@@ -12,14 +12,14 @@ import {
 export const navigationRef = createNavigationContainerRef()
 
 export const navigate = (name, params) => {
-  if (navigationRef.isReady()) {
-    navigationRef.navigate(name, params)
+  if (navigationRef?.isReady()) {
+    navigationRef?.navigate(name, params)
   }
 }
 
 export const navigateAndReset = (routes = [], index = 0) => {
-  if (navigationRef.isReady()) {
-    navigationRef.dispatch(
+  if (navigationRef?.isReady()) {
+    navigationRef?.dispatch(
       CommonActions.reset({
         index,
         routes,
@@ -29,8 +29,8 @@ export const navigateAndReset = (routes = [], index = 0) => {
 }
 
 export const navigateAndSimpleReset = (name, index = 0) => {
-  if (navigationRef.isReady()) {
-    navigationRef.dispatch(
+  if (navigationRef?.isReady()) {
+    navigationRef?.dispatch(
       CommonActions.reset({
         index,
         routes: [{ name }],

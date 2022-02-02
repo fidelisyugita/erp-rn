@@ -5,10 +5,9 @@ import { useTheme } from '@/Hooks'
 import { Brand } from '@/Components'
 import { setDefaultTheme } from '@/Store/Theme'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
+import { Box } from 'native-base'
 
 const StartupContainer = () => {
-  const { Layout, Gutters, Fonts } = useTheme()
-
   const { t } = useTranslation()
 
   const init = async () => {
@@ -17,21 +16,15 @@ const StartupContainer = () => {
         resolve(true)
       }, 2000),
     )
-    await setDefaultTheme({ theme: 'default', darkMode: null })
-    navigateAndSimpleReset('Main')
+    // await setDefaultTheme({ theme: 'default', darkMode: null })
+    navigateAndSimpleReset('LoginScreen')
   }
 
   useEffect(() => {
     init()
   })
 
-  return (
-    <View style={[Layout.fill, Layout.colCenter]}>
-      <Brand />
-      <ActivityIndicator size={'large'} style={[Gutters.largeVMargin]} />
-      <Text style={Fonts.textCenter}>{t('welcome')}</Text>
-    </View>
-  )
+  return <Box flex={1} backgroundColor="primary.900" />
 }
 
 export default StartupContainer

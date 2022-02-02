@@ -5,6 +5,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react'
 import { store, persistor } from '@/Store'
 import ApplicationNavigator from '@/Navigators/Application'
 import './Translations'
+import { NativeBaseProvider } from 'native-base'
 
 const App = () => (
   <Provider store={store}>
@@ -16,7 +17,9 @@ const App = () => (
      * @see https://github.com/rt2zz/redux-persist/blob/master/docs/PersistGate.md
      */}
     <PersistGate loading={null} persistor={persistor}>
-      <ApplicationNavigator />
+      <NativeBaseProvider>
+        <ApplicationNavigator />
+      </NativeBaseProvider>
     </PersistGate>
   </Provider>
 )
