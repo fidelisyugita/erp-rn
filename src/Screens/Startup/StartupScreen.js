@@ -1,13 +1,9 @@
 import React, { useEffect } from 'react'
-import { ActivityIndicator, View, Text } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import { useTheme } from '@/Hooks'
-import { Brand } from '@/Components'
-import { setDefaultTheme } from '@/Store/Theme'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
-import { Box } from 'native-base'
+import { Box, Text } from 'native-base'
 
-const StartupContainer = () => {
+const StartupScreen = () => {
   const { t } = useTranslation()
 
   const init = async () => {
@@ -24,7 +20,18 @@ const StartupContainer = () => {
     init()
   })
 
-  return <Box flex={1} backgroundColor="primary.900" />
+  return (
+    <Box
+      flex={1}
+      backgroundColor="primary.900"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Text fontSize="4xl" bold color="white">
+        ERP APP
+      </Text>
+    </Box>
+  )
 }
 
-export default StartupContainer
+export default StartupScreen

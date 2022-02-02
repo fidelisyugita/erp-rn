@@ -1,11 +1,11 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
-import { StartupContainer } from '@/Containers'
 import { useTheme } from '@/Hooks'
 import { navigationRef } from './utils'
 import { Box } from 'native-base'
 import { LoginScreen } from '@/Screens/Auth'
+import { StartupScreen } from '@/Screens/Startup'
 
 const Stack = createStackNavigator()
 
@@ -18,7 +18,7 @@ const ApplicationNavigator = () => {
     <Box flex={1} safeArea>
       <NavigationContainer theme={NavigationTheme} ref={navigationRef}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Startup" component={StartupContainer} />
+          <Stack.Screen name="Startup" component={StartupScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
         </Stack.Navigator>
       </NavigationContainer>
