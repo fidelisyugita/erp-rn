@@ -1,55 +1,96 @@
 import React, { useState } from 'react'
-import { Box, Button, Center, Input, Stack } from 'native-base'
+import {
+  Box,
+  Button,
+  Center,
+  FormControl,
+  Heading,
+  HStack,
+  Input,
+  Link,
+  Stack,
+  Text,
+  VStack,
+} from 'native-base'
 import { useTranslation } from 'react-i18next'
 import { useToggle } from '@/Hooks'
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const { t } = useTranslation()
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isShowPassword, togglePassword] = useToggle(false)
 
-  const submit = () => {}
+  const submit = () => {
+    navigation.navigate('Dashboard')
+  }
 
   return (
-    <Box flex={1} backgroundColor="primary.900" justifyContent="center">
-      <Center>
-        <Stack space={6} w="75%" maxW="300px">
-          <Input
-            color="white"
-            selectionColor="white"
-            size="md"
-            placeholder={t('username')}
-            onChangeText={setUsername}
-            value={username}
-          />
-          <Input
-            color="white"
-            selectionColor="white"
-            size="md"
-            placeholder={t('password')}
-            onChangeText={setPassword}
-            value={password}
-            secureTextEntry={!isShowPassword}
-            passwordRules="abceef"
-            InputRightElement={
-              <Button
-                size="xs"
-                rounded="none"
-                w="1/6"
-                h="full"
-                onPress={togglePassword}
-              >
-                {isShowPassword ? t('hide') : t('show')}
-              </Button>
-            }
-          />
-          <Button isDisabled={!username || !password} onPress={submit}>
-            {t('login')}
+    <Center flex={1} w="100%" background="white">
+      <Box p="2" py="8" w="90%" maxW="290" background="white">
+        <Heading size="lg" fontWeight="600" color="coolGray.800">
+          {t('welcome')}
+        </Heading>
+        <Heading mt="1" color="coolGray.600" fontWeight="medium" size="xs">
+          {t('signInToContinue')}
+        </Heading>
+
+        <VStack space={3} mt="5">
+          <FormControl>
+            <FormControl.Label>{t('email')}</FormControl.Label>
+            <Input onChangeText={setEmail} value={email} />
+          </FormControl>
+          <FormControl>
+            <FormControl.Label>{t('password')}</FormControl.Label>
+            <Input
+              onChangeText={setPassword}
+              value={password}
+              type={isShowPassword ? 'text' : 'password'}
+              InputRightElement={
+                <Button
+                  size="xs"
+                  rounded="none"
+                  w="1/6"
+                  h="full"
+                  onPress={togglePassword}
+                >
+                  {isShowPassword ? t('hide') : t('show')}
+                </Button>
+              }
+            />
+            <Link
+              _text={{
+                fontSize: 'xs',
+                fontWeight: '500',
+                color: 'primary.500',
+              }}
+              alignSelf="flex-end"
+              mt="1"
+            >
+              {t('forgetPassword')}
+            </Link>
+          </FormControl>
+          <Button isDisabled={!email || !password} onPress={submit} mt="2">
+            {t('signIn')}
           </Button>
-        </Stack>
-      </Center>
-    </Box>
+          <HStack mt="6" justifyContent="center">
+            <Text fontSize="sm" color="coolGray.600">
+              {`${t('dontHaveAccount')} ${t('pleaseContact')}`}
+            </Text>
+            <Link
+              _text={{
+                color: 'primary.500',
+                fontWeight: 'medium',
+                fontSize: 'sm',
+              }}
+              href="#"
+            >
+              {t('admin')}
+            </Link>
+          </HStack>
+        </VStack>
+      </Box>
+    </Center>
   )
 }
 

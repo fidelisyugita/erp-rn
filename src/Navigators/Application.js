@@ -6,6 +6,7 @@ import { navigationRef } from './utils'
 import { Box } from 'native-base'
 import { LoginScreen } from '@/Screens/Auth'
 import { StartupScreen } from '@/Screens/Startup'
+import BottomTabNavigators from './BottomTabNavigators'
 
 const Stack = createStackNavigator()
 
@@ -16,10 +17,11 @@ const ApplicationNavigator = () => {
 
   return (
     <Box flex={1} safeArea>
-      <NavigationContainer theme={NavigationTheme} ref={navigationRef}>
+      <NavigationContainer ref={navigationRef}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Startup" component={StartupScreen} />
+          <Stack.Screen name="StartupScreen" component={StartupScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen name="Dashboard" component={BottomTabNavigators} />
         </Stack.Navigator>
       </NavigationContainer>
     </Box>
