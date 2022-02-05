@@ -6,6 +6,8 @@ import { store, persistor } from '@/Store'
 import ApplicationNavigator from '@/Navigators/Application'
 import './Translations'
 import { NativeBaseProvider } from 'native-base'
+import { Loading } from './Components/Organisms'
+import { setLoadingInstance } from './Helper/LoadingHelper'
 
 const App = () => (
   <Provider store={store}>
@@ -18,6 +20,7 @@ const App = () => (
      */}
     <PersistGate loading={null} persistor={persistor}>
       <NativeBaseProvider>
+        <Loading ref={setLoadingInstance} />
         <ApplicationNavigator />
       </NativeBaseProvider>
     </PersistGate>

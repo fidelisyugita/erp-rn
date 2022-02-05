@@ -9,6 +9,7 @@ export default {
   email: 'Email',
   admin: 'admin',
   employee: 'Employee',
+  signIn: 'Sign In',
 
   welcome: 'Welcome',
   signInToContinue: 'Sign In to continue!',
@@ -21,4 +22,5 @@ export default {
   pettyCash: 'Petty Cash',
   reporting: 'Reporting',
   createInvoice: 'Create Invoice',
+  forgotPassword: 'Forgot password?',
 }

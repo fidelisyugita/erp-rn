@@ -17,6 +17,8 @@ import { api } from '@/Services/api'
 import * as modules from '@/Services/modules'
 import theme from './Theme'
 
+import actionsTracker from '@/Helper/ActionHelper'
+
 const reducers = combineReducers({
   theme,
   ...Object.values(modules).reduce(
@@ -49,6 +51,8 @@ const store = configureStore({
       const createDebugger = require('redux-flipper').default
       middlewares.push(createDebugger())
     }
+
+    middlewares.push(actionsTracker)
 
     return middlewares
   },

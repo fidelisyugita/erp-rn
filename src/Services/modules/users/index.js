@@ -5,7 +5,7 @@ export const userApi = api.injectEndpoints({
   endpoints: build => ({
     fetchOne: fetchOne(build),
   }),
-  overrideExisting: false,
+  overrideExisting: true,
 })
 
 export const { useLazyFetchOneQuery } = userApi

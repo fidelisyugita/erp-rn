@@ -7,6 +7,7 @@
 import {
   CommonActions,
   createNavigationContainerRef,
+  StackActions,
 } from '@react-navigation/native'
 
 export const navigationRef = createNavigationContainerRef()
@@ -17,12 +18,18 @@ export const navigate = (name, params) => {
   }
 }
 
-export const navigateAndReset = (routes = [], index = 0) => {
+export const pop = count => {
+  if (navigationRef?.isReady()) {
+    navigationRef?.dispatch(CommonActions.goBack())
+  }
+}
+
+export const navigateAndReset = (actions = [], index = 0) => {
   if (navigationRef?.isReady()) {
     navigationRef?.dispatch(
       CommonActions.reset({
         index,
-        routes,
+        actions,
       }),
     )
   }
@@ -37,4 +44,17 @@ export const navigateAndSimpleReset = (name, index = 0) => {
       }),
     )
   }
+}
+
+export const navigateAndReplace = (name, params) => {
+  if (navigationRef?.isReady()) {
+    navigationRef?.dispatch(StackActions.replace(name, params))
+  }
+}
+
+export const getCurrentRoute = () => {
+  if (navigationRef?.isReady()) {
+    return navigationRef?.getCurrentRoute()
+  }
+  return null
 }

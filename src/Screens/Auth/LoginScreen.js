@@ -8,21 +8,25 @@ import {
   HStack,
   Input,
   Link,
-  Stack,
   Text,
   VStack,
 } from 'native-base'
 import { useTranslation } from 'react-i18next'
 import { useToggle } from '@/Hooks'
+import { useLoginMutation } from '@/Services/modules/auth'
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = () => {
   const { t } = useTranslation()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isShowPassword, togglePassword] = useToggle(false)
 
+  const [login] = useLoginMutation()
+
   const submit = () => {
-    navigation.navigate('Dashboard')
+    const request = { body: { email, password } }
+
+    login(request)
   }
 
   return (
@@ -38,7 +42,11 @@ const LoginScreen = ({ navigation }) => {
         <VStack space={3} mt="5">
           <FormControl>
             <FormControl.Label>{t('email')}</FormControl.Label>
-            <Input onChangeText={setEmail} value={email} />
+            <Input
+              onChangeText={setEmail}
+              value={email}
+              keyboardType="email-address"
+            />
           </FormControl>
           <FormControl>
             <FormControl.Label>{t('password')}</FormControl.Label>
@@ -67,7 +75,7 @@ const LoginScreen = ({ navigation }) => {
               alignSelf="flex-end"
               mt="1"
             >
-              {t('forgetPassword')}
+              {t('forgotPassword')}
             </Link>
           </FormControl>
           <Button isDisabled={!email || !password} onPress={submit} mt="2">
@@ -75,7 +83,7 @@ const LoginScreen = ({ navigation }) => {
           </Button>
           <HStack mt="6" justifyContent="center">
             <Text fontSize="sm" color="coolGray.600">
-              {`${t('dontHaveAccount')} ${t('pleaseContact')}`}
+              {`${t('dontHaveAccount')} ${t('pleaseContact')} `}
             </Text>
             <Link
               _text={{

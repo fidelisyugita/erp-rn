@@ -1,11 +1,11 @@
 import { api } from '../../api'
 import { login } from './authApi'
 
-export const userApi = api.injectEndpoints({
+export const authApi = api.injectEndpoints({
   endpoints: build => ({
     login: login(build),
   }),
-  overrideExisting: false,
+  overrideExisting: true,
 })
 
-export const { useLoginMutation } = userApi
+export const { useLoginMutation } = authApi
