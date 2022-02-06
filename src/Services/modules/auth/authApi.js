@@ -1,4 +1,5 @@
 import { navigateAndSimpleReset } from '@/Navigators/utils'
+import { setAccessToken, setLoginPayload, setUserId } from '@/Store/Session'
 
 export const login = build => {
   return build.mutation({
@@ -11,7 +12,13 @@ export const login = build => {
       try {
         const { data } = await queryFulfilled
 
-        navigateAndSimpleReset('Main')
+        if (data) {
+          dispatch(setAccessToken(data?.stsTokenManager?.accessToken))
+          dispatch(setUserId(data?.uid))
+          dispatch(setLoginPayload(data))
+
+          navigateAndSimpleReset('Main')
+        }
       } catch (error) {
         console.error(error)
       }

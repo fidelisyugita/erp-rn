@@ -32,3 +32,17 @@ export const ACCOUNTING_MENU = [
     value: 'employee',
   },
 ]
+
+export const MASTER_MENU = [
+  {
+    id: 'MasterProductCategoryScreen',
+    label: i18n.t('productCategory'),
+    icon: 'cube',
+  },
+  { id: 'MasterMeasureUnitScreen', label: i18n.t('measureUnit'), icon: 'cube' },
+  { id: 'MasterProductScreen', label: i18n.t('product'), icon: 'cube' },
+  { id: 'MasterContactcreen', label: i18n.t('contact'), icon: 'contacts' },
+  { id: 'MasterUserScreen', label: i18n.t('User'), icon: 'account' },
+]
+
+export const ROLE = {}

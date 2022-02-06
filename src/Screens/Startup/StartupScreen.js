@@ -2,9 +2,11 @@ import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { navigateAndSimpleReset } from '@/Navigators/utils'
 import { Box, Text } from 'native-base'
+import useSession from '@/Hooks/useSession'
 
 const StartupScreen = () => {
   const { t } = useTranslation()
+  const { userId } = useSession()
 
   const init = async () => {
     await new Promise(resolve =>
@@ -12,8 +14,14 @@ const StartupScreen = () => {
         resolve(true)
       }, 2000),
     )
-    // await setDefaultTheme({ theme: 'default', darkMode: null })
-    navigateAndSimpleReset('LoginScreen')
+
+    let destionation = 'LoginScreen'
+
+    if (userId) {
+      destionation = 'Main'
+    }
+
+    navigateAndSimpleReset(destionation)
   }
 
   useEffect(() => {

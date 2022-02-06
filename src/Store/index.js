@@ -16,11 +16,13 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { api } from '@/Services/api'
 import * as modules from '@/Services/modules'
 import theme from './Theme'
+import session from './Session'
 
 import actionsTracker from '@/Helper/ActionHelper'
 
 const reducers = combineReducers({
   theme,
+  session,
   ...Object.values(modules).reduce(
     (acc, module) => ({
       ...acc,
@@ -33,7 +35,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['theme'],
+  whitelist: ['theme', 'session'],
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers)

@@ -3,7 +3,16 @@ import i18n from '@/Translations'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Toast } from 'native-base'
 
-const baseQuery = fetchBaseQuery({ baseUrl: Config.API_URL })
+const baseQuery = fetchBaseQuery({
+  baseUrl: Config.API_URL,
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState().session?.accessToken
+
+    if (token) headers.set('authorization', `Bearer ${token}`)
+
+    return headers
+  },
+})
 
 const baseQueryWithInterceptor = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions)

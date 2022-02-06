@@ -10,6 +10,9 @@ export default {
   admin: 'admin',
   employee: 'Employee',
   signIn: 'Sign In',
+  product: 'Product',
+  measureUnit: 'Measure Unit',
+  productCategory: 'Product Category',
 
   welcome: 'Welcome',
   signInToContinue: 'Sign In to continue!',
