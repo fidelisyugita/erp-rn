@@ -15,13 +15,13 @@ const StartupScreen = () => {
       }, 2000),
     )
 
-    let destionation = 'LoginScreen'
+    let destination = 'LoginScreen'
 
     if (userId) {
-      destionation = 'Main'
+      destination = 'Main'
     }
 
-    navigateAndSimpleReset(destionation)
+    navigateAndSimpleReset(destination)
   }
 
   useEffect(() => {

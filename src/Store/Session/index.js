@@ -2,9 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   userId: null,
+  loginPayload: null,
   userRole: null,
   accessToken: null,
-  loginPayload: null,
+  refreshToken: null,
+  customToken: null,
 }
 
 const slice = createSlice({
@@ -14,27 +16,35 @@ const slice = createSlice({
     reset: state => ({
       ...initialState,
     }),
-    setAccessToken: (state, { payload }) => {
-      state.accessToken = payload
-    },
     setUserId: (state, { payload }) => {
       state.userId = payload
+    },
+    setLoginPayload: (state, { payload }) => {
+      state.loginPayload = payload
     },
     setUserRole: (state, { payload }) => {
       state.userRole = payload
     },
-    setLoginPayload: (state, { payload }) => {
-      state.loginPayload = payload
+    setAccessToken: (state, { payload }) => {
+      state.accessToken = payload
+    },
+    setRefreshToken: (state, { payload }) => {
+      state.refreshToken = payload
+    },
+    setCustomToken: (state, { payload }) => {
+      state.customToken = payload
     },
   },
 })
 
 export const {
   reset,
-  setAccessToken,
   setUserId,
-  setUserRole,
   setLoginPayload,
+  setUserRole,
+  setAccessToken,
+  setRefreshToken,
+  setCustomToken,
 } = slice.actions
 
 export default slice.reducer
