@@ -13,8 +13,8 @@ export const login = build => {
         const { data } = await queryFulfilled
 
         if (data) {
-          dispatch(setAccessToken(data?.stsTokenManager?.accessToken))
-          dispatch(setUserId(data?.uid))
+          dispatch(setAccessToken(data?.accessToken))
+          dispatch(setUserId(data?.user?.id))
           dispatch(setLoginPayload(data))
 
           navigateAndSimpleReset('Main')

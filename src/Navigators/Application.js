@@ -11,7 +11,10 @@ import BottomTabNavigators from './BottomTabNavigators'
 import { LoginScreen } from '@/Screens/Auth'
 import { StartupScreen } from '@/Screens/Startup'
 import { MasterProductScreen } from '@/Screens/Master'
-import { MasterProductCategoryScreen } from '@/Screens/Master/ProductCategory'
+import {
+  MasterProductCategoryDetailScreen,
+  MasterProductCategoryScreen,
+} from '@/Screens/Master/ProductCategory'
 import {
   MasterMeasureUnitScreen,
   MasterProductMeasureUnitScreen,
@@ -46,6 +49,11 @@ const ApplicationNavigator = () => {
             name="MasterProductCategoryScreen"
             component={MasterProductCategoryScreen}
             options={{ headerShown: true, title: t('productCategory') }}
+          />
+          <Stack.Screen
+            name="MasterProductCategoryDetailScreen"
+            component={MasterProductCategoryDetailScreen}
+            options={{ headerShown: true, title: t('productCategoryDetail') }}
           />
           <Stack.Screen
             name="MasterMeasureUnitScreen"

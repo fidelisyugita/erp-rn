@@ -26,4 +26,6 @@ export default {
   reporting: 'Reporting',
   createInvoice: 'Create Invoice',
   forgotPassword: 'Forgot password?',
+  searchProductCategory: 'Search Product Category',
+  noData: 'No Data',
 }

@@ -46,3 +46,7 @@ export const MASTER_MENU = [
 ]
 
 export const ROLE = {}
+
+export const LIMIT_LOAD_DATA = 10
+
+export const ERROR_MESSAGE_SERVER = ['Invalid token']

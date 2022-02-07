@@ -1,7 +1,7 @@
-export const getProducts = build => {
+export const getProductCategories = build => {
   return build.query({
     query: ({ params }) => ({
-      url: `product`,
+      url: `productCategory`,
       method: 'GET',
       params,
     }),
