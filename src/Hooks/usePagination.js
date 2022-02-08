@@ -99,7 +99,6 @@ export default function (query, req) {
 
   const onLoadMore = debounce(
     useCallback(() => {
-      console.log({ isLoadMore })
       if (isLoadMore && !isFetching) {
         const newPage = page + 1
         setPage(newPage)
