@@ -23,6 +23,7 @@ export default {
   delete: 'Delete',
   view: 'View',
   cancel: 'Cancel',
+  signOut: 'Sign Out',
 
   welcome: 'Welcome',
   signInToContinue: 'Sign In to continue!',

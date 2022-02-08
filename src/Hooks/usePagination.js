@@ -77,14 +77,14 @@ export default function (query, req) {
         params: {
           ...req?.params,
           ...otherReq?.params,
-          page: forcePage || page,
+          page: forcePage,
           limit: LIMIT_LOAD_DATA,
         },
       }
 
       getData(request)
     },
-    [page, req],
+    [req],
   )
 
   const onRefresh = debounce(
@@ -92,7 +92,7 @@ export default function (query, req) {
       setRefresh(true)
       setLoadMore(true)
       setPage(0)
-      getDataRequest(0, req)
+      getDataRequest(0)
     }, [getDataRequest, req]),
     200,
   )

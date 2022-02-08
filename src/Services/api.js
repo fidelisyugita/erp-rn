@@ -19,6 +19,7 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithInterceptor = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions)
+
   if (result?.error) {
     if (
       result?.error?.status === 500 &&
@@ -27,6 +28,9 @@ const baseQueryWithInterceptor = async (args, api, extraOptions) => {
       //force logout
       api.dispatch(reset())
       navigateAndSimpleReset('LoginScreen')
+    } else if (result?.error?.status === 401) {
+      const token = getState().session?.refreshToken
+      api.dispatch(api.endpoints.refreshToken.initiate({ refreshToken: token }))
     }
     Toast.show({
       description: result?.error?.data?.message
