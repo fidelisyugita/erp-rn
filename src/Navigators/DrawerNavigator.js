@@ -23,6 +23,11 @@ import { useDispatch } from 'react-redux'
 import { reset } from '@/Store/Session'
 import { navigateAndSimpleReset } from './utils'
 import { MasterScreen } from '@/Screens/Master'
+import {
+  useLogoutMutation,
+  useRefreshTokenMutation,
+  useRefreshTokenQuery,
+} from '@/Services/modules/auth'
 
 const Drawer = createDrawerNavigator()
 
@@ -73,8 +78,10 @@ const CustomDrawerItem = ({ navigation, name, isActive, onPress }) => {
 const CustomDrawerContent = props => {
   const { loginPayload } = useSession()
   const dispatch = useDispatch()
+  const [logoutRequest] = useLogoutMutation()
 
   const signOut = () => {
+    logoutRequest()
     dispatch(reset())
     navigateAndSimpleReset('LoginScreen')
   }
@@ -110,6 +117,12 @@ const CustomDrawerContent = props => {
 
 const DrawerNavigator = () => {
   const { t } = useTranslation()
+  const { refreshToken } = useSession()
+
+  const { data } = useRefreshTokenQuery(
+    { body: { refreshToken } },
+    { pollingInterval: 1000 * 60 * 59, skip: !refreshToken }, //pool every 59 minute
+  )
 
   return (
     <Drawer.Navigator

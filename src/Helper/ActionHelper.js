@@ -1,8 +1,16 @@
 import { hideLoading, showLoading } from '@/Helper/LoadingHelper'
 
-const showLoadingActions = ['login']
+const showLoadingActions = [
+  'login',
+  'addProductCategory',
+  'editProductCategory',
+]
 
-const hideLoadingActions = ['login']
+const hideLoadingActions = [
+  'login',
+  'addProductCategory',
+  'editProductCategory',
+]
 
 const actionsTracker = () => next => action => {
   if (action && action.meta?.arg) {

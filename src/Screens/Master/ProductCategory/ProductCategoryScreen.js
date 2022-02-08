@@ -9,26 +9,47 @@ import {
   Pressable,
   useTheme,
   IconButton,
+  useDisclose,
 } from 'native-base'
 import { RefreshControl } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useTranslation } from 'react-i18next'
 
 import { usePagination } from '@/Hooks'
-import { useLazyGetProductCategoriesQuery } from '@/Services/modules/product'
+import {
+  useLazyGetProductCategoriesQuery,
+  useDeleteProductCategoryMutation,
+} from '@/Services/modules/product'
+import { ActionSheet } from '@/Components/Organisms'
 
 const ProductCategoryScreen = ({ navigation }) => {
   const { t } = useTranslation()
   const { colors } = useTheme()
+  const { isOpen, onOpen, onClose } = useDisclose()
   const [
-    { list, onRefresh, onSearch, onLoadMore, keyExtractor, renderEmpty },
+    {
+      list,
+      onRefresh,
+      onSearch,
+      onLoadMore,
+      keyExtractor,
+      renderEmpty,
+      renderFooter,
+    },
     { isSearch, isRefresh, isFirstLoad },
   ] = usePagination(useLazyGetProductCategoriesQuery)
+
+  const [selectedItem, setSelectedItem] = React.useState({})
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <IconButton
+          onPress={() => {
+            navigation.navigate('MasterProductCategoryDetailScreen', {
+              type: 'add',
+            })
+          }}
           key="ghost"
           variant="ghost"
           _icon={{
@@ -42,14 +63,15 @@ const ProductCategoryScreen = ({ navigation }) => {
 
   const searchRef = useRef(null)
 
-  const onPressItem = () => {
+  const onPressItem = item => {
     searchRef?.current?.blur()
-    navigation.navigate('MasterProductCategoryDetailScreen')
+    setSelectedItem(item)
+    onOpen()
   }
 
   const renderItem = ({ item }) => {
     return (
-      <Pressable onPress={onPressItem}>
+      <Pressable onPress={() => onPressItem(item)}>
         {({ isPressed }) => {
           return (
             <Box
@@ -101,8 +123,10 @@ const ProductCategoryScreen = ({ navigation }) => {
           data={list}
           keyExtractor={keyExtractor}
           onEndReached={onLoadMore}
+          onEndReachedThreshold={1}
           renderItem={renderItem}
           ListEmptyComponent={renderEmpty}
+          ListFooterComponent={renderFooter}
           refreshControl={
             <RefreshControl
               refreshing={isRefresh}
@@ -113,6 +137,13 @@ const ProductCategoryScreen = ({ navigation }) => {
           }
         />
       )}
+      <ActionSheet
+        isOpen={isOpen}
+        onClose={onClose}
+        item={selectedItem}
+        screenName="MasterProductCategoryDetailScreen"
+        deleteMutation={useDeleteProductCategoryMutation}
+      />
     </Box>
   )
 }

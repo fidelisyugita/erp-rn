@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { debounce } from 'lodash'
 import { LIMIT_LOAD_DATA } from '@/Data/Constant'
-import { Box, Text } from 'native-base'
+import { Box, Spinner, Text } from 'native-base'
 import { useTranslation } from 'react-i18next'
 
 export default function (query, req) {
@@ -99,6 +99,7 @@ export default function (query, req) {
 
   const onLoadMore = debounce(
     useCallback(() => {
+      console.log({ isLoadMore })
       if (isLoadMore && !isFetching) {
         const newPage = page + 1
         setPage(newPage)
@@ -112,8 +113,9 @@ export default function (query, req) {
     useCallback(
       keyword => {
         if (!isFetching) {
-          console.log({ keyword })
           setSearch(true)
+          setLoadMore(true)
+          setPage(0)
           getDataRequest(0, {
             ...req,
             params: {
@@ -140,7 +142,16 @@ export default function (query, req) {
     )
   }, [isFetching])
 
-  const renderFooter = useCallback(() => {}, [])
+  const renderFooter = useCallback(() => {
+    if (isLoadMore && isFetching && !isFirstLoad) {
+      return (
+        <Box py="4">
+          <Spinner />
+        </Box>
+      )
+    }
+    return null
+  }, [isFirstLoad, isFetching, isLoadMore])
 
   return [
     {
