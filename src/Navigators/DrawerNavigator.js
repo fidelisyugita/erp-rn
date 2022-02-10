@@ -31,21 +31,23 @@ import {
 const Drawer = createDrawerNavigator()
 
 const getIcon = screenName => {
+  const { t } = useTranslation()
+
   switch (screenName) {
-    case 'Dashboard':
+    case t('dashboard'):
       return 'view-dashboard'
-    case 'Master':
+    case t('master'):
       return 'database'
-    case 'Favorites':
+    case t('favorites'):
       return 'heart'
-    case 'Archive':
+    case t('archive'):
       return 'archive'
-    case 'Trash':
+    case t('trash'):
       return 'trash-can'
-    case 'SignOut':
+    case t('signOut'):
       return 'logout'
     default:
-      return undefined
+      return '-'
   }
 }
 
@@ -78,6 +80,7 @@ const CustomDrawerContent = props => {
   const { loginPayload } = useSession()
   const dispatch = useDispatch()
   const [logoutRequest] = useLogoutMutation()
+  const { t } = useTranslation()
 
   const signOut = () => {
     logoutRequest()
@@ -106,7 +109,7 @@ const CustomDrawerContent = props => {
                 onPress={() => props.navigation.navigate(name)}
               />
             ))}
-            <CustomDrawerItem name="SignOut" onPress={signOut} />
+            <CustomDrawerItem name={t('signOut')} onPress={signOut} />
           </VStack>
         </VStack>
       </VStack>
@@ -125,12 +128,12 @@ const DrawerNavigator = () => {
 
   return (
     <Drawer.Navigator
-      initialRouteName="Dashboard"
+      initialRouteName={t('dashboard')}
       screenOptions={{ contentContainerStyle: { paddingTop: 0 } }}
       drawerContent={props => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen
-        name="Dashboard"
+        name={t('dashboard')}
         component={DashboardScreen}
         options={{
           title: t('dashboard'),
@@ -138,7 +141,7 @@ const DrawerNavigator = () => {
         }}
       />
       <Drawer.Screen
-        name="Master"
+        name={t('master')}
         component={MasterScreen}
         options={{ title: t('master'), drawerLabel: t('master') }}
       />

@@ -11,6 +11,7 @@ export default {
   employee: 'Employee',
   signIn: 'Sign In',
   product: 'Product',
+  contact: 'Contact',
   measureUnit: 'Measure Unit',
   measureUnitDetail: 'Measure Unit Detail',
   productCategory: 'Product Category',
@@ -33,6 +34,10 @@ export default {
   view: 'View',
   cancel: 'Cancel',
   signOut: 'Sign Out',
+
+  dashboard: 'Dashboard',
+  master: 'Master',
+  archive: 'Archive',
 
   welcome: 'Welcome',
   signInToContinue: 'Sign In to continue!',
