@@ -94,7 +94,6 @@ const ProductCategoryDetailScreen = ({ navigation, route }) => {
   }, [type])
 
   const onSubmit = data => {
-    console.log('submiting with ', data)
     let request = {
       body: data,
     }

@@ -80,7 +80,7 @@ export const deleteProductCategory = build => {
     async onQueryStarted(arg, { queryFulfilled }) {
       try {
         const result = await queryFulfilled
-        console.log({ result })
+
         if (result) {
           Toast.show({
             description: i18n.t('deleteProductCategorySuccess'),
