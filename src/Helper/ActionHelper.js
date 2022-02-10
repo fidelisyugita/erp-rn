@@ -14,6 +14,9 @@ const showLoadingActions = [
   'addTransactionStatus',
   'editTransactionStatus',
   'deleteTransactionStatus',
+  'addContact',
+  'editContact',
+  'deleteContact',
 ]
 
 const hideLoadingActions = [
@@ -30,6 +33,9 @@ const hideLoadingActions = [
   'addTransactionStatus',
   'editTransactionStatus',
   'deleteTransactionStatus',
+  'addContact',
+  'editContact',
+  'deleteContact',
 ]
 
 const actionsTracker = () => next => action => {

@@ -28,6 +28,10 @@ import {
   MasterTransactionStatusDetailScreen,
   MasterTransactionStatusScreen,
 } from '@/Screens/Master/TransactionStatus'
+import {
+  MasterContactDetailScreen,
+  MasterContactScreen,
+} from '@/Screens/Master/Contact'
 
 const Stack = createStackNavigator()
 
@@ -93,6 +97,16 @@ const ApplicationNavigator = () => {
             name="MasterTransactionStatusDetailScreen"
             component={MasterTransactionStatusDetailScreen}
             options={{ headerShown: true, title: t('transactionStatusDetail') }}
+          />
+          <Stack.Screen
+            name="MasterContactScreen"
+            component={MasterContactScreen}
+            options={{ headerShown: true, title: t('contact') }}
+          />
+          <Stack.Screen
+            name="MasterContactDetailScreen"
+            component={MasterContactDetailScreen}
+            options={{ headerShown: true, title: t('contactDetail') }}
           />
         </Stack.Navigator>
       </NavigationContainer>

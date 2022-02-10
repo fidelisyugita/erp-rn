@@ -51,5 +51,6 @@ export const api = createApi({
     'MeasureUnits',
     'TransactionTypes',
     'TransactionStatus',
+    'Contacts',
   ],
 })
