@@ -20,6 +20,14 @@ import {
   MasterMeasureUnitScreen,
   MasterProductMeasureUnitScreen,
 } from '@/Screens/Master/MeasureUnit'
+import {
+  MasterTransactionTypeDetailScreen,
+  MasterTransactionTypeScreen,
+} from '@/Screens/Master/TransactionType'
+import {
+  MasterTransactionStatusDetailScreen,
+  MasterTransactionStatusScreen,
+} from '@/Screens/Master/TransactionStatus'
 
 const Stack = createStackNavigator()
 
@@ -65,6 +73,26 @@ const ApplicationNavigator = () => {
             name="MasterMeasureUnitDetailScreen"
             component={MasterMeasureUnitDetailScreen}
             options={{ headerShown: true, title: t('measureUnitDetail') }}
+          />
+          <Stack.Screen
+            name="MasterTransactionTypeScreen"
+            component={MasterTransactionTypeScreen}
+            options={{ headerShown: true, title: t('transactionType') }}
+          />
+          <Stack.Screen
+            name="MasterTransactionTypeDetailScreen"
+            component={MasterTransactionTypeDetailScreen}
+            options={{ headerShown: true, title: t('transactionTypeDetail') }}
+          />
+          <Stack.Screen
+            name="MasterTransactionStatusScreen"
+            component={MasterTransactionStatusScreen}
+            options={{ headerShown: true, title: t('transactionStatus') }}
+          />
+          <Stack.Screen
+            name="MasterTransactionStatusDetailScreen"
+            component={MasterTransactionStatusDetailScreen}
+            options={{ headerShown: true, title: t('transactionStatusDetail') }}
           />
         </Stack.Navigator>
       </NavigationContainer>

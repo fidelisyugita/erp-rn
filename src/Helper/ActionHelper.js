@@ -4,12 +4,32 @@ const showLoadingActions = [
   'login',
   'addProductCategory',
   'editProductCategory',
+  'deleteProductCategory',
+  'addMeasureUnit',
+  'editMeasureUnit',
+  'deleteMeasureUnit',
+  'addTransactionType',
+  'editTransactionType',
+  'deleteTransactionType',
+  'addTransactionStatus',
+  'editTransactionStatus',
+  'deleteTransactionStatus',
 ]
 
 const hideLoadingActions = [
   'login',
   'addProductCategory',
   'editProductCategory',
+  'deleteProductCategory',
+  'addMeasureUnit',
+  'editMeasureUnit',
+  'deleteMeasureUnit',
+  'addTransactionType',
+  'editTransactionType',
+  'deleteTransactionType',
+  'addTransactionStatus',
+  'editTransactionStatus',
+  'deleteTransactionStatus',
 ]
 
 const actionsTracker = () => next => action => {

@@ -43,6 +43,8 @@ export const MASTER_MENU = [
   { id: 'MasterProductScreen', label: i18n.t('product'), icon: 'cube' },
   { id: 'MasterContactcreen', label: i18n.t('contact'), icon: 'contacts' },
   { id: 'MasterUserScreen', label: i18n.t('User'), icon: 'account' },
+  { id: 'MasterTransactionTypeScreen', label: i18n.t('transactionType'), icon: 'account' },
+  { id: 'MasterTransactionStatusScreen', label: i18n.t('transactionStatus'), icon: 'account' },
 ]
 
 export const ROLE = {}
