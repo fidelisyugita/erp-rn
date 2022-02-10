@@ -35,7 +35,7 @@ const MasterScreen = ({ navigation }) => {
                 p={4}
                 icon={<Icon name={menu.icon} as={MaterialIcons} size="xl" />}
               />
-              <Text textAlign="center" width="16">
+              <Text textAlign="center" width="20">
                 {menu.label}
               </Text>
             </Box>
