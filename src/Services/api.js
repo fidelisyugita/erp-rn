@@ -45,5 +45,5 @@ export const api = createApi({
   baseQuery: baseQueryWithInterceptor,
   keepUnusedDataFor: 60 * 60 * 24 * 7,
   endpoints: () => ({}),
-  tagTypes: ['Products', 'ProductCategories'],
+  tagTypes: ['Products', 'ProductCategories', 'MeasureUnits'],
 })

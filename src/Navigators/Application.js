@@ -16,6 +16,7 @@ import {
   MasterProductCategoryScreen,
 } from '@/Screens/Master/ProductCategory'
 import {
+  MasterMeasureUnitDetailScreen,
   MasterMeasureUnitScreen,
   MasterProductMeasureUnitScreen,
 } from '@/Screens/Master/MeasureUnit'
@@ -59,6 +60,11 @@ const ApplicationNavigator = () => {
             name="MasterMeasureUnitScreen"
             component={MasterMeasureUnitScreen}
             options={{ headerShown: true, title: t('measureUnit') }}
+          />
+          <Stack.Screen
+            name="MasterMeasureUnitDetailScreen"
+            component={MasterMeasureUnitDetailScreen}
+            options={{ headerShown: true, title: t('measureUnitDetail') }}
           />
         </Stack.Navigator>
       </NavigationContainer>

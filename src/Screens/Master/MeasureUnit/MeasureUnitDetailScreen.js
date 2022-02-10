@@ -16,18 +16,18 @@ import * as yup from 'yup'
 import { useTranslation } from 'react-i18next'
 import i18n from '@/Translations'
 import {
-  useAddProductCategoryMutation,
-  useEditProductCategoryMutation,
-} from '@/Services/modules/product'
+  useAddMeasureUnitMutation,
+  useEditMeasureUnitMutation,
+} from '@/Services/modules/measureUnit'
 
 const schema = yup
   .object({
-    name: yup.string().label(i18n.t('name')).min(3).required(),
+    name: yup.string().label(i18n.t('name')).required(),
     description: yup.string().label(i18n.t('description')).nullable(true),
   })
   .required()
 
-const ProductCategoryDetailScreen = ({ navigation, route }) => {
+const MeasureUnitDetailScreen = ({ navigation, route }) => {
   const { type, item: paramItem } = route?.params
 
   const [screenData, setScreenData] = React.useState({})
@@ -47,9 +47,9 @@ const ProductCategoryDetailScreen = ({ navigation, route }) => {
 
   const [submitRequest] =
     type == 'add'
-      ? useAddProductCategoryMutation({ fixedCacheKey: 'add-product-category' })
-      : useEditProductCategoryMutation({
-          fixedCacheKey: 'edit-product-category',
+      ? useAddMeasureUnitMutation({ fixedCacheKey: 'add-measure-unit' })
+      : useEditMeasureUnitMutation({
+          fixedCacheKey: 'edit-measure-unit',
         })
 
   React.useLayoutEffect(() => {
@@ -62,13 +62,13 @@ const ProductCategoryDetailScreen = ({ navigation, route }) => {
     let tempScreen = {}
     switch (type) {
       case 'add':
-        tempScreen = { isDisabled: false, title: t('addProductCategory') }
+        tempScreen = { isDisabled: false, title: t('addMeasureUnit') }
         break
       case 'edit':
-        tempScreen = { isDisabled: false, title: t('editProductCategory') }
+        tempScreen = { isDisabled: false, title: t('editMeasureUnit') }
         break
       case 'view':
-        tempScreen = { isDisabled: true, title: t('productCategoryDetail') }
+        tempScreen = { isDisabled: true, title: t('measureUnitDetail') }
         break
       default:
         tempScreen = { isDisabled: true, title: t('undefined') }
@@ -112,7 +112,7 @@ const ProductCategoryDetailScreen = ({ navigation, route }) => {
                   render={({ field: { onChange, onBlur, value } }) => (
                     <Input
                       onBlur={onBlur}
-                      placeholder={t('inputCategoryName')}
+                      placeholder={t('inputUnitName')}
                       onChangeText={onChange}
                       value={value}
                       isDisabled={screenData?.isDisabled}
@@ -159,4 +159,4 @@ const ProductCategoryDetailScreen = ({ navigation, route }) => {
   )
 }
 
-export default ProductCategoryDetailScreen
+export default MeasureUnitDetailScreen
