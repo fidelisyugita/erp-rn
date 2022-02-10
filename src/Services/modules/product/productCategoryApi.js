@@ -2,6 +2,15 @@ import i18n from '@/Translations'
 import { pop } from '@/Navigators/utils'
 import { Toast } from 'native-base'
 
+function providesList(resultsWithIds, tagType) {
+  return resultsWithIds
+    ? [
+        { type: tagType, id: 'LIST' },
+        ...resultsWithIds.map(({ id }) => ({ type: tagType, id })),
+      ]
+    : [{ type: tagType, id: 'LIST' }]
+}
+
 export const getProductCategories = build => {
   return build.query({
     query: ({ params }) => ({
@@ -20,7 +29,7 @@ export const addProductCategory = build => {
       method: 'POST',
       body,
     }),
-    invalidatesTags: ['ProductCategories'],
+    // invalidatesTags: ['ProductCategories'],
     async onQueryStarted(arg, { queryFulfilled }) {
       try {
         const { data } = await queryFulfilled
@@ -44,7 +53,7 @@ export const editProductCategory = build => {
       method: 'POST',
       body,
     }),
-    invalidatesTags: ['ProductCategories'],
+    // invalidatesTags: ['ProductCategories'],
     async onQueryStarted(arg, { queryFulfilled }) {
       try {
         const { data } = await queryFulfilled
@@ -67,7 +76,7 @@ export const deleteProductCategory = build => {
       url: `productCategory/${id}`,
       method: 'DELETE',
     }),
-    invalidatesTags: ['ProductCategories'],
+    // invalidatesTags: ['ProductCategories'],
     async onQueryStarted(arg, { queryFulfilled }) {
       try {
         const result = await queryFulfilled

@@ -57,7 +57,7 @@ export default function (query, req) {
         setFirstLoad(false)
         setSearch(false)
       }, 200)
-      if (!data || data.length == 0) {
+      if ((!data || data.length == 0) && page == 0) {
         setList([])
       }
     }

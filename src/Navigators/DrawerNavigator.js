@@ -90,7 +90,7 @@ const CustomDrawerContent = props => {
       <VStack space="6" my="2" mx="1">
         <Box px="4">
           <Text bold color="gray.700">
-            Mail
+            {loginPayload?.name}
           </Text>
           <Text fontSize="14" mt="1" color="gray.500" fontWeight="500">
             {loginPayload?.email}

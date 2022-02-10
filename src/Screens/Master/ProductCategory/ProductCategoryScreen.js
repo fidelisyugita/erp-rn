@@ -19,6 +19,8 @@ import { usePagination } from '@/Hooks'
 import {
   useLazyGetProductCategoriesQuery,
   useDeleteProductCategoryMutation,
+  useAddProductCategoryMutation,
+  useEditProductCategoryMutation,
 } from '@/Services/modules/product'
 import { ActionSheet } from '@/Components/Organisms'
 
@@ -38,6 +40,27 @@ const ProductCategoryScreen = ({ navigation }) => {
     },
     { isSearch, isRefresh, isFirstLoad },
   ] = usePagination(useLazyGetProductCategoriesQuery)
+
+  const [
+    deleteTrigger,
+    { isSuccess: isSuccessDelete, reset: resetDelete },
+  ] = useDeleteProductCategoryMutation({
+    fixedCacheKey: 'delete-product-category',
+  })
+
+  const [
+    addTrigger,
+    { isSuccess: isSuccessAdd, reset: resetAdd },
+  ] = useAddProductCategoryMutation({
+    fixedCacheKey: 'add-product-category',
+  })
+
+  const [
+    editTrigger,
+    { isSuccess: isSuccessEdit, reset: resetEdit },
+  ] = useEditProductCategoryMutation({
+    fixedCacheKey: 'edit-product-category',
+  })
 
   const [selectedItem, setSelectedItem] = React.useState({})
 
@@ -60,6 +83,27 @@ const ProductCategoryScreen = ({ navigation }) => {
       ),
     })
   }, [navigation])
+
+  React.useEffect(() => {
+    if (isSuccessAdd) {
+      onRefresh()
+      resetAdd()
+    }
+  }, [isSuccessAdd])
+
+  React.useEffect(() => {
+    if (isSuccessEdit) {
+      onRefresh()
+      resetEdit()
+    }
+  }, [isSuccessEdit])
+
+  React.useEffect(() => {
+    if (isSuccessDelete) {
+      onRefresh()
+      resetDelete()
+    }
+  }, [isSuccessDelete])
 
   const searchRef = useRef(null)
 
@@ -113,7 +157,7 @@ const ProductCategoryScreen = ({ navigation }) => {
           isSearch ? <Spinner color="primary.500" m="2" mr="3" /> : null
         }
       />
-      {isFirstLoad || isSearch ? (
+      {isFirstLoad || isSearch || isRefresh ? (
         <Box mt="4" py="4" alignItems="center">
           <Spinner color="primary.500" />
         </Box>
@@ -123,10 +167,11 @@ const ProductCategoryScreen = ({ navigation }) => {
           data={list}
           keyExtractor={keyExtractor}
           onEndReached={onLoadMore}
-          onEndReachedThreshold={1}
+          onEndReachedThreshold={0.5}
           renderItem={renderItem}
           ListEmptyComponent={renderEmpty}
           ListFooterComponent={renderFooter}
+          showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl
               refreshing={isRefresh}
@@ -143,6 +188,7 @@ const ProductCategoryScreen = ({ navigation }) => {
         item={selectedItem}
         screenName="MasterProductCategoryDetailScreen"
         deleteMutation={useDeleteProductCategoryMutation}
+        fixedCacheKey="delete-product-category"
       />
     </Box>
   )

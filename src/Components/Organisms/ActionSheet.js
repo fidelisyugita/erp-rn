@@ -11,10 +11,11 @@ const ActionSheet = ({
   item,
   screenName = '',
   deleteMutation = () => {},
+  fixedCacheKey = '',
 }) => {
   const navigation = useNavigation()
   const { t } = useTranslation()
-  const [deleteRequest] = deleteMutation()
+  const [deleteRequest] = deleteMutation({ fixedCacheKey })
 
   const [isDeleteOpen, setDeleteOpen] = React.useState(false)
 

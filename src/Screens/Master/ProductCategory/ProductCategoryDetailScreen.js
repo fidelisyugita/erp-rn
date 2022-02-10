@@ -63,8 +63,10 @@ const ProductCategoryDetailScreen = ({ navigation, route }) => {
 
   const [submitRequest] =
     type == 'add'
-      ? useAddProductCategoryMutation()
-      : useEditProductCategoryMutation()
+      ? useAddProductCategoryMutation({ fixedCacheKey: 'add-product-category' })
+      : useEditProductCategoryMutation({
+          fixedCacheKey: 'edit-product-category',
+        })
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
