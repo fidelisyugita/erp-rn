@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { useToggle } from '@/Hooks'
 import { useLoginMutation } from '@/Services/modules/auth'
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const { t } = useTranslation()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -74,6 +74,7 @@ const LoginScreen = () => {
               }}
               alignSelf="flex-end"
               mt="1"
+              onPress={() => navigation.navigate('ForgotPasswordScreen')}
             >
               {t('forgotPassword')}
             </Link>

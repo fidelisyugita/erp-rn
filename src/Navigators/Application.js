@@ -7,8 +7,7 @@ import { Box } from 'native-base'
 import { navigationRef } from './utils'
 
 import DrawerNavigator from './DrawerNavigator'
-import BottomTabNavigators from './BottomTabNavigators'
-import { LoginScreen } from '@/Screens/Auth'
+import { LoginScreen, ForgotPasswordScreen } from '@/Screens/Auth'
 import { StartupScreen } from '@/Screens/Startup'
 import { MasterProductScreen } from '@/Screens/Master'
 import {
@@ -52,7 +51,10 @@ const ApplicationNavigator = () => {
         >
           <Stack.Screen name="StartupScreen" component={StartupScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          {/* <Stack.Screen name="Dashboard" component={BottomTabNavigators} /> */}
+          <Stack.Screen
+            name="ForgotPasswordScreen"
+            component={ForgotPasswordScreen}
+          />
           <Stack.Screen
             name="Main"
             component={DrawerNavigator}

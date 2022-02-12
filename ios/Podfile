@@ -5,6 +5,9 @@ platform :ios, '11.0'
 
 pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+permissions_path = '../node_modules/react-native-permissions/ios'
+pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+
 target 'erp' do
   config = use_native_modules!
 

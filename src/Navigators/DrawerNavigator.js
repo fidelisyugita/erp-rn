@@ -84,7 +84,7 @@ const CustomDrawerContent = props => {
   const { t } = useTranslation()
 
   const signOut = () => {
-    logoutRequest()
+    logoutRequest({ body: {} })
     dispatch(reset())
     navigateAndSimpleReset('LoginScreen')
   }
@@ -130,7 +130,10 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
       initialRouteName={t('dashboard')}
-      screenOptions={{ contentContainerStyle: { paddingTop: 0 }, headerTitleAlign:'center' }}
+      screenOptions={{
+        contentContainerStyle: { paddingTop: 0 },
+        headerTitleAlign: 'center',
+      }}
       drawerContent={props => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen

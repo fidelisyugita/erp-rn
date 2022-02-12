@@ -2,6 +2,7 @@ import { hideLoading, showLoading } from '@/Helper/LoadingHelper'
 
 const showLoadingActions = [
   'login',
+  'forgotPassword',
   'addProductCategory',
   'editProductCategory',
   'deleteProductCategory',
@@ -24,6 +25,7 @@ const showLoadingActions = [
 
 const hideLoadingActions = [
   'login',
+  'forgotPassword',
   'addProductCategory',
   'editProductCategory',
   'deleteProductCategory',

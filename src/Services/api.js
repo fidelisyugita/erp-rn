@@ -29,17 +29,31 @@ const baseQueryWithInterceptor = async (args, api, extraOptions) => {
       api.dispatch(reset())
       navigateAndSimpleReset('LoginScreen')
     } else if (result?.error?.status === 401) {
-      console.log('error', result?.error?.status)
       const token = api.getState().session?.refreshToken
       api.dispatch(api.endpoints.refreshToken.initiate({ refreshToken: token }))
     }
     Toast.show({
-      description: result?.error?.data?.message
-        ? `${result?.error?.data?.message} (${result?.error?.status})`
-        : i18n.t('unkonwnError'),
+      description: errorMessage(result),
     })
   }
   return result
+}
+
+const errorMessage = result => {
+  if (result?.error?.data) {
+    const data = result.error.data
+    if (data.message) {
+      return errorString(data.message, data.status)
+    } else if (data.code) {
+      return errorString(data.name, data.code)
+    } else {
+      return errorString()
+    }
+  }
+}
+
+const errorString = (message = i18n.t('unknownError'), code) => {
+  return `${message} ${code ? `(${code})` : ''}`
 }
 
 export const api = createApi({

@@ -73,6 +73,7 @@ export default {
   signInToContinue: 'Sign In to continue!',
   forgotPassword: 'Forgot Password?',
   dontHaveAccount: "Don't have account?",
+  haveAnAccount: 'Have an account?',
   pleaseContact: 'please contact',
   viewDashboard: 'View Dashboard',
   customerInvoices: 'Customer Invoices',
@@ -81,6 +82,9 @@ export default {
   reporting: 'Reporting',
   createInvoice: 'Create Invoice',
   forgotPassword: 'Forgot password?',
+  forgotPasswordDescripton: 'Enter your email below to reset your password.',
+  forgotPasswordSuccess:
+    'We just sent an email with a link to reset your password',
   searchProduct: 'Search Product',
   searchProductCategory: 'Search Product Category',
   searchMeasureUnit: 'Search Measure Unit',
@@ -126,4 +130,5 @@ export default {
       others: 'other errors',
     },
   },
+  unknownError: 'Unknown error',
 }
