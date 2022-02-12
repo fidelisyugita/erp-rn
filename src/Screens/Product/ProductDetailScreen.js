@@ -31,6 +31,7 @@ import { UploadImage } from '@/Components/Organisms'
 
 const schema = yup
   .object({
+    type: yup.string().required(),
     sku: yup.string().label(i18n.t('sku')).min(3).required(),
     name: yup.string().label(i18n.t('name')).required(),
     barcode: yup.string().label(i18n.t('barcode')).min(3).required(),
@@ -40,7 +41,14 @@ const schema = yup
     sellingPrice: yup.string().label(i18n.t('sellingPrice')).required(),
     totalSold: yup.string().label(i18n.t('totalSold')).required(),
     measureUnit: yup.string().label(i18n.t('measureUnit')).required(),
-    imageBase64: yup.string().label(i18n.t('image')),
+    imageBase64: yup
+      .string()
+      .label(i18n.t('image'))
+      .when(['type'], {
+        is: type => type == 'add',
+        then: yup.string().label(i18n.t('image')).required(),
+        otherwise: yup.string().notRequired(),
+      }),
     description: yup.string().label(i18n.t('description')).nullable(true),
   })
   .required()
@@ -58,6 +66,7 @@ const ProductDetailScreen = ({ navigation, route }) => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
+      type: type,
       sku: paramItem?.sku,
       name: paramItem?.name,
       barcode: paramItem?.barcode,
@@ -133,6 +142,8 @@ const ProductDetailScreen = ({ navigation, route }) => {
   }, [type])
 
   const onSubmit = data => {
+    delete data.type
+
     let request = {
       body: {
         ...data,
@@ -185,28 +196,43 @@ const ProductDetailScreen = ({ navigation, route }) => {
                   render={({ field: { onChange, onBlur, value } }) => {
                     return (
                       <HStack alignItems="flex-start">
-                        <Image
-                          size={150}
-                          alt="fallback text"
-                          borderRadius="4"
-                          source={{
-                            uri: value || paramItem?.imageUrl,
-                          }}
-                          fallbackElement={
-                            <Box
-                              w="150"
-                              h="150"
-                              bgColor="gray.500"
-                              borderRadius="4"
-                              alignItems="center"
-                              justifyContent="center"
-                            >
-                              <Text color="white" fontSize="4xl">
-                                {t('image')}
-                              </Text>
-                            </Box>
-                          }
-                        />
+                        {!value && !paramItem?.imageUrl ? (
+                          <Box
+                            w="150"
+                            h="150"
+                            bgColor="gray.500"
+                            borderRadius="4"
+                            alignItems="center"
+                            justifyContent="center"
+                          >
+                            <Text color="white" fontSize="4xl">
+                              {t('image')}
+                            </Text>
+                          </Box>
+                        ) : (
+                          <Image
+                            size={150}
+                            alt="fallback text"
+                            borderRadius="4"
+                            source={{
+                              uri: value || paramItem?.imageUrl,
+                            }}
+                            fallbackElement={
+                              <Box
+                                w="150"
+                                h="150"
+                                bgColor="gray.500"
+                                borderRadius="4"
+                                alignItems="center"
+                                justifyContent="center"
+                              >
+                                <Text color="white" fontSize="4xl">
+                                  {t('image')}
+                                </Text>
+                              </Box>
+                            }
+                          />
+                        )}
                         {!screenData?.isDisabled ? (
                           <UploadImage onChangeValue={onChange} />
                         ) : null}
