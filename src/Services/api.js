@@ -29,7 +29,8 @@ const baseQueryWithInterceptor = async (args, api, extraOptions) => {
       api.dispatch(reset())
       navigateAndSimpleReset('LoginScreen')
     } else if (result?.error?.status === 401) {
-      const token = getState().session?.refreshToken
+      console.log('error', result?.error?.status)
+      const token = api.getState().session?.refreshToken
       api.dispatch(api.endpoints.refreshToken.initiate({ refreshToken: token }))
     }
     Toast.show({

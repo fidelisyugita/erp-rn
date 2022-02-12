@@ -32,6 +32,7 @@ import {
   MasterContactDetailScreen,
   MasterContactScreen,
 } from '@/Screens/Master/Contact'
+import { ProductDetailScreen } from '@/Screens/Product'
 
 const Stack = createStackNavigator()
 
@@ -43,7 +44,11 @@ const ApplicationNavigator = () => {
     <Box flex={1}>
       <NavigationContainer ref={navigationRef}>
         <Stack.Navigator
-          screenOptions={{ headerShown: false, headerBackTitleVisible: false }}
+          screenOptions={{
+            headerShown: false,
+            headerBackTitleVisible: false,
+            headerTitleAlign: 'center',
+          }}
         >
           <Stack.Screen name="StartupScreen" component={StartupScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
@@ -107,6 +112,13 @@ const ApplicationNavigator = () => {
             name="MasterContactDetailScreen"
             component={MasterContactDetailScreen}
             options={{ headerShown: true, title: t('contactDetail') }}
+          />
+
+          {/* Product */}
+          <Stack.Screen
+            name="ProductDetailScreen"
+            component={ProductDetailScreen}
+            options={{ headerShown: true, title: t('productDetail') }}
           />
         </Stack.Navigator>
       </NavigationContainer>

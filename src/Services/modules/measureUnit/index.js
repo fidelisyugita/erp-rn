@@ -17,6 +17,7 @@ export const measureUnitApi = api.injectEndpoints({
 })
 
 export const {
+  useGetMeasureUnitsQuery,
   useLazyGetMeasureUnitsQuery,
   useAddMeasureUnitMutation,
   useEditMeasureUnitMutation,

@@ -27,6 +27,7 @@ import {
   useRefreshTokenMutation,
   useRefreshTokenQuery,
 } from '@/Services/modules/auth'
+import { ProductScreen } from '@/Screens/Product'
 
 const Drawer = createDrawerNavigator()
 
@@ -38,8 +39,8 @@ const getIcon = screenName => {
       return 'view-dashboard'
     case t('master'):
       return 'database'
-    case t('favorites'):
-      return 'heart'
+    case t('product'):
+      return 'cube'
     case t('archive'):
       return 'archive'
     case t('trash'):
@@ -129,7 +130,7 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
       initialRouteName={t('dashboard')}
-      screenOptions={{ contentContainerStyle: { paddingTop: 0 } }}
+      screenOptions={{ contentContainerStyle: { paddingTop: 0 }, headerTitleAlign:'center' }}
       drawerContent={props => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen
@@ -144,6 +145,11 @@ const DrawerNavigator = () => {
         name={t('master')}
         component={MasterScreen}
         options={{ title: t('master'), drawerLabel: t('master') }}
+      />
+      <Drawer.Screen
+        name={t('product')}
+        component={ProductScreen}
+        options={{ title: t('product'), drawerLabel: t('product') }}
       />
       {/* <Drawer.Screen
         name="AccountingScreen"

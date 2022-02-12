@@ -52,7 +52,7 @@ export default function (query, req) {
       } else {
         setList(tempList => [...tempList, ...data])
       }
-    } else if (isSuccess) {
+    } else if (isSuccess || isError) {
       setTimeout(() => {
         setFirstLoad(false)
         setSearch(false)

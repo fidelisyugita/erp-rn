@@ -1,5 +1,10 @@
 import { api } from '../../api'
-import { getProducts } from './productApi'
+import {
+  addProduct,
+  editProduct,
+  getProducts,
+  deleteProduct,
+} from './productApi'
 import {
   addProductCategory,
   deleteProductCategory,
@@ -10,6 +15,10 @@ import {
 export const productApi = api.injectEndpoints({
   endpoints: build => ({
     getProducts: getProducts(build),
+    addProduct: addProduct(build),
+    editProduct: editProduct(build),
+    deleteProduct: deleteProduct(build),
+
     getProductCategories: getProductCategories(build),
     addProductCategory: addProductCategory(build),
     editProductCategory: editProductCategory(build),
@@ -19,7 +28,12 @@ export const productApi = api.injectEndpoints({
 })
 
 export const {
-  useGetProductsQuery,
+  useLazyGetProductsQuery,
+  useAddProductMutation,
+  useEditProductMutation,
+  useDeleteProductMutation,
+
+  useGetProductCategoriesQuery,
   useLazyGetProductCategoriesQuery,
   useAddProductCategoryMutation,
   useEditProductCategoryMutation,
