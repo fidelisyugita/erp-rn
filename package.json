@@ -27,6 +27,7 @@
     "native-base": "^3.3.6",
     "numbro": "^2.3.6",
     "prop-types": "^15.8.1",
+    "ramda": "^0.28.0",
     "react": "17.0.2",
     "react-hook-form": "^7.26.1",
     "react-i18next": "^11.15.3",
