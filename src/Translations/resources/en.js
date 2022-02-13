@@ -69,6 +69,7 @@ export default {
   selectImage: 'Select Image',
   scanBarcode: 'Scan Barcode',
   scan: 'Scan',
+  image: 'Image',
 
   dashboard: 'Dashboard',
   master: 'Master',
