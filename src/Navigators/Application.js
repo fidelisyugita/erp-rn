@@ -9,7 +9,6 @@ import { navigationRef } from './utils'
 import DrawerNavigator from './DrawerNavigator'
 import { LoginScreen, ForgotPasswordScreen } from '@/Screens/Auth'
 import { StartupScreen } from '@/Screens/Startup'
-import { MasterProductScreen } from '@/Screens/Master'
 import {
   MasterProductCategoryDetailScreen,
   MasterProductCategoryScreen,
@@ -32,6 +31,7 @@ import {
   MasterContactScreen,
 } from '@/Screens/Master/Contact'
 import { ProductDetailScreen } from '@/Screens/Product'
+import ScanBarcodeScreen from '@/Screens/Product/ScanBarcodeScreen'
 
 const Stack = createStackNavigator()
 
@@ -59,11 +59,6 @@ const ApplicationNavigator = () => {
             name="Main"
             component={DrawerNavigator}
             options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="MasterProductScreen"
-            component={MasterProductScreen}
-            options={{ headerShown: true, title: t('product') }}
           />
           <Stack.Screen
             name="MasterProductCategoryScreen"
@@ -121,6 +116,11 @@ const ApplicationNavigator = () => {
             name="ProductDetailScreen"
             component={ProductDetailScreen}
             options={{ headerShown: true, title: t('productDetail') }}
+          />
+          <Stack.Screen
+            name="ScanBarcodeScreen"
+            component={ScanBarcodeScreen}
+            options={{ headerShown: true, title: t('scanBarcode') }}
           />
         </Stack.Navigator>
       </NavigationContainer>

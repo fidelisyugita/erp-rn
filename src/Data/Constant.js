@@ -40,7 +40,6 @@ export const MASTER_MENU = [
     icon: 'cube',
   },
   { id: 'MasterMeasureUnitScreen', label: i18n.t('measureUnit'), icon: 'cube' },
-  // { id: 'MasterProductScreen', label: i18n.t('product'), icon: 'cube' },
   { id: 'MasterContactScreen', label: i18n.t('contact'), icon: 'contacts' },
   // { id: 'MasterUserScreen', label: i18n.t('User'), icon: 'account' },
   {

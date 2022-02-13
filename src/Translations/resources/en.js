@@ -33,6 +33,7 @@ export default {
   transactionStatusDetail: 'Transaction Status Detail',
   contact: 'Contact',
   contactDetail: 'Contact Detail',
+  ok: 'Ok',
 
   name: 'Name',
   description: 'Description',
@@ -64,6 +65,7 @@ export default {
   signOut: 'Sign Out',
   takeImage: 'Take Image',
   selectImage: 'Select Image',
+  scanBarcode: 'Scan Barcode',
 
   dashboard: 'Dashboard',
   master: 'Master',
@@ -131,4 +133,5 @@ export default {
     },
   },
   unknownError: 'Unknown error',
+  theBarcodeValueIs: 'The barcode value is',
 }

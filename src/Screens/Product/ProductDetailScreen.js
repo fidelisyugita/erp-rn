@@ -141,6 +141,10 @@ const ProductDetailScreen = ({ navigation, route }) => {
     setScreenData(tempScreen)
   }, [type])
 
+  const scanBarcode = callback => {
+    navigation.navigate('ScanBarcodeScreen', { callback })
+  }
+
   const onSubmit = data => {
     delete data.type
 
@@ -321,6 +325,19 @@ const ProductDetailScreen = ({ navigation, route }) => {
                       onChangeText={onChange}
                       value={value}
                       isDisabled={screenData?.isDisabled}
+                      InputRightElement={
+                        !screenData?.isDisabled ? (
+                          <Button
+                            size="xs"
+                            rounded="none"
+                            w="1/6"
+                            h="full"
+                            onPress={() => scanBarcode(onChange)}
+                          >
+                            {t('scan')}
+                          </Button>
+                        ) : null
+                      }
                     />
                   )}
                   name="barcode"
