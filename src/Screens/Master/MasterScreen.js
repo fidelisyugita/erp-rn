@@ -10,10 +10,11 @@ import {
 } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTranslation } from 'react-i18next'
-import { MASTER_MENU } from '@/Data/Constant'
+import { MENU } from '@/Data/Constant'
+import useSession from '@/Hooks/useSession'
 
 const MasterScreen = ({ navigation }) => {
-  const { t } = useTranslation()
+  const { userRole } = useSession()
 
   return (
     <Box flex="1" bgColor="white">
@@ -25,21 +26,33 @@ const MasterScreen = ({ navigation }) => {
           alignItems="center"
           mt="4"
         >
-          {MASTER_MENU.map(menu => (
-            <Box key={String(menu.id)} alignItems="center">
-              <IconButton
-                onPress={() => navigation.navigate(menu.id)}
-                borderRadius="md"
-                colorScheme="primary"
-                variant="solid"
-                p={4}
-                icon={<Icon name={menu.icon} as={MaterialIcons} size="xl" />}
-              />
-              <Text textAlign="center" width="20">
-                {menu.label}
-              </Text>
-            </Box>
-          ))}
+          {MENU[1].menu.map(menu => {
+            if (
+              !menu.roleAccess.some(ra => {
+                return (
+                  userRole.some(ur => ur.includes(ra.role)) &&
+                  ra.access.includes('read')
+                )
+              })
+            ) {
+              return null
+            }
+            return (
+              <Box key={String(menu.id)} alignItems="center">
+                <IconButton
+                  onPress={() => navigation.navigate(menu.id)}
+                  borderRadius="md"
+                  colorScheme="primary"
+                  variant="solid"
+                  p={4}
+                  icon={<Icon name={menu.icon} as={MaterialIcons} size="xl" />}
+                />
+                <Text textAlign="center" width="20">
+                  {menu.label}
+                </Text>
+              </Box>
+            )
+          })}
         </SimpleGrid>
       </ScrollView>
     </Box>

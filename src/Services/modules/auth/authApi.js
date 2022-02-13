@@ -5,6 +5,7 @@ import {
   setAccessToken,
   setRefreshToken,
   setCustomToken,
+  setUserRole,
 } from '@/Store/Session'
 import i18n from '@/Translations'
 import { Toast } from 'native-base'
@@ -26,6 +27,7 @@ export const login = build => {
           dispatch(setAccessToken(data?.accessToken))
           dispatch(setRefreshToken(data?.refreshToken))
           dispatch(setCustomToken(data?.customToken))
+          dispatch(setUserRole(data?.user?.roles))
 
           navigateAndSimpleReset('Main')
         }

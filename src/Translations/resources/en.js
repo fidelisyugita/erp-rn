@@ -66,6 +66,7 @@ export default {
   takeImage: 'Take Image',
   selectImage: 'Select Image',
   scanBarcode: 'Scan Barcode',
+  scan: 'Scan',
 
   dashboard: 'Dashboard',
   master: 'Master',
