@@ -101,11 +101,6 @@ const ApplicationNavigator = () => {
             options={{ headerShown: true, title: t('transactionStatusDetail') }}
           />
           <Stack.Screen
-            name="MasterContactScreen"
-            component={MasterContactScreen}
-            options={{ headerShown: true, title: t('contact') }}
-          />
-          <Stack.Screen
             name="MasterContactDetailScreen"
             component={MasterContactDetailScreen}
             options={{ headerShown: true, title: t('contactDetail') }}

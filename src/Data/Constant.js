@@ -80,21 +80,6 @@ export const MENU = [
     ],
     menu: [
       {
-        id: 'MasterContactScreen',
-        name: 'MasterContactScreen',
-        label: i18n.t('contact'),
-        icon: 'contacts',
-        roleAccess: [
-          {
-            role: 'ACCOUNTANT',
-            access: ['create', 'update', 'delete'],
-          },
-          { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
-          { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
-          { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
-        ],
-      },
-      {
         id: 'MasterMeasureUnitScreen',
         name: 'MasterMeasureUnitScreen',
         label: i18n.t('measureUnit'),
@@ -154,6 +139,21 @@ export const MENU = [
           { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
         ],
       },
+    ],
+  },
+  {
+    id: 'Contact',
+    name: 'Contact',
+    label: i18n.t('contact'),
+    icon: 'contacts',
+    roleAccess: [
+      {
+        role: 'ACCOUNTANT',
+        access: ['create', 'update', 'delete'],
+      },
+      { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
+      { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
+      { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
     ],
   },
   {

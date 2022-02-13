@@ -28,6 +28,7 @@ import {
   useRefreshTokenQuery,
 } from '@/Services/modules/auth'
 import { ProductScreen } from '@/Screens/Product'
+import { MasterContactScreen } from '@/Screens/Master/Contact'
 
 const Drawer = createDrawerNavigator()
 
@@ -41,8 +42,8 @@ const getIcon = screenName => {
       return 'database'
     case t('product'):
       return 'cube'
-    case t('archive'):
-      return 'archive'
+    case t('contact'):
+      return 'contacts'
     case t('trash'):
       return 'trash-can'
     case t('signOut'):
@@ -150,6 +151,11 @@ const DrawerNavigator = () => {
         name={t('master')}
         component={MasterScreen}
         options={{ title: t('master'), drawerLabel: t('master') }}
+      />
+      <Drawer.Screen
+        name={t('contact')}
+        component={MasterContactScreen}
+        options={{ title: t('contact'), drawerLabel: t('contact') }}
       />
       <Drawer.Screen
         name={t('product')}
