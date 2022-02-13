@@ -102,14 +102,16 @@ const CustomDrawerContent = props => {
         </Box>
         <VStack divider={<Divider />} space="4">
           <VStack space="3">
-            {props.state.routeNames.map((name, index) => (
-              <CustomDrawerItem
-                key={name}
-                name={name}
-                isActive={index === props.state.index}
-                onPress={() => props.navigation.navigate(name)}
-              />
-            ))}
+            {props.state.routeNames.map((name, index) => {
+              return (
+                <CustomDrawerItem
+                  key={name}
+                  name={name}
+                  isActive={index === props.state.index}
+                  onPress={() => props.navigation.navigate(name)}
+                />
+              )
+            })}
             <CustomDrawerItem name={t('signOut')} onPress={signOut} />
           </VStack>
         </VStack>

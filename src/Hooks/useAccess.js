@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { MENU } from '@/Data/Constant'
 import { useSession } from '.'
+import { getCurrentRoute } from '@/Navigators/utils'
 
 const matchAccess = (roleAccess = [], userRole, access) => {
   return roleAccess.some(ra => {
@@ -10,7 +11,7 @@ const matchAccess = (roleAccess = [], userRole, access) => {
   })
 }
 
-export default function (screenName) {
+export default function (screenName = getCurrentRoute().name) {
   const { userRole } = useSession()
   const [menu, setMenu] = useState([])
 

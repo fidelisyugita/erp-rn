@@ -15,7 +15,7 @@ import { RefreshControl } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useTranslation } from 'react-i18next'
 
-import { usePagination } from '@/Hooks'
+import { usePagination, useAccess } from '@/Hooks'
 import { ActionSheet } from '@/Components/Organisms'
 import {
   useLazyGetContactsQuery,
@@ -27,6 +27,7 @@ import {
 const ContactScreen = ({ navigation }) => {
   const { t } = useTranslation()
   const { colors } = useTheme()
+  const { isCanAdd } = useAccess()
   const { isOpen, onOpen, onClose } = useDisclose()
   const [
     {
@@ -65,24 +66,26 @@ const ContactScreen = ({ navigation }) => {
   const [selectedItem, setSelectedItem] = React.useState({})
 
   React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <IconButton
-          onPress={() => {
-            navigation.navigate('MasterContactDetailScreen', {
-              type: 'add',
-            })
-          }}
-          key="ghost"
-          variant="ghost"
-          _icon={{
-            as: MaterialIcons,
-            name: 'add',
-          }}
-        />
-      ),
-    })
-  }, [navigation])
+    if (isCanAdd) {
+      navigation.setOptions({
+        headerRight: () => (
+          <IconButton
+            onPress={() => {
+              navigation.navigate('MasterContactDetailScreen', {
+                type: 'add',
+              })
+            }}
+            key="ghost"
+            variant="ghost"
+            _icon={{
+              as: MaterialIcons,
+              name: 'add',
+            }}
+          />
+        ),
+      })
+    }
+  }, [navigation, isCanAdd])
 
   React.useEffect(() => {
     if (isSuccessAdd) {

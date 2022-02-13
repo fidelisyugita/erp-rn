@@ -62,7 +62,7 @@ const ACCESS = ['create', 'read', 'update', 'delete', 'download']
 
 export const MENU = [
   {
-    name: 'DashboardScreen',
+    name: 'Dashboard',
     roleAccess: [
       { role: 'ACCOUNTANT', access: ['create', 'read', 'update', 'delete'] },
       { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
@@ -71,7 +71,7 @@ export const MENU = [
     ],
   },
   {
-    name: 'MasterScreen',
+    name: 'Master',
     roleAccess: [
       { role: 'ACCOUNTANT', access: ['create', 'read', 'update', 'delete'] },
       { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
@@ -157,7 +157,7 @@ export const MENU = [
     ],
   },
   {
-    name: 'ProductScreen',
+    name: 'Product',
     roleAccess: [
       { role: 'ACCOUNTANT', access: ['create', 'read', 'update', 'delete'] },
       { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
