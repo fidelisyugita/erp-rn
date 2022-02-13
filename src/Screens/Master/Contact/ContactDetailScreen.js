@@ -27,8 +27,9 @@ const schema = yup
     alias: yup.string().label(i18n.t('alias')).min(3).required(),
     phone: yup.string().label(i18n.t('phone')).min(8).required(),
     address: yup.string().label(i18n.t('address')).min(3).required(),
-    department: yup.string().label(i18n.t('department')).min(3).required(),
+    merchant: yup.string().label(i18n.t('merchant')).min(3).required(),
     description: yup.string().label(i18n.t('description')).nullable(true),
+    note: yup.string().label(i18n.t('note')).nullable(true),
   })
   .required()
 
@@ -50,8 +51,9 @@ const ContactDetailScreen = ({ navigation, route }) => {
       alias: paramItem?.alias,
       phone: paramItem?.phone,
       address: paramItem?.address,
-      department: paramItem?.department,
+      merchant: paramItem?.merchant,
       description: paramItem?.description,
+      note: paramItem?.note,
     },
   })
 
@@ -221,24 +223,24 @@ const ContactDetailScreen = ({ navigation, route }) => {
                 </FormControl.ErrorMessage>
               </FormControl>
 
-              <FormControl isRequired isInvalid={'department' in errors}>
-                <FormControl.Label>{t('department')}</FormControl.Label>
+              <FormControl isRequired isInvalid={'merchant' in errors}>
+                <FormControl.Label>{t('merchant')}</FormControl.Label>
                 <Controller
                   control={control}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <Input
                       onBlur={onBlur}
-                      placeholder={t('inputDepartment')}
+                      placeholder={t('inputMerchant')}
                       onChangeText={onChange}
                       value={value}
                       isDisabled={screenData?.isDisabled}
                     />
                   )}
-                  name="department"
+                  name="merchant"
                   defaultValue=""
                 />
                 <FormControl.ErrorMessage>
-                  {errors?.department?.message}
+                  {errors?.merchant?.message}
                 </FormControl.ErrorMessage>
               </FormControl>
 
@@ -260,6 +262,27 @@ const ContactDetailScreen = ({ navigation, route }) => {
                 />
                 <FormControl.ErrorMessage>
                   {errors?.description}
+                </FormControl.ErrorMessage>
+              </FormControl>
+
+              <FormControl>
+                <FormControl.Label>{t('note')}</FormControl.Label>
+                <Controller
+                  control={control}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <Input
+                      onBlur={onBlur}
+                      placeholder={t('inputNote')}
+                      onChangeText={onChange}
+                      value={value}
+                      isDisabled={screenData?.isDisabled}
+                    />
+                  )}
+                  name="note"
+                  defaultValue=""
+                />
+                <FormControl.ErrorMessage>
+                  {errors?.note}
                 </FormControl.ErrorMessage>
               </FormControl>
 
