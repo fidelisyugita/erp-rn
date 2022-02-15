@@ -72,7 +72,7 @@ export default {
   image: 'Image',
 
   dashboard: 'Dashboard',
-  master: 'Master',
+  dataMaster: 'Data Master',
   archive: 'Archive',
 
   welcome: 'Welcome',

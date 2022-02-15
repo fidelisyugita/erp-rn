@@ -38,7 +38,7 @@ const getIcon = screenName => {
   switch (screenName) {
     case t('dashboard'):
       return 'view-dashboard'
-    case t('master'):
+    case t('dataMaster'):
       return 'database'
     case t('product'):
       return 'cube'
@@ -148,9 +148,9 @@ const DrawerNavigator = () => {
         }}
       />
       <Drawer.Screen
-        name={t('master')}
+        name={t('dataMaster')}
         component={MasterScreen}
-        options={{ title: t('master'), drawerLabel: t('master') }}
+        options={{ title: t('dataMaster'), drawerLabel: t('dataMaster') }}
       />
       <Drawer.Screen
         name={t('contact')}
