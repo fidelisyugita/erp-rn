@@ -221,7 +221,7 @@ const ProductScreen = ({ navigation }) => {
         item={selectedItem}
         screenName="ProductDetailScreen"
         deleteMutation={useDeleteProductMutation}
-        fixedCacheKey="delete-product"
+        deleteFixedCacheKey="delete-product"
       />
     </Box>
   )

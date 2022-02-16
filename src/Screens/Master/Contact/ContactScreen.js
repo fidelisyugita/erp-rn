@@ -191,7 +191,7 @@ const ContactScreen = ({ navigation }) => {
         item={selectedItem}
         screenName="MasterContactDetailScreen"
         deleteMutation={useDeleteContactMutation}
-        fixedCacheKey="delete-contact"
+        deleteFixedCacheKey="delete-contact"
       />
     </Box>
   )

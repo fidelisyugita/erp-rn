@@ -65,6 +65,7 @@ export default {
   inputSellingPrice: 'Input selling price',
   inputTotalSold: 'Input total sold',
   chooseMeasureUnit: 'Choose measure unit',
+  chooseBrand: 'Choose brand',
   submit: 'Submit',
   edit: 'Edit',
   delete: 'Delete',

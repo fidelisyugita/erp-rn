@@ -191,7 +191,7 @@ const BrandScreen = ({ navigation }) => {
         item={selectedItem}
         screenName="MasterBrandDetailScreen"
         deleteMutation={useDeleteBrandMutation}
-        fixedCacheKey="delete-brand"
+        deleteFixedCacheKey="delete-brand"
       />
     </Box>
   )

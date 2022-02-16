@@ -14,14 +14,14 @@ const ActionSheet = ({
   item,
   screenName = '',
   deleteMutation = () => {},
-  fixedCacheKey = '',
+  deleteFixedCacheKey = '',
 }) => {
   const navigation = useNavigation()
   const { t } = useTranslation()
   const currentRoute = getCurrentRoute()
   const { isCanView, isCanEdit, isCanDelete } = useAccess(currentRoute.name)
 
-  const [deleteRequest] = deleteMutation({ fixedCacheKey })
+  const [deleteRequest] = deleteMutation({ deleteFixedCacheKey })
 
   const [isDeleteOpen, setDeleteOpen] = React.useState(false)
 
@@ -33,12 +33,18 @@ const ActionSheet = ({
     navigation.navigate(screenName, { type: 'view', item })
     onClose?.()
   }
+
   const onEdit = () => {
     navigation.navigate(screenName, { type: 'edit', item })
     onClose?.()
   }
+
   const onDelete = () => {
     setDeleteOpen(true)
+  }
+
+  const onDownloadPdf = () => {
+
   }
 
   const deleteItem = () => {

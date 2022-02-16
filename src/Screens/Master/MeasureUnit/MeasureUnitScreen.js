@@ -191,7 +191,7 @@ const MeasureUnitScreen = ({ navigation }) => {
         item={selectedItem}
         screenName="MasterMeasureUnitDetailScreen"
         deleteMutation={useDeleteMeasureUnitMutation}
-        fixedCacheKey="delete-measure-unit"
+        deleteFixedCacheKey="delete-measure-unit"
       />
     </Box>
   )

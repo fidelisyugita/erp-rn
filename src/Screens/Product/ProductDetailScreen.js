@@ -25,6 +25,7 @@ import {
   useAddProductMutation,
   useEditProductMutation,
   useGetProductCategoriesQuery,
+  useGetBrandsQuery,
 } from '@/Services/modules/product'
 import { useGetMeasureUnitsQuery } from '@/Services/modules/measureUnit'
 import { UploadImage } from '@/Components/Organisms'
@@ -34,9 +35,9 @@ const schema = yup
     type: yup.string().required(),
     sku: yup.string().label(i18n.t('sku')).min(3).required(),
     name: yup.string().label(i18n.t('name')).required(),
-    barcode: yup.string().label(i18n.t('barcode')).min(3).required(),
     stock: yup.number().label(i18n.t('stock')).required(),
     category: yup.string().label(i18n.t('category')).required(),
+    brand: yup.string().label(i18n.t('brand')).required(),
     buyingPrice: yup.string().label(i18n.t('buyingPrice')).required(),
     sellingPrice: yup.string().label(i18n.t('sellingPrice')).required(),
     totalSold: yup.string().label(i18n.t('totalSold')).required(),
@@ -74,6 +75,7 @@ const ProductDetailScreen = ({ navigation, route }) => {
         thousandSeparated: true,
       }),
       category: paramItem?.category?.id,
+      brand: paramItem?.brand?.id,
       buyingPrice: numbro(paramItem?.buyingPrice || 0).format({
         thousandSeparated: true,
       }),
@@ -105,6 +107,15 @@ const ProductDetailScreen = ({ navigation, route }) => {
       limit: 100,
     },
   })
+
+  const { data: brands = [], isFetching: isFetchingBrands } = useGetBrandsQuery(
+    {
+      params: {
+        page: 0,
+        limit: 100,
+      },
+    },
+  )
 
   const {
     data: measureUnits = [],
@@ -141,17 +152,15 @@ const ProductDetailScreen = ({ navigation, route }) => {
     setScreenData(tempScreen)
   }, [type])
 
-  const scanBarcode = callback => {
-    navigation.navigate('ScanBarcodeScreen', { callback })
-  }
-
   const onSubmit = data => {
     delete data.type
+    delete data.barcode
 
     let request = {
       body: {
         ...data,
         category: productCategories.find(pc => data.category == pc.id),
+        brand: brands.find(br => data.brand == br.id),
         measureUnit: measureUnits.find(mu => data.measureUnit == mu.id),
         sellingPrice: numbro.unformat(data.sellingPrice),
         buyingPrice: numbro.unformat(data.buyingPrice),
@@ -314,39 +323,41 @@ const ProductDetailScreen = ({ navigation, route }) => {
                 </FormControl.ErrorMessage>
               </FormControl>
 
-              <FormControl isRequired isInvalid={'barcode' in errors}>
-                <FormControl.Label>{t('barcode')}</FormControl.Label>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <Input
-                      onBlur={onBlur}
-                      placeholder={t('inputBarcode')}
-                      onChangeText={onChange}
-                      value={value}
-                      isDisabled={screenData?.isDisabled}
-                      InputRightElement={
-                        !screenData?.isDisabled ? (
-                          <Button
-                            size="xs"
-                            rounded="none"
-                            w="1/6"
-                            h="full"
-                            onPress={() => scanBarcode(onChange)}
-                          >
-                            {t('scan')}
-                          </Button>
-                        ) : null
-                      }
-                    />
-                  )}
-                  name="barcode"
-                  defaultValue=""
-                />
-                <FormControl.ErrorMessage>
-                  {errors?.barcode?.message}
-                </FormControl.ErrorMessage>
-              </FormControl>
+              {type !== 'add' ? (
+                <FormControl isRequired isInvalid={'barcode' in errors}>
+                  <FormControl.Label>{t('barcode')}</FormControl.Label>
+                  <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <Input
+                        onBlur={onBlur}
+                        placeholder={t('inputBarcode')}
+                        onChangeText={onChange}
+                        value={value}
+                        isDisabled={true}
+                        // InputRightElement={
+                        //   !screenData?.isDisabled ? (
+                        //     <Button
+                        //       size="xs"
+                        //       rounded="none"
+                        //       w="1/6"
+                        //       h="full"
+                        //       onPress={() => scanBarcode(onChange)}
+                        //     >
+                        //       {t('scan')}
+                        //     </Button>
+                        //   ) : null
+                        // }
+                      />
+                    )}
+                    name="barcode"
+                    defaultValue=""
+                  />
+                  <FormControl.ErrorMessage>
+                    {errors?.barcode?.message}
+                  </FormControl.ErrorMessage>
+                </FormControl>
+              ) : null}
 
               <FormControl isRequired isInvalid={'stock' in errors}>
                 <FormControl.Label>{t('stock')}</FormControl.Label>
@@ -403,6 +414,37 @@ const ProductDetailScreen = ({ navigation, route }) => {
                 </Skeleton>
                 <FormControl.ErrorMessage>
                   {errors?.category?.message}
+                </FormControl.ErrorMessage>
+              </FormControl>
+
+              <FormControl isRequired isInvalid={'brand' in errors}>
+                <FormControl.Label>{t('brand')}</FormControl.Label>
+                <Skeleton h="8" isLoaded={!isFetchingBrands}>
+                  <Controller
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                      <Select
+                        isDisabled={screenData?.isDisabled}
+                        placeholder={t('chooseBrand')}
+                        selectedValue={value}
+                        onValueChange={onChange}
+                        selectedItemBg={'teal.400'}
+                      >
+                        {brands.map(br => (
+                          <Select.Item
+                            key={String(br.id)}
+                            label={br.name}
+                            value={br.id}
+                          />
+                        ))}
+                      </Select>
+                    )}
+                    name="brand"
+                    defaultValue=""
+                  />
+                </Skeleton>
+                <FormControl.ErrorMessage>
+                  {errors?.brand?.message}
                 </FormControl.ErrorMessage>
               </FormControl>
 

@@ -191,7 +191,7 @@ const TransactionStatusScreen = ({ navigation }) => {
         item={selectedItem}
         screenName="MasterTransactionStatusDetailScreen"
         deleteMutation={useDeleteTransactionStatusMutation}
-        fixedCacheKey="delete-transaction-status"
+        deleteFixedCacheKey="delete-transaction-status"
       />
     </Box>
   )

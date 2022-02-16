@@ -191,7 +191,7 @@ const TransactionTypeScreen = ({ navigation }) => {
         item={selectedItem}
         screenName="MasterTransactionTypeDetailScreen"
         deleteMutation={useDeleteTransactionTypeMutation}
-        fixedCacheKey="delete-transaction-type"
+        deleteFixedCacheKey="delete-transaction-type"
       />
     </Box>
   )

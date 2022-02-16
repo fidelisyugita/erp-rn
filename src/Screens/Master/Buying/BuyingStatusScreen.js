@@ -191,7 +191,7 @@ const BuyingStatusScreen = ({ navigation }) => {
         item={selectedItem}
         screenName="MasterBuyingStatusDetailScreen"
         deleteMutation={useDeleteBuyingStatusMutation}
-        fixedCacheKey="delete-buying-status"
+        deleteFixedCacheKey="delete-buying-status"
       />
     </Box>
   )

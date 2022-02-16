@@ -191,7 +191,7 @@ const BuyingTypeScreen = ({ navigation }) => {
         item={selectedItem}
         screenName="MasterBuyingTypeDetailScreen"
         deleteMutation={useDeleteBuyingTypeMutation}
-        fixedCacheKey="delete-buying-type"
+        deleteFixedCacheKey="delete-buying-type"
       />
     </Box>
   )
