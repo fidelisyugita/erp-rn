@@ -27,6 +27,9 @@ const showLoadingActions = [
   'addProduct',
   'editProduct',
   'deleteProduct',
+  'addBrand',
+  'editBrand',
+  'deleteBrand',
 ]
 
 const hideLoadingActions = [
@@ -56,6 +59,9 @@ const hideLoadingActions = [
   'addProduct',
   'editProduct',
   'deleteProduct',
+  'addBrand',
+  'editBrand',
+  'deleteBrand',
 ]
 
 const actionsTracker = () => next => action => {

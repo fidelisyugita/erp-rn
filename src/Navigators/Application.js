@@ -33,6 +33,7 @@ import {
 import { ProductDetailScreen } from '@/Screens/Product'
 import ScanBarcodeScreen from '@/Screens/Product/ScanBarcodeScreen'
 import { MasterBuyingStatusDetailScreen, MasterBuyingStatusScreen, MasterBuyingTypeDetailScreen, MasterBuyingTypeScreen } from '@/Screens/Master/Buying'
+import { MasterBrandDetailScreen, MasterBrandScreen } from '@/Screens/Master/Brand'
 
 const Stack = createStackNavigator()
 
@@ -125,6 +126,16 @@ const ApplicationNavigator = () => {
             name="MasterContactDetailScreen"
             component={MasterContactDetailScreen}
             options={{ headerShown: true, title: t('contactDetail') }}
+          />
+           <Stack.Screen
+            name="MasterBrandScreen"
+            component={MasterBrandScreen}
+            options={{ headerShown: true, title: t('brand') }}
+          />
+          <Stack.Screen
+            name="MasterBrandDetailScreen"
+            component={MasterBrandDetailScreen}
+            options={{ headerShown: true, title: t('brandDetail') }}
           />
 
           {/* Product */}

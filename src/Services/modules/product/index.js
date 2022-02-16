@@ -1,4 +1,5 @@
 import { api } from '../../api'
+import { addBrand, editBrand, getBrands, deleteBrand } from './brandApi'
 import {
   addProduct,
   editProduct,
@@ -14,6 +15,11 @@ import {
 
 export const productApi = api.injectEndpoints({
   endpoints: build => ({
+    getBrands: getBrands(build),
+    addBrand: addBrand(build),
+    editBrand: editBrand(build),
+    deleteBrand: deleteBrand(build),
+
     getProducts: getProducts(build),
     addProduct: addProduct(build),
     editProduct: editProduct(build),
@@ -28,6 +34,12 @@ export const productApi = api.injectEndpoints({
 })
 
 export const {
+  useGetBrandsQuery,
+  useLazyGetBrandsQuery,
+  useAddBrandMutation,
+  useEditBrandMutation,
+  useDeleteBrandMutation,
+
   useLazyGetProductsQuery,
   useAddProductMutation,
   useEditProductMutation,
