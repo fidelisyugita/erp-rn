@@ -80,3 +80,12 @@ export const deleteProduct = build => {
     },
   })
 }
+
+export const downloadPdfProduct = build => {
+  return build.mutation({
+    query: ({ id }) => ({
+      url: `product/pdf/${id}`,
+      method: 'POST',
+    }),
+  })
+}

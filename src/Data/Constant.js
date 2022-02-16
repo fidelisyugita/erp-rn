@@ -58,6 +58,7 @@ export const MASTER_MENU = [
 ]
 
 export const ROLE = ['ACCOUNTANT', 'SALES', 'PURCHASE', 'INVENTORY']
+
 const ACCESS = ['create', 'read', 'update', 'delete', 'download']
 
 export const MENU = [
@@ -204,10 +205,22 @@ export const MENU = [
   {
     name: 'Product',
     roleAccess: [
-      { role: 'ACCOUNTANT', access: ['create', 'read', 'update', 'delete'] },
-      { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
-      { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
-      { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
+      {
+        role: 'ACCOUNTANT',
+        access: ['create', 'read', 'update', 'delete', 'download'],
+      },
+      {
+        role: 'SALES',
+        access: ['create', 'read', 'update', 'delete', 'download'],
+      },
+      {
+        role: 'PURCHASE',
+        access: ['create', 'read', 'update', 'delete', 'download'],
+      },
+      {
+        role: 'INVENTORY',
+        access: ['create', 'read', 'update', 'delete', 'download'],
+      },
     ],
   },
 ]

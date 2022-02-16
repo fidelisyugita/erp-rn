@@ -26,6 +26,7 @@ import {
   useAddProductMutation,
   useEditProductMutation,
   useDeleteProductMutation,
+  useDownloadPdfProductMutation,
 } from '@/Services/modules/product'
 import numbro from 'numbro'
 
@@ -222,6 +223,8 @@ const ProductScreen = ({ navigation }) => {
         screenName="ProductDetailScreen"
         deleteMutation={useDeleteProductMutation}
         deleteFixedCacheKey="delete-product"
+        downloadPdfMutation={useDownloadPdfProductMutation}
+        downloadFixedCacheKey="download-product-pdf"
       />
     </Box>
   )

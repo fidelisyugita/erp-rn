@@ -70,6 +70,7 @@ export default {
   edit: 'Edit',
   delete: 'Delete',
   view: 'View',
+  downloadPdf: 'Download PDF',
   cancel: 'Cancel',
   signOut: 'Sign Out',
   takeImage: 'Take Image',

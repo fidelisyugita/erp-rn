@@ -13,15 +13,25 @@ const ActionSheet = ({
   onClose,
   item,
   screenName = '',
-  deleteMutation = () => {},
+  deleteMutation = null,
   deleteFixedCacheKey = '',
+  downloadPdfMutation = null,
+  downloadFixedCacheKey = '',
 }) => {
   const navigation = useNavigation()
   const { t } = useTranslation()
   const currentRoute = getCurrentRoute()
-  const { isCanView, isCanEdit, isCanDelete } = useAccess(currentRoute.name)
+  const { isCanView, isCanEdit, isCanDelete, isCanDownload } = useAccess(
+    currentRoute.name,
+  )
 
-  const [deleteRequest] = deleteMutation({ deleteFixedCacheKey })
+  const [deleteRequest] = deleteMutation
+    ? deleteMutation({ deleteFixedCacheKey })
+    : []
+
+  const [downloadPdfRequest] = downloadPdfMutation
+    ? downloadPdfMutation({ downloadFixedCacheKey })
+    : []
 
   const [isDeleteOpen, setDeleteOpen] = React.useState(false)
 
@@ -44,7 +54,13 @@ const ActionSheet = ({
   }
 
   const onDownloadPdf = () => {
+    onClose?.()
 
+    const request = {
+      id: item.id,
+    }
+
+    downloadPdfRequest?.(request)
   }
 
   const deleteItem = () => {
@@ -62,6 +78,20 @@ const ActionSheet = ({
     <>
       <Actionsheet isOpen={isOpen} onClose={onClose} size="full">
         <Actionsheet.Content>
+          {isCanDownload ? (
+            <Actionsheet.Item
+              onPress={onDownloadPdf}
+              startIcon={
+                <Icon
+                  as={<MaterialIcons name="picture-as-pdf" />}
+                  color="muted.500"
+                  mr={3}
+                />
+              }
+            >
+              {t('downloadPdf')}
+            </Actionsheet.Item>
+          ) : null}
           {isCanView ? (
             <Actionsheet.Item
               onPress={onView}
