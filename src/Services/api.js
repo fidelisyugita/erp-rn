@@ -67,5 +67,7 @@ export const api = createApi({
     'TransactionTypes',
     'TransactionStatus',
     'Contacts',
+    'BuyingStatus',
+    'BuyingType',
   ],
 })

@@ -18,13 +18,13 @@ import { useTranslation } from 'react-i18next'
 import { usePagination, useAccess } from '@/Hooks'
 import { ActionSheet } from '@/Components/Organisms'
 import {
-  useLazyGetTransactionStatusQuery,
-  useAddTransactionStatusMutation,
-  useEditTransactionStatusMutation,
-  useDeleteTransactionStatusMutation,
-} from '@/Services/modules/transaction'
+  useLazyGetBuyingStatusQuery,
+  useAddBuyingStatusMutation,
+  useEditBuyingStatusMutation,
+  useDeleteBuyingStatusMutation,
+} from '@/Services/modules/buying'
 
-const TransactionStatusScreen = ({ navigation }) => {
+const BuyingStatusScreen = ({ navigation }) => {
   const { t } = useTranslation()
   const { colors } = useTheme()
   const { isCanAdd } = useAccess()
@@ -40,27 +40,27 @@ const TransactionStatusScreen = ({ navigation }) => {
       renderFooter,
     },
     { isSearch, isRefresh, isFirstLoad },
-  ] = usePagination(useLazyGetTransactionStatusQuery)
+  ] = usePagination(useLazyGetBuyingStatusQuery)
 
   const [
     deleteTrigger,
     { isSuccess: isSuccessDelete, reset: resetDelete },
-  ] = useDeleteTransactionStatusMutation({
-    fixedCacheKey: 'delete-transaction-status',
+  ] = useDeleteBuyingStatusMutation({
+    fixedCacheKey: 'delete-buying-status',
   })
 
   const [
     addTrigger,
     { isSuccess: isSuccessAdd, reset: resetAdd },
-  ] = useAddTransactionStatusMutation({
-    fixedCacheKey: 'add-transaction-status',
+  ] = useAddBuyingStatusMutation({
+    fixedCacheKey: 'add-buying-status',
   })
 
   const [
     editTrigger,
     { isSuccess: isSuccessEdit, reset: resetEdit },
-  ] = useEditTransactionStatusMutation({
-    fixedCacheKey: 'edit-transaction-status',
+  ] = useEditBuyingStatusMutation({
+    fixedCacheKey: 'edit-buying-status',
   })
 
   const [selectedItem, setSelectedItem] = React.useState({})
@@ -71,7 +71,7 @@ const TransactionStatusScreen = ({ navigation }) => {
         headerRight: () => (
           <IconButton
             onPress={() => {
-              navigation.navigate('MasterTransactionStatusDetailScreen', {
+              navigation.navigate('MasterBuyingStatusDetailScreen', {
                 type: 'add',
               })
             }}
@@ -139,7 +139,7 @@ const TransactionStatusScreen = ({ navigation }) => {
     <Box flex="1" bgColor="white" paddingX="4">
       <Input
         ref={searchRef}
-        placeholder={t('searchTransactionStatus')}
+        placeholder={t('searchBuyingStatus')}
         width="100%"
         borderRadius="4"
         py="3"
@@ -189,12 +189,12 @@ const TransactionStatusScreen = ({ navigation }) => {
         isOpen={isOpen}
         onClose={onClose}
         item={selectedItem}
-        screenName="MasterTransactionStatusDetailScreen"
-        deleteMutation={useDeleteTransactionStatusMutation}
-        fixedCacheKey="delete-transaction-status"
+        screenName="MasterBuyingStatusDetailScreen"
+        deleteMutation={useDeleteBuyingStatusMutation}
+        fixedCacheKey="delete-buying-status"
       />
     </Box>
   )
 }
 
-export default TransactionStatusScreen
+export default BuyingStatusScreen

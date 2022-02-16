@@ -80,6 +80,36 @@ export const MENU = [
     ],
     menu: [
       {
+        id: 'MasterBuyingStatusScreen',
+        name: 'MasterBuyingStatusScreen',
+        label: i18n.t('buyingStatus'),
+        icon: 'progress-check',
+        roleAccess: [
+          {
+            role: 'ACCOUNTANT',
+            access: ['create', 'read', 'update', 'delete'],
+          },
+          { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
+          { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
+          { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
+        ],
+      },
+      {
+        id: 'MasterBuyingTypeScreen',
+        name: 'MasterBuyingTypeScreen',
+        label: i18n.t('buyingType'),
+        icon: 'progress-check',
+        roleAccess: [
+          {
+            role: 'ACCOUNTANT',
+            access: ['create', 'read', 'update', 'delete'],
+          },
+          { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
+          { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
+          { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
+        ],
+      },
+      {
         id: 'MasterMeasureUnitScreen',
         name: 'MasterMeasureUnitScreen',
         label: i18n.t('measureUnit'),
