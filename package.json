@@ -10,7 +10,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.8",
@@ -42,11 +43,12 @@
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.11.1",
     "react-native-svg": "^12.1.1",
-    "react-native-vector-icons": "^9.0.0",
+    "react-native-vector-icons": "^9.1.0",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
     "redux-flipper": "^2.0.1",
     "redux-persist": "^6.0.0",
+    "rn-fetch-blob": "^0.12.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
@@ -63,6 +65,8 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.7",
     "metro-react-native-babel-preset": "^0.67.0",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
     "react-test-renderer": "17.0.2"
   },
   "jest": {

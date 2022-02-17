@@ -17,6 +17,7 @@ export const contactApi = api.injectEndpoints({
 })
 
 export const {
+  useGetContactsQuery,
   useLazyGetContactsQuery,
   useAddContactMutation,
   useEditContactMutation,

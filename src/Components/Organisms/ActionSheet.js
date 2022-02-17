@@ -1,12 +1,15 @@
 import React from 'react'
-import { Actionsheet, AlertDialog, Button, Icon } from 'native-base'
+import { Actionsheet, AlertDialog, Button, Icon, Toast } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import R from 'ramda'
 
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 
 import { useAccess } from '@/Hooks'
 import { getCurrentRoute } from '@/Navigators/utils'
+import { downloadFile } from '@/Helper/DownloadHelper'
+import { Config } from '@/Config'
 
 const ActionSheet = ({
   isOpen,
@@ -17,6 +20,7 @@ const ActionSheet = ({
   deleteFixedCacheKey = '',
   downloadPdfMutation = null,
   downloadFixedCacheKey = '',
+  downloadOptions = {},
 }) => {
   const navigation = useNavigation()
   const { t } = useTranslation()
@@ -55,12 +59,17 @@ const ActionSheet = ({
 
   const onDownloadPdf = () => {
     onClose?.()
+    if (!R.isEmpty(downloadOptions)) {
+      const request = {
+        url: `${Config.API_URL}/${downloadOptions?.url}`,
+        method: downloadOptions?.method,
+      }
 
-    const request = {
-      id: item.id,
+      // downloadPdfRequest?.(request)
+      downloadFile(request)
+    } else {
+      Toast.show({ description: t('linkNotAvailable') })
     }
-
-    downloadPdfRequest?.(request)
   }
 
   const deleteItem = () => {

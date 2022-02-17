@@ -225,6 +225,10 @@ const ProductScreen = ({ navigation }) => {
         deleteFixedCacheKey="delete-product"
         downloadPdfMutation={useDownloadPdfProductMutation}
         downloadFixedCacheKey="download-product-pdf"
+        downloadOptions={{
+          url: `product/pdf/${selectedItem?.id}`,
+          method: 'POST',
+        }}
       />
     </Box>
   )

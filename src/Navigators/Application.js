@@ -32,8 +32,17 @@ import {
 } from '@/Screens/Master/Contact'
 import { ProductDetailScreen } from '@/Screens/Product'
 import ScanBarcodeScreen from '@/Screens/Product/ScanBarcodeScreen'
-import { MasterBuyingStatusDetailScreen, MasterBuyingStatusScreen, MasterBuyingTypeDetailScreen, MasterBuyingTypeScreen } from '@/Screens/Master/Buying'
-import { MasterBrandDetailScreen, MasterBrandScreen } from '@/Screens/Master/Brand'
+import {
+  MasterBuyingStatusDetailScreen,
+  MasterBuyingStatusScreen,
+  MasterBuyingTypeDetailScreen,
+  MasterBuyingTypeScreen,
+} from '@/Screens/Master/Buying'
+import {
+  MasterBrandDetailScreen,
+  MasterBrandScreen,
+} from '@/Screens/Master/Brand'
+import { TransactionDetailScreen } from '@/Screens/Transaction'
 
 const Stack = createStackNavigator()
 
@@ -112,7 +121,7 @@ const ApplicationNavigator = () => {
             component={MasterBuyingStatusDetailScreen}
             options={{ headerShown: true, title: t('buyingStatusDetail') }}
           />
-           <Stack.Screen
+          <Stack.Screen
             name="MasterBuyingTypeScreen"
             component={MasterBuyingTypeScreen}
             options={{ headerShown: true, title: t('buyingType') }}
@@ -127,7 +136,7 @@ const ApplicationNavigator = () => {
             component={MasterContactDetailScreen}
             options={{ headerShown: true, title: t('contactDetail') }}
           />
-           <Stack.Screen
+          <Stack.Screen
             name="MasterBrandScreen"
             component={MasterBrandScreen}
             options={{ headerShown: true, title: t('brand') }}
@@ -148,6 +157,13 @@ const ApplicationNavigator = () => {
             name="ScanBarcodeScreen"
             component={ScanBarcodeScreen}
             options={{ headerShown: true, title: t('scanBarcode') }}
+          />
+
+          {/* Transaction */}
+          <Stack.Screen
+            name="TransactionDetailScreen"
+            component={TransactionDetailScreen}
+            options={{ headerShown: true, title: t('transactionDetail') }}
           />
         </Stack.Navigator>
       </NavigationContainer>

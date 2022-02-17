@@ -84,7 +84,7 @@ export const MENU = [
         id: 'MasterBuyingStatusScreen',
         name: 'MasterBuyingStatusScreen',
         label: i18n.t('buyingStatus'),
-        icon: 'progress-check',
+        icon: 'cart-check',
         roleAccess: [
           {
             role: 'ACCOUNTANT',
@@ -99,7 +99,7 @@ export const MENU = [
         id: 'MasterBuyingTypeScreen',
         name: 'MasterBuyingTypeScreen',
         label: i18n.t('buyingType'),
-        icon: 'progress-check',
+        icon: 'cart-variant',
         roleAccess: [
           {
             role: 'ACCOUNTANT',
@@ -114,7 +114,7 @@ export const MENU = [
         id: 'MasterBrandScreen',
         name: 'MasterBrandScreen',
         label: i18n.t('brand'),
-        icon: 'progress-check',
+        icon: 'tag',
         roleAccess: [
           {
             role: 'ACCOUNTANT',
@@ -204,6 +204,27 @@ export const MENU = [
   },
   {
     name: 'Product',
+    roleAccess: [
+      {
+        role: 'ACCOUNTANT',
+        access: ['create', 'read', 'update', 'delete', 'download'],
+      },
+      {
+        role: 'SALES',
+        access: ['create', 'read', 'update', 'delete', 'download'],
+      },
+      {
+        role: 'PURCHASE',
+        access: ['create', 'read', 'update', 'delete', 'download'],
+      },
+      {
+        role: 'INVENTORY',
+        access: ['create', 'read', 'update', 'delete', 'download'],
+      },
+    ],
+  },
+  {
+    name: 'Transaction',
     roleAccess: [
       {
         role: 'ACCOUNTANT',

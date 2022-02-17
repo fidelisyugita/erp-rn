@@ -29,6 +29,7 @@ import {
 } from '@/Services/modules/auth'
 import { ProductScreen } from '@/Screens/Product'
 import { MasterContactScreen } from '@/Screens/Master/Contact'
+import { TransactionScreen } from '@/Screens/Transaction'
 
 const Drawer = createDrawerNavigator()
 
@@ -44,8 +45,8 @@ const getIcon = screenName => {
       return 'cube'
     case t('contact'):
       return 'contacts'
-    case t('trash'):
-      return 'trash-can'
+    case t('transaction'):
+      return 'script-text-outline'
     case t('signOut'):
       return 'logout'
     default:
@@ -161,6 +162,11 @@ const DrawerNavigator = () => {
         name={t('product')}
         component={ProductScreen}
         options={{ title: t('product'), drawerLabel: t('product') }}
+      />
+      <Drawer.Screen
+        name={t('transaction')}
+        component={TransactionScreen}
+        options={{ title: t('transaction'), drawerLabel: t('transaction') }}
       />
       {/* <Drawer.Screen
         name="AccountingScreen"

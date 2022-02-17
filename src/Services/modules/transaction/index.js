@@ -1,4 +1,13 @@
 import { api } from '../../api'
+
+import {
+  getTransactions,
+  addTransaction,
+  editTransaction,
+  deleteTransaction,
+  downloadPdfTransaction,
+} from './transactionApi'
+
 import {
   getTransactionTypes,
   addTransactionType,
@@ -15,6 +24,12 @@ import {
 
 export const transactionApi = api.injectEndpoints({
   endpoints: build => ({
+    getTransactions: getTransactions(build),
+    addTransaction: addTransaction(build),
+    editTransaction: editTransaction(build),
+    deleteTransaction: deleteTransaction(build),
+    downloadPdfTransaction: downloadPdfTransaction(build),
+
     getTransactionTypes: getTransactionTypes(build),
     addTransactionType: addTransactionType(build),
     editTransactionType: editTransactionType(build),
@@ -29,11 +44,19 @@ export const transactionApi = api.injectEndpoints({
 })
 
 export const {
+  useLazyGetTransactionsQuery,
+  useAddTransactionMutation,
+  useEditTransactionMutation,
+  useDeleteTransactionMutation,
+  useDownloadPdfTransactionMutation,
+
+  useGetTransactionTypesQuery,
   useLazyGetTransactionTypesQuery,
   useAddTransactionTypeMutation,
   useEditTransactionTypeMutation,
   useDeleteTransactionTypeMutation,
-
+  
+  useGetTransactionStatusQuery,
   useLazyGetTransactionStatusQuery,
   useAddTransactionStatusMutation,
   useEditTransactionStatusMutation,
