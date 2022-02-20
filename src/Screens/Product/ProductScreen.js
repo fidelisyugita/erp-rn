@@ -29,6 +29,7 @@ import {
   useDownloadPdfProductMutation,
 } from '@/Services/modules/product'
 import numbro from 'numbro'
+import { generatePdfProduct } from '@/Helper/PdfHelper'
 
 const ProductScreen = ({ navigation }) => {
   const { t } = useTranslation()
@@ -223,12 +224,13 @@ const ProductScreen = ({ navigation }) => {
         screenName="ProductDetailScreen"
         deleteMutation={useDeleteProductMutation}
         deleteFixedCacheKey="delete-product"
-        downloadPdfMutation={useDownloadPdfProductMutation}
-        downloadFixedCacheKey="download-product-pdf"
-        downloadOptions={{
-          url: `product/pdf/${selectedItem?.id}`,
-          method: 'POST',
-        }}
+        // downloadPdfMutation={useDownloadPdfProductMutation}
+        // downloadFixedCacheKey="download-product-pdf"
+        // downloadOptions={{
+        //   url: `product/pdf/${selectedItem?.id}`,
+        //   method: 'POST',
+        // }}
+        downloadPdf={generatePdfProduct}
       />
     </Box>
   )

@@ -10,6 +10,7 @@ import { useAccess } from '@/Hooks'
 import { getCurrentRoute } from '@/Navigators/utils'
 import { downloadFile } from '@/Helper/DownloadHelper'
 import { Config } from '@/Config'
+import { generatePdfProduct } from '@/Helper/PdfHelper'
 
 const ActionSheet = ({
   isOpen,
@@ -21,6 +22,7 @@ const ActionSheet = ({
   downloadPdfMutation = null,
   downloadFixedCacheKey = '',
   downloadOptions = {},
+  downloadPdf,
 }) => {
   const navigation = useNavigation()
   const { t } = useTranslation()
@@ -57,18 +59,23 @@ const ActionSheet = ({
     setDeleteOpen(true)
   }
 
-  const onDownloadPdf = () => {
+  const onDownloadPdf = async () => {
     onClose?.()
-    if (!R.isEmpty(downloadOptions)) {
-      const request = {
-        url: `${Config.API_URL}/${downloadOptions?.url}`,
-        method: downloadOptions?.method,
-      }
+    // if (!R.isEmpty(downloadOptions)) {
+    //   const request = {
+    //     url: `${Config.API_URL}/${downloadOptions?.url}`,
+    //     method: downloadOptions?.method,
+    //   }
 
-      // downloadPdfRequest?.(request)
-      downloadFile(request)
-    } else {
-      Toast.show({ description: t('linkNotAvailable') })
+    //   // downloadPdfRequest?.(request)
+    //   downloadFile(request)
+    // } else {
+    //   Toast.show({ description: t('linkNotAvailable') })
+    // }
+    try {
+      await downloadPdf?.(item)
+    } catch (error) {
+      console.log({ 'onDownloadPdf-error': error })
     }
   }
 
