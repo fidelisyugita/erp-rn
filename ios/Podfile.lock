@@ -412,6 +412,9 @@ PODS:
   - RNScreens (3.11.1):
     - React-Core
     - React-RCTImage
+  - RNSmartCode (1.1.0):
+    - React
+    - React-Core
   - RNSVG (12.1.1):
     - React
   - RNVectorIcons (9.1.0):
@@ -489,6 +492,7 @@ DEPENDENCIES:
   - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSmartCode (from `../node_modules/react-native-smart-code`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -596,6 +600,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSmartCode:
+    :path: "../node_modules/react-native-smart-code"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -660,6 +666,7 @@ SPEC CHECKSUMS:
   RNPermissions: f7ebe52db07c00901127966ca080b4ec6a6ceb0a
   RNReanimated: 32c91e28f5780937b8efc07ddde1bab8d373fe0b
   RNScreens: 4d83613b50b74ed277026375dc0810893b0c347f
+  RNSmartCode: b7410d659677d180a640e850e15eb4980d744d70
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   Yoga: 9b6696970c3289e8dea34b3eda93f23e61fb8121
