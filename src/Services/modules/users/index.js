@@ -1,11 +1,11 @@
 import { api } from '../../api'
-import fetchOne from './fetchOne'
+import { getProfile } from './userApi'
 
 export const userApi = api.injectEndpoints({
   endpoints: build => ({
-    fetchOne: fetchOne(build),
+    getProfile: getProfile(build),
   }),
   overrideExisting: true,
 })
 
-export const { useLazyFetchOneQuery } = userApi
+export const { useGetProfileQuery } = userApi

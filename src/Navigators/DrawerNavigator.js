@@ -30,6 +30,9 @@ import {
 import { ProductScreen } from '@/Screens/Product'
 import { MasterContactScreen } from '@/Screens/Master/Contact'
 import { TransactionScreen } from '@/Screens/Transaction'
+import { useGetProfileQuery } from '@/Services/modules/users'
+import { useEffect } from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 const Drawer = createDrawerNavigator()
 
@@ -125,11 +128,34 @@ const CustomDrawerContent = props => {
 const DrawerNavigator = () => {
   const { t } = useTranslation()
   const { refreshToken } = useSession()
+  const navigation = useNavigation()
 
-  const { data } = useRefreshTokenQuery(
+  const { isSuccess: isSuccessRefreshToken } = useRefreshTokenQuery(
     { body: { refreshToken } },
     { pollingInterval: 1000 * 60 * 59, skip: !refreshToken }, //pool every 59 minute
   )
+
+  const {
+    data: profile,
+    isError: isErrorProfile,
+    refetch: refetchProfile,
+  } = useGetProfileQuery()
+
+  useEffect(() => {
+    if (isErrorProfile && isSuccessRefreshToken) {
+      refetchProfile()
+    }
+  }, [isErrorProfile])
+
+  useEffect(() => {
+    if (!profile?.isAttendToday) {
+      navigateAndSimpleReset('AttendanceScreen')
+    }
+  }, [profile])
+
+  if (!profile?.isAttendToday) {
+    return <Box flex={1} /> // to-do change with text need to attendance first
+  }
 
   return (
     <Drawer.Navigator

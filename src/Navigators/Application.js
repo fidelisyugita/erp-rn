@@ -43,6 +43,7 @@ import {
   MasterBrandScreen,
 } from '@/Screens/Master/Brand'
 import { TransactionDetailScreen } from '@/Screens/Transaction'
+import { AttendanceScreen } from '@/Screens/Attendance'
 
 const Stack = createStackNavigator()
 
@@ -145,6 +146,13 @@ const ApplicationNavigator = () => {
             name="MasterBrandDetailScreen"
             component={MasterBrandDetailScreen}
             options={{ headerShown: true, title: t('brandDetail') }}
+          />
+
+          {/* Attendance */}
+          <Stack.Screen
+            name="AttendanceScreen"
+            component={AttendanceScreen}
+            options={{ headerShown: true, title: t('attendance') }}
           />
 
           {/* Product */}
