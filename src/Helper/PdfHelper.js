@@ -1,5 +1,5 @@
 import pdfmake from 'pdfmake/build/pdfmake'
-import pdfFonts from 'pdfmake/build/vfs_fonts'
+import pdfFonts from 'pdfmake/build/vfs_fonts' // don't remove
 import CodeGenerator from 'react-native-smart-code'
 import RNFetchBlob from 'rn-fetch-blob'
 import { Toast } from 'native-base'
@@ -52,6 +52,43 @@ export const generatePdfProduct = async product => {
     // })
   })
   // })
+}
+
+export const generateDeliveryOrder = async transaction => {
+  // const barcodeUri = await CodeGenerator.generate({
+  //   type: CodeGenerator.Type.Code128,
+  //   code: `${transaction.barcode}`,
+  // })
+  // console.log({ 'CodeGenerator.barcodeUri': barcodeUri })
+
+  const docDefinition = {
+    content: [
+      { text: `SURAT JALAN`, style: 'header' },
+      { text: `PT. KREASINDO MITRA PRIMA`, style: 'header' },
+      { text: `JL. JALUR SUTERA TIMUR 3B NO 7` },
+
+      // { image: barcodeUri, width: 300, height: 80 },
+      { text: `Kode Invoice: ${transaction.invoiceCode}` },
+
+      { text: `Nama Produk: ${transaction.name}`, margin: [0, 10, 0, 0] },
+    ],
+
+    styles: {
+      header: {
+        fontSize: 22,
+        bold: true,
+      },
+    },
+  }
+
+  const pdfDocGenerator = pdfmake.createPdf(docDefinition)
+  pdfDocGenerator.getBase64(base64Data => {
+    Toast.show({ description: i18n.t('downloadSuccess') })
+    savePdf(
+      base64Data,
+      `${transaction.invoiceCode} - ${moment().format('DD MMM YYYY HH.mm')}`,
+    )
+  })
 }
 
 const savePdf = async (pdfData, filename) => {

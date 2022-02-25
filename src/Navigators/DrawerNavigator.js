@@ -182,11 +182,11 @@ const DrawerNavigator = () => {
         component={AttendanceScreen}
         options={{ title: t('attendance'), drawerLabel: t('attendance') }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name={t('dataMaster')}
         component={MasterScreen}
         options={{ title: t('dataMaster'), drawerLabel: t('dataMaster') }}
-      />
+      /> */}
       <Drawer.Screen
         name={t('contact')}
         component={MasterContactScreen}

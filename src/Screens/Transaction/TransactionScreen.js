@@ -143,19 +143,20 @@ const TransactionScreen = ({ navigation }) => {
                 />
                 <VStack>
                   <Text color="coolGray.800" bold>
-                    {item.name}
+                    {item.invoiceCode}
                   </Text>
-                  <Text color="coolGray.600">{item.sku}</Text>
+                  <Text color="coolGray.600">{item.contact.name}</Text>
                 </VStack>
                 <Spacer />
                 <VStack>
                   <Text fontSize="xs" color="coolGray.800" textAlign="right">
-                    {numbro(item.sellingPrice || 0).format({
+                    {numbro(item.totalPrice || 0).format({
                       thousandSeparated: true,
+                      prefix: 'Rp ',
                     })}
                   </Text>
                   <Text fontSize="xs" color="coolGray.800">
-                    {item.stock} {item.measureUnit.name}
+                    {item.status.name}
                   </Text>
                 </VStack>
               </HStack>

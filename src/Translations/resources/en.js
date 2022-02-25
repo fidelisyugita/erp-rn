@@ -181,4 +181,10 @@ export default {
   },
   unknownError: 'Unknown error',
   theBarcodeValueIs: 'The barcode value is',
+
+  takePicture: 'Take Picture',
+  checkIn: 'Check In',
+
+  pending: 'Pending',
+  approved: 'Approved',
 }
