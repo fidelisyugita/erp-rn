@@ -79,19 +79,21 @@ const AttendanceScreen = ({ navigation }) => {
               py="2"
               bg={isPressed ? 'coolGray.200' : 'white'}
             >
-              <HStack alignItems="center" space={3}>
+              <HStack alignItems="center" space={2}>
                 <Avatar
-                  borderRadius="48px"
+                  borderRadius="2px"
                   size="48px"
                   source={{
                     uri: item.imageUrl,
                   }}
                 />
-                <VStack>
-                  <Text color="coolGray.800" bold>
+                <VStack width="160px">
+                  <Text numberOfLines={1} color="coolGray.800" bold>
                     {item.createdBy?.name}
                   </Text>
-                  <Text color="coolGray.600">{item.createdBy?.email}</Text>
+                  <Text numberOfLines={1} color="coolGray.600">
+                    {item.createdBy?.email}
+                  </Text>
                 </VStack>
                 <Spacer />
                 <VStack alignSelf="flex-start">

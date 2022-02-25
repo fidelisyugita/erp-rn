@@ -1,4 +1,5 @@
 import React from 'react'
+import { PermissionsAndroid } from 'react-native'
 import { Actionsheet, Button, Toast, useDisclose } from 'native-base'
 import { useTranslation } from 'react-i18next'
 import * as ImagePicker from 'react-native-image-picker'
@@ -49,11 +50,17 @@ const UploadImage = ({
   const onAction = async (type, options) => {
     try {
       if (type == 'capture') {
-        const result = await ImagePicker.launchCamera({
-          ...options,
-          cameraType,
-        })
-        actionResult(result)
+        const accessCamera = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+        )
+        if (accessCamera === PermissionsAndroid.RESULTS.GRANTED) {
+          const result = await ImagePicker.launchCamera({
+            ...options,
+            cameraType,
+          })
+          console.log({ 'onAction-result': result })
+          actionResult(result)
+        }
       } else if (type == 'cancel') {
         onClose()
       } else {
@@ -61,6 +68,7 @@ const UploadImage = ({
         actionResult(result)
       }
     } catch (error) {
+      console.log({ 'onAction-error': error })
       Toast.show({ description: error.message, status: 'error' })
     }
   }
