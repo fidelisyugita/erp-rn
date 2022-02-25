@@ -1,4 +1,5 @@
 import { navigateAndSimpleReset } from '@/Navigators/utils'
+import { api } from '@/Services/api'
 import {
   setUserId,
   setLoginPayload,
@@ -45,6 +46,9 @@ export const logout = build => {
       method: 'POST',
       body,
     }),
+    async onQueryStarted(arg, { dispatch }) {
+      dispatch(api.util.resetApiState())
+    },
   })
 }
 

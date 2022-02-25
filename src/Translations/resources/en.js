@@ -80,10 +80,13 @@ export default {
   scanBarcode: 'Scan Barcode',
   scan: 'Scan',
   image: 'Image',
+  upload: 'Upload',
+  approve: 'Approve',
 
   dashboard: 'Dashboard',
   dataMaster: 'Data Master',
   archive: 'Archive',
+  attendance: 'Attendance',
 
   welcome: 'Welcome',
   signInToContinue: 'Sign In to continue!',
@@ -118,6 +121,7 @@ export default {
   updateProductCategorySuccess: 'Update product category successfully!',
   deleteProductCategorySuccess: 'Delete product category successfully!',
   deleteDescription: "Are you sure? You can't undo this action afterwards.",
+  approveDescription: 'Are you sure?',
   addMeasureUnit: 'Add Measure Unit',
   editMeasureUnit: 'Edit Measure Unit',
   addMeasureUnitSuccess: 'Add measure unit successfully!',
@@ -163,6 +167,11 @@ export default {
   addProductSuccess: 'Add product successfully!',
   updateProductSuccess: 'Update product successfully!',
   deleteProductSuccess: 'Delete product successfully!',
+  addAttendance: 'Add Attendance',
+  editAttendance: 'Edit Attendance',
+  addAttendanceSuccess: 'Check-in successfully!',
+  approveAttendanceSuccess: 'Approve Attendance successfully!',
+  deleteAttendanceSuccess: 'Delete Attendance successfully!',
   camera: {
     error: {
       camera_unavailable: 'Camera not available on device',

@@ -6,5 +6,6 @@
 export default function () {
   return {
     logo: require('@/Assets/Images/TOM.png'),
+    profilePlaceholder: require('@/Assets/Images/profilePlaceholder.jpg'),
   }
 }

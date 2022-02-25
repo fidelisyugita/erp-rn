@@ -80,21 +80,22 @@ export const MENU = [
       { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
     ],
     menu: [
-      {
-        id: 'MasterBuyingStatusScreen',
-        name: 'MasterBuyingStatusScreen',
-        label: i18n.t('buyingStatus'),
-        icon: 'cart-check',
-        roleAccess: [
-          {
-            role: 'ACCOUNTANT',
-            access: ['create', 'read', 'update', 'delete'],
-          },
-          { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
-          { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
-          { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
-        ],
-      },
+      // hide until next instruction
+      // {
+      //   id: 'MasterBuyingStatusScreen',
+      //   name: 'MasterBuyingStatusScreen',
+      //   label: i18n.t('buyingStatus'),
+      //   icon: 'cart-check',
+      //   roleAccess: [
+      //     {
+      //       role: 'ACCOUNTANT',
+      //       access: ['create', 'read', 'update', 'delete'],
+      //     },
+      //     { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
+      //     { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
+      //     { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
+      //   ],
+      // },
       {
         id: 'MasterBuyingTypeScreen',
         name: 'MasterBuyingTypeScreen',
@@ -110,66 +111,67 @@ export const MENU = [
           { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
         ],
       },
-      {
-        id: 'MasterBrandScreen',
-        name: 'MasterBrandScreen',
-        label: i18n.t('brand'),
-        icon: 'tag',
-        roleAccess: [
-          {
-            role: 'ACCOUNTANT',
-            access: ['create', 'read', 'update', 'delete'],
-          },
-          { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
-          { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
-          { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
-        ],
-      },
-      {
-        id: 'MasterMeasureUnitScreen',
-        name: 'MasterMeasureUnitScreen',
-        label: i18n.t('measureUnit'),
-        icon: 'tape-measure',
-        roleAccess: [
-          {
-            role: 'ACCOUNTANT',
-            access: ['create', 'read', 'update', 'delete'],
-          },
-          { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
-          { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
-          { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
-        ],
-      },
-      {
-        id: 'MasterProductCategoryScreen',
-        name: 'MasterProductCategoryScreen',
-        label: i18n.t('productCategory'),
-        icon: 'crop-square',
-        roleAccess: [
-          {
-            role: 'ACCOUNTANT',
-            access: ['create', 'read', 'update', 'delete'],
-          },
-          { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
-          { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
-          { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
-        ],
-      },
-      {
-        id: 'MasterTransactionStatusScreen',
-        name: 'MasterTransactionStatusScreen',
-        label: i18n.t('transactionStatus'),
-        icon: 'progress-check',
-        roleAccess: [
-          {
-            role: 'ACCOUNTANT',
-            access: ['create', 'read', 'update', 'delete'],
-          },
-          { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
-          { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
-          { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
-        ],
-      },
+      // hide until next instruction
+      // {
+      //   id: 'MasterBrandScreen',
+      //   name: 'MasterBrandScreen',
+      //   label: i18n.t('brand'),
+      //   icon: 'tag',
+      //   roleAccess: [
+      //     {
+      //       role: 'ACCOUNTANT',
+      //       access: ['create', 'read', 'update', 'delete'],
+      //     },
+      //     { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
+      //     { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
+      //     { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
+      //   ],
+      // },
+      // {
+      //   id: 'MasterMeasureUnitScreen',
+      //   name: 'MasterMeasureUnitScreen',
+      //   label: i18n.t('measureUnit'),
+      //   icon: 'tape-measure',
+      //   roleAccess: [
+      //     {
+      //       role: 'ACCOUNTANT',
+      //       access: ['create', 'read', 'update', 'delete'],
+      //     },
+      //     { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
+      //     { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
+      //     { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
+      //   ],
+      // },
+      // {
+      //   id: 'MasterProductCategoryScreen',
+      //   name: 'MasterProductCategoryScreen',
+      //   label: i18n.t('productCategory'),
+      //   icon: 'crop-square',
+      //   roleAccess: [
+      //     {
+      //       role: 'ACCOUNTANT',
+      //       access: ['create', 'read', 'update', 'delete'],
+      //     },
+      //     { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
+      //     { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
+      //     { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
+      //   ],
+      // },
+      // {
+      //   id: 'MasterTransactionStatusScreen',
+      //   name: 'MasterTransactionStatusScreen',
+      //   label: i18n.t('transactionStatus'),
+      //   icon: 'progress-check',
+      //   roleAccess: [
+      //     {
+      //       role: 'ACCOUNTANT',
+      //       access: ['create', 'read', 'update', 'delete'],
+      //     },
+      //     { role: 'SALES', access: ['create', 'read', 'update', 'delete'] },
+      //     { role: 'PURCHASE', access: ['create', 'read', 'update', 'delete'] },
+      //     { role: 'INVENTORY', access: ['create', 'read', 'update', 'delete'] },
+      //   ],
+      // },
       {
         id: 'MasterTransactionTypeScreen',
         name: 'MasterTransactionTypeScreen',
@@ -244,8 +246,19 @@ export const MENU = [
       },
     ],
   },
+  {
+    name: 'Attendance',
+    roleAccess: [
+      {
+        role: 'ADMIN',
+        access: ['update'],
+      },
+    ],
+  },
 ]
 
 export const LIMIT_LOAD_DATA = 10
 
 export const ERROR_MESSAGE_SERVER = ['Invalid token']
+
+export const ATTENDANCE_APPROVE_STATUS = [i18n.t('pending'), i18n.t('approved')]

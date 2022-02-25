@@ -1,15 +1,19 @@
+import { attendanceApi } from './attendance'
 import { authApi } from './auth'
-import { productApi } from './product'
-import { measureUnitApi } from './measureUnit'
-import { transactionApi } from './transaction'
-import { contactApi } from './contact'
 import { buyingApi } from './buying'
+import { contactApi } from './contact'
+import { measureUnitApi } from './measureUnit'
+import { productApi } from './product'
+import { transactionApi } from './transaction'
+import { userApi } from './users'
 
 export {
+  attendanceApi,
   authApi,
-  productApi,
-  measureUnitApi,
-  transactionApi,
-  contactApi,
   buyingApi,
+  contactApi,
+  measureUnitApi,
+  productApi,
+  transactionApi,
+  userApi,
 }

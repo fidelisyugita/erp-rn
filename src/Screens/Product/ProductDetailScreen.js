@@ -247,7 +247,12 @@ const ProductDetailScreen = ({ navigation, route }) => {
                           />
                         )}
                         {!screenData?.isDisabled ? (
-                          <UploadImage onChangeValue={onChange} />
+                          <UploadImage
+                            onChangeValue={onChange}
+                            buttonProps={{ ml: '4' }}
+                          >
+                            {t('upload')}
+                          </UploadImage>
                         ) : null}
                       </HStack>
                     )

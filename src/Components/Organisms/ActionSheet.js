@@ -1,5 +1,13 @@
 import React from 'react'
-import { Actionsheet, AlertDialog, Button, Icon, Toast } from 'native-base'
+import {
+  Actionsheet,
+  AlertDialog,
+  Avatar,
+  Button,
+  Icon,
+  Text,
+  Toast,
+} from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import R from 'ramda'
 
@@ -21,6 +29,8 @@ const ActionSheet = ({
   deleteFixedCacheKey = '',
   downloadPdfMutation = null,
   downloadFixedCacheKey = '',
+  approveMutation = null,
+  approveFixedCacheKey = '',
   downloadOptions = {},
   downloadPdf,
 }) => {
@@ -39,11 +49,19 @@ const ActionSheet = ({
     ? downloadPdfMutation({ downloadFixedCacheKey })
     : []
 
+  const [approveRequest] = approveMutation
+    ? approveMutation({ approveFixedCacheKey })
+    : []
+
   const [isDeleteOpen, setDeleteOpen] = React.useState(false)
 
-  const onCloseDelete = () => setDeleteOpen(false)
+  const [isApproveOpen, setApproveOpen] = React.useState(false)
 
-  const cancelRef = React.useRef()
+  const onCloseDelete = () => setDeleteOpen(false)
+  const onCloseApprove = () => setApproveOpen(false)
+
+  const cancelDeleteRef = React.useRef()
+  const cancelApproveRef = React.useRef()
 
   const onView = () => {
     navigation.navigate(screenName, { type: 'view', item })
@@ -57,6 +75,10 @@ const ActionSheet = ({
 
   const onDelete = () => {
     setDeleteOpen(true)
+  }
+
+  const onApprove = () => {
+    setApproveOpen(true)
   }
 
   const onDownloadPdf = async () => {
@@ -90,10 +112,35 @@ const ActionSheet = ({
     deleteRequest?.(request)
   }
 
+  const approveItem = () => {
+    onCloseApprove()
+    onClose?.()
+
+    const request = {
+      id: item.id,
+    }
+
+    approveRequest?.(request)
+  }
+
   return (
     <>
       <Actionsheet isOpen={isOpen} onClose={onClose} size="full">
         <Actionsheet.Content>
+          {isCanEdit && approveMutation ? (
+            <Actionsheet.Item
+              onPress={onApprove}
+              startIcon={
+                <Icon
+                  as={<MaterialIcons name="check" />}
+                  color="muted.500"
+                  mr={3}
+                />
+              }
+            >
+              {t('approve')}
+            </Actionsheet.Item>
+          ) : null}
           {isCanDownload ? (
             <Actionsheet.Item
               onPress={onDownloadPdf}
@@ -122,7 +169,7 @@ const ActionSheet = ({
               {t('view')}
             </Actionsheet.Item>
           ) : null}
-          {isCanEdit ? (
+          {isCanEdit && !approveMutation ? (
             <Actionsheet.Item
               onPress={onEdit}
               startIcon={
@@ -155,7 +202,7 @@ const ActionSheet = ({
 
       {/* Delete Confirmation */}
       <AlertDialog
-        leastDestructiveRef={cancelRef}
+        leastDestructiveRef={cancelDeleteRef}
         isOpen={isDeleteOpen}
         onClose={onCloseDelete}
         motionPreset={'fade'}
@@ -166,7 +213,7 @@ const ActionSheet = ({
           </AlertDialog.Header>
           <AlertDialog.Body>{t('deleteDescription')}</AlertDialog.Body>
           <AlertDialog.Footer>
-            <Button ref={cancelRef} onPress={onCloseDelete}>
+            <Button ref={cancelDeleteRef} onPress={onCloseDelete}>
               {t('cancel')}
             </Button>
             <Button
@@ -180,6 +227,47 @@ const ActionSheet = ({
           </AlertDialog.Footer>
         </AlertDialog.Content>
       </AlertDialog>
+
+      {/* Approve Confirmation */}
+      {approveMutation ? (
+        <AlertDialog
+          leastDestructiveRef={cancelApproveRef}
+          isOpen={isApproveOpen}
+          onClose={onCloseApprove}
+          motionPreset={'fade'}
+        >
+          <AlertDialog.Content>
+            <AlertDialog.Header fontSize="lg" fontWeight="bold">
+              {`${t('approve')} ${item.createdBy?.name || ''}`}
+            </AlertDialog.Header>
+            <AlertDialog.Body>
+              <Avatar
+                alignSelf="center"
+                borderRadius="2"
+                size="full"
+                height="64"
+                source={{
+                  uri: item.imageUrl,
+                }}
+              />
+              {/* <Text>{t('approveDescription')}</Text> */}
+            </AlertDialog.Body>
+            <AlertDialog.Footer>
+              <Button ref={cancelApproveRef} onPress={onCloseApprove}>
+                {t('cancel')}
+              </Button>
+              <Button
+                colorScheme="red"
+                onPress={onCloseApprove}
+                ml={3}
+                onPress={approveItem}
+              >
+                {t('approve')}
+              </Button>
+            </AlertDialog.Footer>
+          </AlertDialog.Content>
+        </AlertDialog>
+      ) : null}
     </>
   )
 }
