@@ -99,7 +99,7 @@ const savePdf = async (pdfData, filename) => {
     android: fs.dirs.DownloadDir,
   })
 
-  fPath = `${dPath}/${filename}.pdf`
+  fPath = `${dPath}/${String(filename).replace(/[/\\]/g, '-')}.pdf`
 
   if (Platform.OS === 'ios') {
     await fs.createFile(fPath, pdfData, 'base64')
