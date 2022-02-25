@@ -61,6 +61,7 @@ export const api = createApi({
   keepUnusedDataFor: 60 * 60 * 24 * 7,
   endpoints: () => ({}),
   tagTypes: [
+    'Attendance',
     'Brands',
     'BuyingStatus',
     'BuyingType',

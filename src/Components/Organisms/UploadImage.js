@@ -36,14 +36,23 @@ const actions = [
   { title: i18n.t('cancel'), type: 'cancel' },
 ]
 
-const UploadImage = ({ onChangeValue }) => {
+const UploadImage = ({
+  onChangeValue,
+  children,
+  types = ['capture', 'library', 'cancel'],
+  cameraType = 'back',
+  buttonProps,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclose()
   const { t } = useTranslation()
 
   const onAction = async (type, options) => {
     try {
       if (type == 'capture') {
-        const result = await ImagePicker.launchCamera(options)
+        const result = await ImagePicker.launchCamera({
+          ...options,
+          cameraType,
+        })
         actionResult(result)
       } else if (type == 'cancel') {
         onClose()
@@ -72,22 +81,26 @@ const UploadImage = ({ onChangeValue }) => {
     }
   }
 
+  const renderAction = action => {
+    if (!types.includes(action.type)) return null
+
+    return (
+      <Actionsheet.Item
+        key={action.title}
+        onPress={() => onAction(action.type, action.options)}
+      >
+        {action.title}
+      </Actionsheet.Item>
+    )
+  }
+
   return (
     <>
-      <Button ml="4" px="4" onPress={onOpen}>
-        {t('upload')}
+      <Button px="4" onPress={onOpen} {...buttonProps}>
+        {children && children}
       </Button>
       <Actionsheet isOpen={isOpen} onClose={onClose}>
-        <Actionsheet.Content>
-          {actions.map(action => (
-            <Actionsheet.Item
-              key={action.title}
-              onPress={() => onAction(action.type, action.options)}
-            >
-              {action.title}
-            </Actionsheet.Item>
-          ))}
-        </Actionsheet.Content>
+        <Actionsheet.Content>{actions.map(renderAction)}</Actionsheet.Content>
       </Actionsheet>
     </>
   )

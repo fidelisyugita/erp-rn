@@ -30,6 +30,8 @@ const showLoadingActions = [
   'addBrand',
   'editBrand',
   'deleteBrand',
+  'addAttendance',
+  'approveAttendance',
 ]
 
 const hideLoadingActions = [
@@ -62,6 +64,8 @@ const hideLoadingActions = [
   'addBrand',
   'editBrand',
   'deleteBrand',
+  'addAttendance',
+  'approveAttendance',
 ]
 
 const actionsTracker = () => next => action => {

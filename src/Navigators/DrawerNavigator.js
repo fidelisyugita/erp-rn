@@ -33,6 +33,7 @@ import { TransactionScreen } from '@/Screens/Transaction'
 import { useGetProfileQuery } from '@/Services/modules/users'
 import { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import { AttendanceScreen } from '@/Screens/Attendance'
 
 const Drawer = createDrawerNavigator()
 
@@ -42,6 +43,8 @@ const getIcon = screenName => {
   switch (screenName) {
     case t('dashboard'):
       return 'view-dashboard'
+    case t('attendance'):
+      return 'account'
     case t('dataMaster'):
       return 'database'
     case t('product'):
@@ -128,7 +131,6 @@ const CustomDrawerContent = props => {
 const DrawerNavigator = () => {
   const { t } = useTranslation()
   const { refreshToken } = useSession()
-  const navigation = useNavigation()
 
   const { isSuccess: isSuccessRefreshToken } = useRefreshTokenQuery(
     { body: { refreshToken } },
@@ -138,6 +140,7 @@ const DrawerNavigator = () => {
   const {
     data: profile,
     isError: isErrorProfile,
+    isSuccess: isSuccessProfile,
     refetch: refetchProfile,
   } = useGetProfileQuery()
 
@@ -148,10 +151,10 @@ const DrawerNavigator = () => {
   }, [isErrorProfile])
 
   useEffect(() => {
-    if (!profile?.isAttendToday) {
-      navigateAndSimpleReset('AttendanceScreen')
+    if (!profile?.isAttendToday && isSuccessProfile) {
+      navigateAndSimpleReset('AttendanceCheckInScreen')
     }
-  }, [profile])
+  }, [profile, isSuccessProfile])
 
   if (!profile?.isAttendToday) {
     return <Box flex={1} /> // to-do change with text need to attendance first
@@ -173,6 +176,11 @@ const DrawerNavigator = () => {
           title: t('dashboard'),
           drawerLabel: t('dashboard'),
         }}
+      />
+      <Drawer.Screen
+        name={t('attendance')}
+        component={AttendanceScreen}
+        options={{ title: t('attendance'), drawerLabel: t('attendance') }}
       />
       <Drawer.Screen
         name={t('dataMaster')}

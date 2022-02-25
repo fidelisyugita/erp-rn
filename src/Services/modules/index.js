@@ -1,3 +1,4 @@
+import { attendanceApi } from './attendance'
 import { authApi } from './auth'
 import { buyingApi } from './buying'
 import { contactApi } from './contact'
@@ -7,6 +8,7 @@ import { transactionApi } from './transaction'
 import { userApi } from './users'
 
 export {
+  attendanceApi,
   authApi,
   buyingApi,
   contactApi,
