@@ -29,6 +29,7 @@ import {
   useDownloadPdfTransactionMutation,
 } from '@/Services/modules/transaction'
 import numbro from 'numbro'
+import { generateDeliveryOrder } from '@/Helper/PdfHelper'
 
 const TransactionScreen = ({ navigation }) => {
   const { t } = useTranslation()
@@ -224,8 +225,7 @@ const TransactionScreen = ({ navigation }) => {
         screenName="TransactionDetailScreen"
         deleteMutation={useDeleteTransactionMutation}
         deleteFixedCacheKey="delete-transaction"
-        downloadPdfMutation={useDownloadPdfTransactionMutation}
-        downloadFixedCacheKey="download-transaction-pdf"
+        downloadPdf={generateDeliveryOrder}
       />
     </Box>
   )
