@@ -27,13 +27,14 @@ import {
   useRefreshTokenMutation,
   useRefreshTokenQuery,
 } from '@/Services/modules/auth'
-import { ProductScreen } from '@/Screens/Product'
+import { ParentProductScreen } from '@/Screens/Product'
 import { MasterContactScreen } from '@/Screens/Master/Contact'
 import { TransactionScreen } from '@/Screens/Transaction'
 import { useGetProfileQuery } from '@/Services/modules/users'
 import { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { AttendanceScreen } from '@/Screens/Attendance'
+import { useAccess } from '@/Hooks'
 
 const Drawer = createDrawerNavigator()
 
@@ -157,7 +158,7 @@ const DrawerNavigator = () => {
   }, [profile, isSuccessProfile])
 
   if (!profile?.isAttendToday) {
-    return <Box flex={1} /> // to-do change with text need to attendance first
+    return <Box flex={1} /> // to-do change with text need to check-in first
   }
 
   return (
@@ -194,7 +195,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name={t('product')}
-        component={ProductScreen}
+        component={ParentProductScreen}
         options={{ title: t('product'), drawerLabel: t('product') }}
       />
       <Drawer.Screen
@@ -202,11 +203,6 @@ const DrawerNavigator = () => {
         component={TransactionScreen}
         options={{ title: t('transaction'), drawerLabel: t('transaction') }}
       />
-      {/* <Drawer.Screen
-        name="AccountingScreen"
-        component={AccountingScreen}
-        options={{ title: t('accounting'), drawerLabel: t('accounting') }}
-      /> */}
     </Drawer.Navigator>
   )
 }

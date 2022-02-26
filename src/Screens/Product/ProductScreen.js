@@ -31,7 +31,9 @@ import {
 import numbro from 'numbro'
 import { generatePdfProduct } from '@/Helper/PdfHelper'
 
-const ProductScreen = ({ navigation }) => {
+const ProductScreen = ({ navigation, route }) => {
+  const paramItem = route.params?.item || {}
+
   const { t } = useTranslation()
   const { colors } = useTheme()
   const { isCanAdd } = useAccess()
@@ -47,7 +49,9 @@ const ProductScreen = ({ navigation }) => {
       renderFooter,
     },
     { isSearch, isRefresh, isFirstLoad },
-  ] = usePagination(useLazyGetProductsQuery)
+  ] = usePagination(useLazyGetProductsQuery, {
+    params: { categoryId: paramItem?.id || '' },
+  })
 
   const [
     deleteTrigger,

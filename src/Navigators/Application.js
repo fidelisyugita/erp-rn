@@ -30,7 +30,7 @@ import {
   MasterContactDetailScreen,
   MasterContactScreen,
 } from '@/Screens/Master/Contact'
-import { ProductDetailScreen } from '@/Screens/Product'
+import { ProductDetailScreen, ProductScreen } from '@/Screens/Product'
 import ScanBarcodeScreen from '@/Screens/Product/ScanBarcodeScreen'
 import {
   MasterBuyingStatusDetailScreen,
@@ -157,6 +157,11 @@ const ApplicationNavigator = () => {
           />
 
           {/* Product */}
+          <Stack.Screen
+            name="ProductScreen"
+            component={ProductScreen}
+            options={{ headerShown: true, title: t('product') }}
+          />
           <Stack.Screen
             name="ProductDetailScreen"
             component={ProductDetailScreen}
