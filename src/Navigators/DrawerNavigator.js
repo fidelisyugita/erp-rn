@@ -130,7 +130,7 @@ const CustomDrawerContent = props => {
 
 const DrawerNavigator = () => {
   const { t } = useTranslation()
-  const { refreshToken } = useSession()
+  const { refreshToken, userRole } = useSession()
 
   const { isSuccess: isSuccessRefreshToken } = useRefreshTokenQuery(
     { body: { refreshToken } },
@@ -151,12 +151,16 @@ const DrawerNavigator = () => {
   }, [isErrorProfile])
 
   useEffect(() => {
-    if (!profile?.isAttendToday && isSuccessProfile) {
+    if (
+      !userRole?.includes('ADMIN') &&
+      !profile?.isAttendToday &&
+      isSuccessProfile
+    ) {
       navigateAndSimpleReset('AttendanceCheckInScreen')
     }
   }, [profile, isSuccessProfile])
 
-  if (!profile?.isAttendToday) {
+  if (!userRole?.includes('ADMIN') && !profile?.isAttendToday) {
     return <Box flex={1} /> // to-do change with text need to attendance first
   }
 
