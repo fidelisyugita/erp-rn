@@ -251,7 +251,7 @@ export const MENU = [
     roleAccess: [
       {
         role: 'ADMIN',
-        access: ['update'],
+        access: ['read', 'update'],
       },
     ],
   },
