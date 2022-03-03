@@ -73,6 +73,7 @@ export default {
   delete: 'Delete',
   view: 'View',
   downloadPdf: 'Download PDF',
+  downloadSuccess: 'Download Success',
   cancel: 'Cancel',
   signOut: 'Sign Out',
   takeImage: 'Take Image',
@@ -181,4 +182,10 @@ export default {
   },
   unknownError: 'Unknown error',
   theBarcodeValueIs: 'The barcode value is',
+
+  takePicture: 'Take Picture',
+  checkIn: 'Check In',
+
+  pending: 'Pending',
+  approved: 'Approved',
 }

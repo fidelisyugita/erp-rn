@@ -54,10 +54,10 @@ const AttendanceCheckInScreen = () => {
         onChangeValue={setImage}
         cameraType="front"
       >
-        {t('upload')}
+        {t('takePicture')}
       </UploadImage>
       <Button mt="6" onPress={submit} isDisabled={!image}>
-        {t('checkIn')}
+        {t('submit')}
       </Button>
     </Box>
   )
