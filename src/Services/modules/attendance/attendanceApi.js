@@ -31,7 +31,7 @@ export const addAttendance = build => {
       method: 'POST',
       body,
     }),
-    invalidateTags: ['UserProfile'],
+    invalidatesTags: ['UserProfile'],
     async onQueryStarted(arg, { queryFulfilled }) {
       try {
         const { data } = await queryFulfilled

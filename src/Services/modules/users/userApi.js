@@ -6,7 +6,7 @@ export const getProfile = build => {
       url: `user/getProfile`,
       method: 'GET',
     }),
-    provideTags: ['UserProfile'],
+    providesTags: ['UserProfile'],
     async onQueryStarted(arg, { dispatch, queryFulfilled }) {
       try {
         const { data } = await queryFulfilled
