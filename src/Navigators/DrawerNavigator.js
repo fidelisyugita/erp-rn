@@ -14,7 +14,6 @@ import {
   Icon,
 } from 'native-base'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { AccountingScreen } from '@/Screens/Accounting'
 import { DashboardScreen } from '@/Screens/Dashboard'
 import { useTranslation } from 'react-i18next'
 import useSession from '@/Hooks/useSession'
@@ -61,7 +60,7 @@ const getIcon = screenName => {
   }
 }
 
-const CustomDrawerItem = ({ navigation, name, isActive, onPress }) => {
+const CustomDrawerItem = ({ name, isActive, onPress }) => {
   return (
     <Pressable
       px="5"
