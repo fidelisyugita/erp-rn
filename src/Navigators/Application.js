@@ -1,5 +1,5 @@
 import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { Box } from 'native-base'
@@ -45,7 +45,7 @@ import {
 import { TransactionDetailScreen } from '@/Screens/Transaction'
 import { AttendanceCheckInScreen } from '@/Screens/Attendance'
 
-const Stack = createStackNavigator()
+const Stack = createNativeStackNavigator()
 
 // @refresh reset
 const ApplicationNavigator = () => {
