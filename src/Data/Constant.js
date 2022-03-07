@@ -205,7 +205,7 @@ export const MENU = [
     ],
   },
   {
-    name: 'Product',
+    name: 'ProductScreen',
     roleAccess: [
       {
         role: 'ACCOUNTANT',

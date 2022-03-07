@@ -42,6 +42,7 @@ export default {
   contact: 'Contact',
   contactDetail: 'Contact Detail',
   ok: 'Ok',
+  sold: 'Sold',
 
   name: 'Name',
   description: 'Description',
@@ -66,6 +67,8 @@ export default {
   inputBuyingPrice: 'Input buying price',
   inputSellingPrice: 'Input selling price',
   inputTotalSold: 'Input total sold',
+  inputColor: 'Input color',
+  inputSize: 'Input Size',
   chooseMeasureUnit: 'Choose measure unit',
   chooseBrand: 'Choose brand',
   submit: 'Submit',
@@ -83,6 +86,10 @@ export default {
   image: 'Image',
   upload: 'Upload',
   approve: 'Approve',
+  color: 'Color',
+  variants: 'Variants',
+  variant: 'Variant',
+  size: 'Size',
 
   dashboard: 'Dashboard',
   dataMaster: 'Data Master',
@@ -116,6 +123,7 @@ export default {
   searchBrand: 'Search Brand',
   searchTransaction: 'Search Transaction',
   noData: 'No Data',
+  noVariant: 'No Variant',
   addProductCategory: 'Add Product Category',
   editProductCategory: 'Edit Product Category',
   addProductCategorySuccess: 'Add product cateogory successfully!',
@@ -173,6 +181,8 @@ export default {
   addAttendanceSuccess: 'Check-in successfully!',
   approveAttendanceSuccess: 'Approve Attendance successfully!',
   deleteAttendanceSuccess: 'Delete Attendance successfully!',
+  addVariant: 'Add Variant',
+  addProductVariant: 'Add Product Variant',
   camera: {
     error: {
       camera_unavailable: 'Camera not available on device',
