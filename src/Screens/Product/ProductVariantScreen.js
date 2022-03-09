@@ -17,6 +17,12 @@ import * as yup from 'yup'
 import { useTranslation } from 'react-i18next'
 import i18n from '@/Translations'
 
+const transformNumbro = value => {
+  return numbro(value || 0).format({
+    thousandSeparated: true,
+  })
+}
+
 const schema = yup
   .object({
     size: yup.string().label(i18n.t('size')).required(),
@@ -41,18 +47,10 @@ const ProductVariantScreen = ({ navigation, route }) => {
     resolver: yupResolver(schema),
     defaultValues: {
       size: paramItem?.size,
-      stock: numbro(paramItem?.stock || 0).format({
-        thousandSeparated: true,
-      }),
-      buyingPrice: numbro(paramItem?.buyingPrice || 0).format({
-        thousandSeparated: true,
-      }),
-      sellingPrice: numbro(paramItem?.sellingPrice || 0).format({
-        thousandSeparated: true,
-      }),
-      sold: numbro(paramItem?.sold || 0).format({
-        thousandSeparated: true,
-      }),
+      stock: transformNumbro(paramItem?.stock),
+      buyingPrice: transformNumbro(paramItem?.buyingPrice),
+      sellingPrice: transformNumbro(paramItem?.sellingPrice),
+      sold: transformNumbro(paramItem?.sold),
     },
   })
 
@@ -140,9 +138,7 @@ const ProductVariantScreen = ({ navigation, route }) => {
                         onBlur={onBlur}
                         placeholder={t('inputStock')}
                         onChangeText={onChange}
-                        value={numbro(value || 0).format({
-                          thousandSeparated: true,
-                        })}
+                        value={transformNumbro(value)}
                         isDisabled={screenData?.isDisabled}
                         keyboardType="number-pad"
                         maxLength={9}
@@ -167,9 +163,7 @@ const ProductVariantScreen = ({ navigation, route }) => {
                         onBlur={onBlur}
                         placeholder={t('inputBuyingPrice')}
                         onChangeText={onChange}
-                        value={numbro(value || 0).format({
-                          thousandSeparated: true,
-                        })}
+                        value={transformNumbro(value)}
                         isDisabled={screenData?.isDisabled}
                         keyboardType="number-pad"
                         maxLength={9}
@@ -194,9 +188,7 @@ const ProductVariantScreen = ({ navigation, route }) => {
                         onBlur={onBlur}
                         placeholder={t('inputSellingPrice')}
                         onChangeText={onChange}
-                        value={numbro(value || 0).format({
-                          thousandSeparated: true,
-                        })}
+                        value={transformNumbro(value)}
                         isDisabled={screenData?.isDisabled}
                         keyboardType="number-pad"
                         maxLength={9}
@@ -221,9 +213,7 @@ const ProductVariantScreen = ({ navigation, route }) => {
                         onBlur={onBlur}
                         placeholder={t('inputSold')}
                         onChangeText={onChange}
-                        value={numbro(value || 0).format({
-                          thousandSeparated: true,
-                        })}
+                        value={transformNumbro(value)}
                         isDisabled={screenData?.isDisabled}
                         keyboardType="number-pad"
                         maxLength={9}

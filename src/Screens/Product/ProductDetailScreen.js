@@ -24,6 +24,7 @@ import * as yup from 'yup'
 import { useTranslation } from 'react-i18next'
 import i18n from '@/Translations'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import R from 'ramda'
 import {
   useAddProductMutation,
   useEditProductMutation,
@@ -490,6 +491,10 @@ const ProductDetailScreen = ({ navigation, route }) => {
                       onChange([...value, item])
                     }
 
+                    const onDelete = pointer => {
+                      onChange(R.drop(pointer + 1, value))
+                    }
+
                     return (
                       <>
                         {value.length > 0 ? (
@@ -499,6 +504,7 @@ const ProductDetailScreen = ({ navigation, route }) => {
                                 key={String(valIndex)}
                                 item={val}
                                 pointer={valIndex}
+                                onDelete={onDelete}
                               />
                             )
                           })

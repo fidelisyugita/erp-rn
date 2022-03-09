@@ -216,12 +216,7 @@ const ActionSheet = ({
             <Button ref={cancelDeleteRef} onPress={onCloseDelete}>
               {t('cancel')}
             </Button>
-            <Button
-              colorScheme="red"
-              onPress={onCloseDelete}
-              ml={3}
-              onPress={deleteItem}
-            >
+            <Button colorScheme="red" ml={3} onPress={deleteItem}>
               {t('delete')}
             </Button>
           </AlertDialog.Footer>
@@ -256,12 +251,7 @@ const ActionSheet = ({
               <Button ref={cancelApproveRef} onPress={onCloseApprove}>
                 {t('cancel')}
               </Button>
-              <Button
-                colorScheme="red"
-                onPress={onCloseApprove}
-                ml={3}
-                onPress={approveItem}
-              >
+              <Button colorScheme="red" ml={3} onPress={approveItem}>
                 {t('approve')}
               </Button>
             </AlertDialog.Footer>

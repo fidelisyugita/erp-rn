@@ -5,16 +5,18 @@ import {
   Pressable,
   ScrollView,
   SimpleGrid,
+  Spinner,
   Text,
 } from 'native-base'
 import { useGetProductCategoriesQuery } from '@/Services/modules/product'
 
 const ParentProductScreen = ({ navigation }) => {
-  const { data: brands = [] } = useGetProductCategoriesQuery({})
+  const { data: brands = [], isLoading } = useGetProductCategoriesQuery({})
 
   return (
     <Box flex="1" bgColor="white">
       <ScrollView>
+        {isLoading ? <Spinner mt="4" /> : null}
         <SimpleGrid
           columns={3}
           spacingY={4}
