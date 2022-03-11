@@ -30,7 +30,14 @@ import {
   MasterContactDetailScreen,
   MasterContactScreen,
 } from '@/Screens/Master/Contact'
-import { ProductDetailScreen, ProductScreen, ProductVariantScreen } from '@/Screens/Product'
+import {
+  ParentProductScreen,
+  ProductDetailScreen,
+  ProductScreen,
+  ProductVariantScreen,
+  SelectProductDetailScreen,
+  SelectProductScreen,
+} from '@/Screens/Product'
 import ScanBarcodeScreen from '@/Screens/Product/ScanBarcodeScreen'
 import {
   MasterBuyingStatusDetailScreen,
@@ -158,6 +165,11 @@ const ApplicationNavigator = () => {
 
           {/* Product */}
           <Stack.Screen
+            name="ParentProductScreen"
+            component={ParentProductScreen}
+            options={{ headerShown: true, title: t('productCategory') }}
+          />
+          <Stack.Screen
             name="ProductScreen"
             component={ProductScreen}
             options={{ headerShown: true, title: t('product') }}
@@ -171,6 +183,16 @@ const ApplicationNavigator = () => {
             name="ProductVariantScreen"
             component={ProductVariantScreen}
             options={{ headerShown: true, title: t('productVariant') }}
+          />
+          <Stack.Screen
+            name="SelectProductScreen"
+            component={SelectProductScreen}
+            options={{ headerShown: true, title: t('selectProduct') }}
+          />
+          <Stack.Screen
+            name="SelectProductDetailScreen"
+            component={SelectProductDetailScreen}
+            options={{ headerShown: true, title: t('selectProduct') }}
           />
 
           <Stack.Screen

@@ -20,7 +20,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useTranslation } from 'react-i18next'
 
 import { usePagination, useAccess } from '@/Hooks'
-import { ActionSheet } from '@/Components/Organisms'
+import { ActionSheet, ProductCard } from '@/Components/Organisms'
 import {
   useLazyGetProductsQuery,
   useAddProductMutation,
@@ -128,47 +128,7 @@ const ProductScreen = ({ navigation, route }) => {
   }
 
   const renderItem = ({ item }) => {
-    return (
-      <Pressable onPress={() => onPressItem(item)}>
-        {({ isPressed }) => {
-          return (
-            <Box
-              borderBottomWidth={1}
-              borderColor="coolGray.200"
-              py="2"
-              bg={isPressed ? 'coolGray.200' : 'white'}
-            >
-              <HStack space={3} justifyContent="space-between">
-                <Avatar
-                  borderRadius="2"
-                  size="48px"
-                  source={{
-                    uri: item.imageUrl,
-                  }}
-                />
-                <VStack>
-                  <Text color="coolGray.800" bold>
-                    {item.name}
-                  </Text>
-                  <Text color="coolGray.600">{item.sku}</Text>
-                </VStack>
-                <Spacer />
-                <VStack>
-                  <Text fontSize="xs" color="coolGray.800" textAlign="right">
-                    {numbro(item.sellingPrice || 0).format({
-                      thousandSeparated: true,
-                    })}
-                  </Text>
-                  <Text fontSize="xs" color="coolGray.800">
-                    {item.stock} {item.measureUnit.name}
-                  </Text>
-                </VStack>
-              </HStack>
-            </Box>
-          )
-        }}
-      </Pressable>
-    )
+    return <ProductCard item={item} onPress={onPressItem} />
   }
 
   return (

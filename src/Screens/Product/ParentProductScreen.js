@@ -10,8 +10,9 @@ import {
 } from 'native-base'
 import { useGetProductCategoriesQuery } from '@/Services/modules/product'
 
-const ParentProductScreen = ({ navigation }) => {
+const ParentProductScreen = ({ navigation, route }) => {
   const { data: brands = [], isLoading } = useGetProductCategoriesQuery({})
+  const selectable = route.params?.selectable || false
 
   return (
     <Box flex="1" bgColor="white">
@@ -29,16 +30,25 @@ const ParentProductScreen = ({ navigation }) => {
               <Pressable
                 key={String(menu.id)}
                 onPress={() =>
-                  navigation.navigate('ProductScreen', { item: menu })
+                  navigation.navigate(
+                    selectable ? 'SelectProductScreen' : 'ProductScreen',
+                    { item: menu },
+                  )
                 }
               >
-                <Box alignItems="center">
+                <Box
+                  alignItems="center"
+                  borderWidth="1"
+                  borderColor="gray.200"
+                  p="2"
+                  borderRadius="4"
+                >
                   <Image
                     size="md"
                     source={{ uri: menu.imageUrl }}
                     alt="category"
                   />
-                  <Text textAlign="center" width="20">
+                  <Text textAlign="center" mt="2" width="20">
                     {menu.name}
                   </Text>
                 </Box>

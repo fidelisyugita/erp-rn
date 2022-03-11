@@ -26,6 +26,7 @@ import {
   useGetTransactionTypesQuery,
 } from '@/Services/modules/transaction'
 import { useGetContactsQuery } from '@/Services/modules/contact'
+import { useSelector } from 'react-redux'
 
 const schema = yup
   .object({
@@ -104,6 +105,8 @@ const TransactionDetailScreen = ({ navigation, route }) => {
       limit: 100,
     },
   })
+
+  const { productSelected } = useSelector(state => state.product)
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -207,6 +210,47 @@ const TransactionDetailScreen = ({ navigation, route }) => {
                 </FormControl.ErrorMessage>
               </FormControl>
 
+              <FormControl isRequired isInvalid={'products' in errors}>
+                <FormControl.Label>{t('products')}</FormControl.Label>
+                <Controller
+                  control={control}
+                  render={({ field: { onChange, value } }) => {
+                    return (
+                      <>
+                        {productSelected.length > 0 ? (
+                          productSelected.map((val, valIndex) => {
+                            return (
+                              <Text key={String(valIndex)}>{val.name}</Text>
+                            )
+                          })
+                        ) : (
+                          <Text color="gray.500" textAlign="center">
+                            {t('noProduct')}
+                          </Text>
+                        )}
+                        {!screenData?.isDisabled ? (
+                          <Button
+                            mt="4"
+                            onPress={() =>
+                              navigation.navigate('ParentProductScreen', {
+                                selectable: true,
+                              })
+                            }
+                          >
+                            {t('addProduct')}
+                          </Button>
+                        ) : null}
+                      </>
+                    )
+                  }}
+                  name="products"
+                  defaultValue=""
+                />
+                <FormControl.ErrorMessage>
+                  {errors?.products?.message}
+                </FormControl.ErrorMessage>
+              </FormControl>
+
               <FormControl isRequired isInvalid={'status' in errors}>
                 <FormControl.Label>{t('transactionStatus')}</FormControl.Label>
                 <Skeleton h="8" isLoaded={!isFetchingTransactionStatus}>
@@ -285,7 +329,7 @@ const TransactionDetailScreen = ({ navigation, route }) => {
                         {contacts.map(cs => (
                           <Select.Item
                             key={String(cs.id)}
-                            label={cs.name}
+                            label={`${cs.name} (${cs.email})`}
                             value={cs.id}
                           />
                         ))}

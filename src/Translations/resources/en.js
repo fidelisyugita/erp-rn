@@ -95,6 +95,7 @@ export default {
   variant: 'Variant',
   size: 'Size',
   invoiceCode: 'Invoice Code',
+  products: 'Products',
 
   dashboard: 'Dashboard',
   dataMaster: 'Data Master',
@@ -118,6 +119,7 @@ export default {
   forgotPasswordSuccess:
     'We just sent an email with a link to reset your password',
   searchProduct: 'Search Product',
+  selectProduct: 'Select Product',
   searchProductCategory: 'Search Product Category',
   searchMeasureUnit: 'Search Measure Unit',
   searchTransactionType: 'Search Transaction Type',
@@ -129,6 +131,7 @@ export default {
   searchTransaction: 'Search Transaction',
   noData: 'No Data',
   noVariant: 'No Variant',
+  noProduct: 'No Product',
   addProductCategory: 'Add Product Category',
   editProductCategory: 'Edit Product Category',
   addProductCategorySuccess: 'Add product cateogory successfully!',
