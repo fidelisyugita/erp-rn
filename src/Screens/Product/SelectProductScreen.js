@@ -4,62 +4,70 @@ import {
   Input,
   Icon,
   FlatList,
-  Text,
   Spinner,
-  Pressable,
   useTheme,
-  HStack,
-  Avatar,
-  VStack,
-  Spacer,
-  Button,
+  useDisclose,
 } from 'native-base'
 import { RefreshControl } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useTranslation } from 'react-i18next'
-import numbro from 'numbro'
 
 import { usePagination } from '@/Hooks'
-import { useLazyGetProductsQuery } from '@/Services/modules/product'
+import { useLazyGetProductVariantsQuery } from '@/Services/modules/product'
 import { selectProduct } from '@/Store/Product'
 import { useDispatch, useSelector } from 'react-redux'
-import { ProductCard } from '@/Components/Organisms'
+import { ProductCard, ProductVariantCard } from '@/Components/Organisms'
+import SelectProductDetailScreen from './SelectProductDetailScreen'
 
 const SelectProductScreen = ({ navigation, route }) => {
   const paramItem = route.params?.item || {}
 
-  const { productSelected } = useSelector(state => state.product)
-  const dispatch = useDispatch()
+  const [productSelected, setProductSelected] = React.useState(null)
 
+  // const { productSelected } = useSelector(state => state.product)
+  const dispatch = useDispatch()
   const { t } = useTranslation()
   const { colors } = useTheme()
+  const searchRef = useRef(null)
+
+  const {
+    isOpen: isAddProductOpen,
+    onOpen: onAddProductOpen,
+    onClose: onAddProductClose,
+  } = useDisclose()
+
   const [
-    {
-      list,
-      onRefresh,
-      onSearch,
-      onLoadMore,
-      keyExtractor,
-      renderEmpty,
-      renderFooter,
-    },
+    { list, onRefresh, onSearch, onLoadMore, renderEmpty, renderFooter },
     { isSearch, isRefresh, isFirstLoad },
-  ] = usePagination(useLazyGetProductsQuery, {
+  ] = usePagination(useLazyGetProductVariantsQuery, {
     params: { categoryId: paramItem?.id || '' },
   })
 
-  const searchRef = useRef(null)
-
   const onPressItem = item => {
     searchRef?.current?.blur()
+    setProductSelected(item)
+    onAddProductOpen()
   }
 
+  const onAddProduct = item => {
+    dispatch(selectProduct({ ...item, price: item.sellingPrice }))
+  }
+
+  const keyExtractor = item => String(item.barcode)
+
   const renderItem = ({ item }) => {
-    return <ProductCard item={item} onPress={onPressItem} />
+    return <ProductVariantCard item={item} onPress={onPressItem} />
   }
 
   return (
     <Box flex="1" bgColor="white" paddingX="4">
+      <SelectProductDetailScreen
+        isOpen={isAddProductOpen}
+        onCancel={onAddProductClose}
+        onClose={onAddProductClose}
+        onAdd={onAddProduct}
+        item={productSelected}
+      />
       <Input
         ref={searchRef}
         placeholder={t('searchProduct')}

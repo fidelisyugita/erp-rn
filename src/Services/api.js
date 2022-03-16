@@ -69,6 +69,7 @@ export const api = createApi({
     'MeasureUnits',
     'ProductCategories',
     'Products',
+    'ProductVariants',
     'Transactions',
     'TransactionStatus',
     'TransactionTypes',

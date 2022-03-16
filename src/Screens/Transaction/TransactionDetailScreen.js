@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Box,
   Button,
   Center,
   FormControl,
+  IconButton,
   Input,
   KeyboardAvoidingView,
   ScrollView,
@@ -19,6 +20,8 @@ import * as yup from 'yup'
 import { useTranslation } from 'react-i18next'
 import numbro from 'numbro'
 import i18n from '@/Translations'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+
 import {
   useAddTransactionMutation,
   useEditTransactionMutation,
@@ -26,7 +29,17 @@ import {
   useGetTransactionTypesQuery,
 } from '@/Services/modules/transaction'
 import { useGetContactsQuery } from '@/Services/modules/contact'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { InputAmount } from '@/Components/Atoms'
+import {
+  ProductVariantCard,
+  ProductVariantTransactionCard,
+} from '@/Components/Organisms'
+import { formatNumber } from '@/Helper/NumberHelper'
+import {
+  addAmountProductSelected,
+  minusAmountProductSelected,
+} from '@/Store/Product'
 
 const schema = yup
   .object({
@@ -35,11 +48,11 @@ const schema = yup
     description: yup.string().label(i18n.t('description')).nullable(true),
     products: yup.array().label(i18n.t('products')).required(),
     status: yup.string().label(i18n.t('transactionStatus')).required(),
-    type: yup.string().label(i18n.t('transactionType')).required(),
+    transactionType: yup.string().label(i18n.t('transactionType')).required(),
     contact: yup.string().label(i18n.t('contact')).required(),
     tax: yup.number().label(i18n.t('tax')).required(),
     discount: yup.number().label(i18n.t('discount')).required(),
-    note: yup.string().label(i18n.t('note')).required(),
+    note: yup.string().label(i18n.t('note')),
   })
   .required()
 
@@ -49,9 +62,11 @@ const TransactionDetailScreen = ({ navigation, route }) => {
   const [screenData, setScreenData] = React.useState({})
   const { t } = useTranslation()
   const { sizes } = useTheme()
+  const dispatch = useDispatch()
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -61,7 +76,7 @@ const TransactionDetailScreen = ({ navigation, route }) => {
       description: paramItem?.description,
       products: paramItem?.products,
       status: paramItem?.status,
-      type: paramItem?.type,
+      transactionType: paramItem?.type,
       contact: paramItem?.contact?.id,
       tax: paramItem?.tax,
       discount: paramItem?.discount,
@@ -133,6 +148,12 @@ const TransactionDetailScreen = ({ navigation, route }) => {
     setScreenData(tempScreen)
   }, [type])
 
+  useEffect(() => {
+    if (productSelected.length > 0 && !screenData.isDisabled) {
+      setValue('products', productSelected)
+    }
+  }, [productSelected])
+
   const onSubmit = data => {
     delete data.type
 
@@ -140,8 +161,8 @@ const TransactionDetailScreen = ({ navigation, route }) => {
       body: {
         ...data,
         status: transactionStatus.find(ts => data.status == ts.id),
-        type: transactionTypes.find(ts => data.type == ts.id),
-        // products: products.map(pr => data.products.includes(pr.id)),
+        type: transactionTypes.find(ts => data.transactionType == ts.id),
+        contact: contacts.find(c => data.contact == c.id),
       },
     }
 
@@ -217,10 +238,30 @@ const TransactionDetailScreen = ({ navigation, route }) => {
                   render={({ field: { onChange, value } }) => {
                     return (
                       <>
-                        {productSelected.length > 0 ? (
-                          productSelected.map((val, valIndex) => {
+                        {value.length > 0 ? (
+                          value.map((val, valIndex) => {
                             return (
-                              <Text key={String(valIndex)}>{val.name}</Text>
+                              <ProductVariantCard
+                                key={val.barcode}
+                                item={val}
+                                disabled
+                              >
+                                <InputAmount
+                                  disabled={screenData?.isDisabled}
+                                  value={val.amount}
+                                  alignSelf="center"
+                                  width="1/2"
+                                  onPlus={() =>
+                                    dispatch(addAmountProductSelected(valIndex))
+                                  }
+                                  onMinus={() =>
+                                    dispatch(
+                                      minusAmountProductSelected(valIndex),
+                                    )
+                                  }
+                                  stock={val.stock}
+                                />
+                              </ProductVariantCard>
                             )
                           })
                         ) : (
@@ -282,7 +323,7 @@ const TransactionDetailScreen = ({ navigation, route }) => {
                 </FormControl.ErrorMessage>
               </FormControl>
 
-              <FormControl isRequired isInvalid={'type' in errors}>
+              <FormControl isRequired isInvalid={'transactionType' in errors}>
                 <FormControl.Label>{t('transactionType')}</FormControl.Label>
                 <Skeleton h="8" isLoaded={!isFetchingTransactionTypes}>
                   <Controller
@@ -304,12 +345,12 @@ const TransactionDetailScreen = ({ navigation, route }) => {
                         ))}
                       </Select>
                     )}
-                    name="type"
+                    name="transactionType"
                     defaultValue=""
                   />
                 </Skeleton>
                 <FormControl.ErrorMessage>
-                  {errors?.type?.message}
+                  {errors?.transactionType?.message}
                 </FormControl.ErrorMessage>
               </FormControl>
 
