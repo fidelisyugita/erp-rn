@@ -17,12 +17,14 @@ import { api } from '@/Services/api'
 import * as modules from '@/Services/modules'
 import theme from './Theme'
 import session from './Session'
+import product from './Product'
 
 import actionsTracker from '@/Helper/ActionHelper'
 
 const reducers = combineReducers({
   theme,
   session,
+  product,
   ...Object.values(modules).reduce(
     (acc, module) => ({
       ...acc,

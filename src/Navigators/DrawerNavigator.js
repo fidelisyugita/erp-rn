@@ -14,7 +14,6 @@ import {
   Icon,
 } from 'native-base'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { AccountingScreen } from '@/Screens/Accounting'
 import { DashboardScreen } from '@/Screens/Dashboard'
 import { useTranslation } from 'react-i18next'
 import useSession from '@/Hooks/useSession'
@@ -27,13 +26,14 @@ import {
   useRefreshTokenMutation,
   useRefreshTokenQuery,
 } from '@/Services/modules/auth'
-import { ProductScreen } from '@/Screens/Product'
+import { ParentProductScreen } from '@/Screens/Product'
 import { MasterContactScreen } from '@/Screens/Master/Contact'
 import { TransactionScreen } from '@/Screens/Transaction'
 import { useGetProfileQuery } from '@/Services/modules/users'
 import { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { AttendanceScreen } from '@/Screens/Attendance'
+import { useAccess } from '@/Hooks'
 
 const Drawer = createDrawerNavigator()
 
@@ -60,7 +60,7 @@ const getIcon = screenName => {
   }
 }
 
-const CustomDrawerItem = ({ navigation, name, isActive, onPress }) => {
+const CustomDrawerItem = ({ name, isActive, onPress }) => {
   return (
     <Pressable
       px="5"
@@ -198,7 +198,7 @@ const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name={t('product')}
-        component={ProductScreen}
+        component={ParentProductScreen}
         options={{ title: t('product'), drawerLabel: t('product') }}
       />
       <Drawer.Screen
@@ -206,11 +206,6 @@ const DrawerNavigator = () => {
         component={TransactionScreen}
         options={{ title: t('transaction'), drawerLabel: t('transaction') }}
       />
-      {/* <Drawer.Screen
-        name="AccountingScreen"
-        component={AccountingScreen}
-        options={{ title: t('accounting'), drawerLabel: t('accounting') }}
-      /> */}
     </Drawer.Navigator>
   )
 }

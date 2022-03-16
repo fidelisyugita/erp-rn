@@ -5,9 +5,12 @@ import {
   Center,
   FormControl,
   HStack,
+  Icon,
+  IconButton,
   Image,
   Input,
   KeyboardAvoidingView,
+  Pressable,
   ScrollView,
   Select,
   Skeleton,
@@ -19,8 +22,9 @@ import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useTranslation } from 'react-i18next'
-import numbro from 'numbro'
 import i18n from '@/Translations'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import R from 'ramda'
 import {
   useAddProductMutation,
   useEditProductMutation,
@@ -28,19 +32,19 @@ import {
   useGetBrandsQuery,
 } from '@/Services/modules/product'
 import { useGetMeasureUnitsQuery } from '@/Services/modules/measureUnit'
-import { UploadImage } from '@/Components/Organisms'
+import { UploadImage, VariantCard } from '@/Components/Organisms'
 
 const schema = yup
   .object({
     type: yup.string().required(),
-    sku: yup.string().label(i18n.t('sku')).min(3).required(),
+    // sku: yup.string().label(i18n.t('sku')).min(3).required(),
     name: yup.string().label(i18n.t('name')).required(),
-    stock: yup.number().label(i18n.t('stock')).required(),
+    // stock: yup.number().label(i18n.t('stock')).required(),
     category: yup.string().label(i18n.t('category')).required(),
     brand: yup.string().label(i18n.t('brand')).required(),
-    buyingPrice: yup.string().label(i18n.t('buyingPrice')).required(),
-    sellingPrice: yup.string().label(i18n.t('sellingPrice')).required(),
-    totalSold: yup.string().label(i18n.t('totalSold')).required(),
+    // buyingPrice: yup.string().label(i18n.t('buyingPrice')).required(),
+    // sellingPrice: yup.string().label(i18n.t('sellingPrice')).required(),
+    // totalSold: yup.string().label(i18n.t('totalSold')).required(),
     measureUnit: yup.string().label(i18n.t('measureUnit')).required(),
     imageBase64: yup
       .string()
@@ -50,7 +54,21 @@ const schema = yup
         then: yup.string().label(i18n.t('image')).required(),
         otherwise: yup.string().notRequired(),
       }),
-    description: yup.string().label(i18n.t('description')).nullable(true),
+    note: yup.string().label(i18n.t('note')).nullable(true),
+    color: yup.string().label(i18n.t('color')).required(),
+    variants: yup.array().of(
+      yup
+        .object()
+        .shape({
+          size: yup.number().label(i18n.t('size')).required(),
+          stock: yup.number().label(i18n.t('stock')).required(),
+          buyingPrice: yup.string().label(i18n.t('buyingPrice')).required(),
+          sellingPrice: yup.string().label(i18n.t('sellingPrice')).required(),
+          sold: yup.string().label(i18n.t('sold')).required(),
+        })
+        .label(i18n.t('variant'))
+        .required(),
+    ),
   })
   .required()
 
@@ -68,26 +86,16 @@ const ProductDetailScreen = ({ navigation, route }) => {
     resolver: yupResolver(schema),
     defaultValues: {
       type: type,
-      sku: paramItem?.sku,
+      // sku: paramItem?.sku,
+      // barcode: paramItem?.barcode,
       name: paramItem?.name,
-      barcode: paramItem?.barcode,
-      stock: numbro(paramItem?.stock || 0).format({
-        thousandSeparated: true,
-      }),
       category: paramItem?.category?.id,
       brand: paramItem?.brand?.id,
-      buyingPrice: numbro(paramItem?.buyingPrice || 0).format({
-        thousandSeparated: true,
-      }),
-      sellingPrice: numbro(paramItem?.sellingPrice || 0).format({
-        thousandSeparated: true,
-      }),
-      totalSold: numbro(paramItem?.totalSold || 0).format({
-        thousandSeparated: true,
-      }),
       measureUnit: paramItem?.measureUnit?.id,
       imageBase64: '',
-      description: paramItem?.description,
+      note: paramItem?.note,
+      color: paramItem?.color,
+      variants: paramItem?.variants || [],
     },
   })
 
@@ -162,10 +170,6 @@ const ProductDetailScreen = ({ navigation, route }) => {
         category: productCategories.find(pc => data.category == pc.id),
         brand: brands.find(br => data.brand == br.id),
         measureUnit: measureUnits.find(mu => data.measureUnit == mu.id),
-        sellingPrice: numbro.unformat(data.sellingPrice),
-        buyingPrice: numbro.unformat(data.buyingPrice),
-        totalSold: numbro.unformat(data.totalSold),
-        stock: numbro.unformat(data.stock),
       },
     }
 
@@ -265,7 +269,7 @@ const ProductDetailScreen = ({ navigation, route }) => {
                 </FormControl.ErrorMessage>
               </FormControl>
 
-              <FormControl isRequired isInvalid={'sku' in errors}>
+              {/* <FormControl isRequired isInvalid={'sku' in errors}>
                 <FormControl.Label>{t('sku')}</FormControl.Label>
                 <Controller
                   control={control}
@@ -284,7 +288,7 @@ const ProductDetailScreen = ({ navigation, route }) => {
                 <FormControl.ErrorMessage>
                   {errors?.sku?.message}
                 </FormControl.ErrorMessage>
-              </FormControl>
+              </FormControl> */}
 
               <FormControl isRequired isInvalid={'name' in errors}>
                 <FormControl.Label>{t('name')}</FormControl.Label>
@@ -308,23 +312,44 @@ const ProductDetailScreen = ({ navigation, route }) => {
               </FormControl>
 
               <FormControl>
-                <FormControl.Label>{t('description')}</FormControl.Label>
+                <FormControl.Label>{t('note')}</FormControl.Label>
                 <Controller
                   control={control}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <Input
                       onBlur={onBlur}
-                      placeholder={t('inputDescription')}
+                      placeholder={t('inputNote')}
                       onChangeText={onChange}
                       value={value}
                       isDisabled={screenData?.isDisabled}
                     />
                   )}
-                  name="description"
+                  name="note"
                   defaultValue=""
                 />
                 <FormControl.ErrorMessage>
-                  {errors?.description}
+                  {errors?.note}
+                </FormControl.ErrorMessage>
+              </FormControl>
+
+              <FormControl isRequired isInvalid={'color' in errors}>
+                <FormControl.Label>{t('color')}</FormControl.Label>
+                <Controller
+                  control={control}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <Input
+                      onBlur={onBlur}
+                      placeholder={t('inputColor')}
+                      onChangeText={onChange}
+                      value={value}
+                      isDisabled={screenData?.isDisabled}
+                    />
+                  )}
+                  name="color"
+                  defaultValue=""
+                />
+                <FormControl.ErrorMessage>
+                  {errors?.color?.message}
                 </FormControl.ErrorMessage>
               </FormControl>
 
@@ -363,33 +388,6 @@ const ProductDetailScreen = ({ navigation, route }) => {
                   </FormControl.ErrorMessage>
                 </FormControl>
               ) : null}
-
-              <FormControl isRequired isInvalid={'stock' in errors}>
-                <FormControl.Label>{t('stock')}</FormControl.Label>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, onBlur, value } }) => {
-                    return (
-                      <Input
-                        onBlur={onBlur}
-                        placeholder={t('inputStock')}
-                        onChangeText={onChange}
-                        value={numbro(value || 0).format({
-                          thousandSeparated: true,
-                        })}
-                        isDisabled={screenData?.isDisabled}
-                        keyboardType="number-pad"
-                        maxLength={9}
-                      />
-                    )
-                  }}
-                  name="stock"
-                  defaultValue="0"
-                />
-                <FormControl.ErrorMessage>
-                  {errors?.stock?.message}
-                </FormControl.ErrorMessage>
-              </FormControl>
 
               <FormControl isRequired isInvalid={'category' in errors}>
                 <FormControl.Label>{t('category')}</FormControl.Label>
@@ -453,87 +451,6 @@ const ProductDetailScreen = ({ navigation, route }) => {
                 </FormControl.ErrorMessage>
               </FormControl>
 
-              <FormControl isRequired isInvalid={'buyingPrice' in errors}>
-                <FormControl.Label>{t('buyingPrice')}</FormControl.Label>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, onBlur, value } }) => {
-                    return (
-                      <Input
-                        onBlur={onBlur}
-                        placeholder={t('inputBuyingPrice')}
-                        onChangeText={onChange}
-                        value={numbro(value || 0).format({
-                          thousandSeparated: true,
-                        })}
-                        isDisabled={screenData?.isDisabled}
-                        keyboardType="number-pad"
-                        maxLength={9}
-                      />
-                    )
-                  }}
-                  name="buyingPrice"
-                  defaultValue="0"
-                />
-                <FormControl.ErrorMessage>
-                  {errors?.buyingPrice?.message}
-                </FormControl.ErrorMessage>
-              </FormControl>
-
-              <FormControl isRequired isInvalid={'sellingPrice' in errors}>
-                <FormControl.Label>{t('sellingPrice')}</FormControl.Label>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, onBlur, value } }) => {
-                    return (
-                      <Input
-                        onBlur={onBlur}
-                        placeholder={t('inputSellingPrice')}
-                        onChangeText={onChange}
-                        value={numbro(value || 0).format({
-                          thousandSeparated: true,
-                        })}
-                        isDisabled={screenData?.isDisabled}
-                        keyboardType="number-pad"
-                        maxLength={9}
-                      />
-                    )
-                  }}
-                  name="sellingPrice"
-                  defaultValue="0"
-                />
-                <FormControl.ErrorMessage>
-                  {errors?.sellingPrice?.message}
-                </FormControl.ErrorMessage>
-              </FormControl>
-
-              <FormControl isRequired isInvalid={'totalSold' in errors}>
-                <FormControl.Label>{t('totalSold')}</FormControl.Label>
-                <Controller
-                  control={control}
-                  render={({ field: { onChange, onBlur, value } }) => {
-                    return (
-                      <Input
-                        onBlur={onBlur}
-                        placeholder={t('inputTotalSold')}
-                        onChangeText={onChange}
-                        value={numbro(value || 0).format({
-                          thousandSeparated: true,
-                        })}
-                        isDisabled={screenData?.isDisabled}
-                        keyboardType="number-pad"
-                        maxLength={9}
-                      />
-                    )
-                  }}
-                  name="totalSold"
-                  defaultValue="0"
-                />
-                <FormControl.ErrorMessage>
-                  {errors?.totalSold?.message}
-                </FormControl.ErrorMessage>
-              </FormControl>
-
               <FormControl isRequired isInvalid={'measureUnit' in errors}>
                 <FormControl.Label>{t('measureUnit')}</FormControl.Label>
                 <Skeleton h="8" isLoaded={!isFetchingMeasureUnits}>
@@ -562,6 +479,61 @@ const ProductDetailScreen = ({ navigation, route }) => {
                 </Skeleton>
                 <FormControl.ErrorMessage>
                   {errors?.measureUnit?.message}
+                </FormControl.ErrorMessage>
+              </FormControl>
+
+              <FormControl isRequired isInvalid={'variants' in errors}>
+                <FormControl.Label>{t('variants')}</FormControl.Label>
+                <Controller
+                  control={control}
+                  render={({ field: { onChange, onBlur, value } }) => {
+                    const onSubmit = item => {
+                      onChange([...value, item])
+                    }
+
+                    const onDelete = pointer => {
+                      onChange(R.drop(pointer + 1, value))
+                    }
+
+                    return (
+                      <>
+                        {value.length > 0 ? (
+                          value.map((val, valIndex) => {
+                            return (
+                              <VariantCard
+                                key={String(valIndex)}
+                                item={val}
+                                pointer={valIndex}
+                                onDelete={onDelete}
+                              />
+                            )
+                          })
+                        ) : (
+                          <Text color="gray.500" textAlign="center">
+                            {t('noVariant')}
+                          </Text>
+                        )}
+                        {!screenData?.isDisabled ? (
+                          <Button
+                            mt="4"
+                            onPress={() =>
+                              navigation.navigate('ProductVariantScreen', {
+                                type: 'add',
+                                onSubmit: onSubmit,
+                              })
+                            }
+                          >
+                            {t('addVariant')}
+                          </Button>
+                        ) : null}
+                      </>
+                    )
+                  }}
+                  name="variants"
+                  defaultValue={[]}
+                />
+                <FormControl.ErrorMessage>
+                  {errors?.variants?.message}
                 </FormControl.ErrorMessage>
               </FormControl>
             </VStack>

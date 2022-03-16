@@ -30,11 +30,14 @@ import {
 } from '@/Services/modules/transaction'
 import numbro from 'numbro'
 import { generateDeliveryOrder } from '@/Helper/PdfHelper'
+import { resetSelectProduct } from '@/Store/Product'
+import { useDispatch } from 'react-redux'
 
 const TransactionScreen = ({ navigation }) => {
   const { t } = useTranslation()
   const { colors } = useTheme()
   const { isCanAdd } = useAccess()
+  const dispatch = useDispatch()
   const { isOpen, onOpen, onClose } = useDisclose()
   const [
     {
@@ -81,6 +84,7 @@ const TransactionScreen = ({ navigation }) => {
               navigation.navigate('TransactionDetailScreen', {
                 type: 'add',
               })
+              dispatch(resetSelectProduct())
             }}
             key="ghost"
             variant="ghost"
@@ -146,7 +150,7 @@ const TransactionScreen = ({ navigation }) => {
                   <Text color="coolGray.800" bold>
                     {item.invoiceCode}
                   </Text>
-                  <Text color="coolGray.600">{item.contact.name}</Text>
+                  <Text color="coolGray.600">{item.contact?.name}</Text>
                 </VStack>
                 <Spacer />
                 <VStack>

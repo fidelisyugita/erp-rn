@@ -25,7 +25,7 @@ const AttendanceCheckInScreen = () => {
   }
 
   return (
-    <Box flex={1} bgColor="white" paddingX="4">
+    <Box flex={1} bgColor="white" paddingX="4" pt="4">
       <Image
         alignSelf="center"
         size="4/6"

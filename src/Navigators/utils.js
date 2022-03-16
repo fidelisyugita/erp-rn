@@ -46,6 +46,12 @@ export const navigateAndSimpleReset = (name, index = 0) => {
   }
 }
 
+export const push = (name, params) => {
+  if (navigationRef?.isReady()) {
+    navigationRef?.dispatch(StackActions.pop(name, params))
+  }
+}
+
 export const navigateAndReplace = (name, params) => {
   if (navigationRef?.isReady()) {
     navigationRef?.dispatch(StackActions.replace(name, params))

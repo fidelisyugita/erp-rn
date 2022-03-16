@@ -1,14 +1,11 @@
 import React, { useRef } from 'react'
 import {
   Box,
-  Input,
-  Icon,
   FlatList,
   Text,
   Spinner,
   Pressable,
   useTheme,
-  IconButton,
   useDisclose,
   HStack,
   Avatar,
@@ -16,26 +13,21 @@ import {
   Spacer,
 } from 'native-base'
 import { RefreshControl } from 'react-native'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { useTranslation } from 'react-i18next'
+import moment from 'moment'
 
-import { usePagination, useAccess } from '@/Hooks'
+import { usePagination } from '@/Hooks'
 import { ActionSheet } from '@/Components/Organisms'
 import {
   useLazyGetAttendancesQuery,
   useApproveAttendanceMutation,
 } from '@/Services/modules/attendance'
-import numbro from 'numbro'
 import { generatePdfProduct } from '@/Helper/PdfHelper'
-import moment from 'moment'
 import { ATTENDANCE_APPROVE_STATUS } from '@/Data/Constant'
 
 const today = moment().format('YYYY-MM-DD')
 
-const AttendanceScreen = ({ navigation }) => {
-  const { t } = useTranslation()
+const AttendanceScreen = ({}) => {
   const { colors } = useTheme()
-  const { isCanAdd } = useAccess()
   const { isOpen, onOpen, onClose } = useDisclose()
   const [
     { list, onRefresh, onLoadMore, keyExtractor, renderEmpty, renderFooter },
@@ -120,28 +112,6 @@ const AttendanceScreen = ({ navigation }) => {
 
   return (
     <Box flex="1" bgColor="white" paddingX="4">
-      {/* <Input
-        ref={filterDateRef}
-        isDisabled
-        backgroundColor="transparent"
-        placeholder={t('searchEmployee')}
-        width="100%"
-        borderRadius="4"
-        py="3"
-        px="4"
-        mt="4"
-        fontSize="14"
-        onChangeText={onSearch}
-        InputRightElement={
-          <IconButton
-            color="gray.400"
-            _icon={{
-              as: MaterialIcons,
-              name: 'date-range',
-            }}
-          />
-        }
-      /> */}
       {isFirstLoad || isSearch || isRefresh ? (
         <Box mt="4" py="4" alignItems="center">
           <Spinner color="primary.500" />

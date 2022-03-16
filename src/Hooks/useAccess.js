@@ -6,7 +6,7 @@ import { getCurrentRoute } from '@/Navigators/utils'
 const matchAccess = (roleAccess = [], userRole, access) => {
   return roleAccess.some(ra => {
     return (
-      userRole.some(ur => ur.includes(ra.role)) && ra.access.includes(access)
+      userRole.some(ur => ur.includes(ra?.role)) && ra.access.includes(access)
     )
   })
 }
