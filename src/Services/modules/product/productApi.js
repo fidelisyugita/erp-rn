@@ -12,6 +12,16 @@ export const getProducts = build => {
     providesTags: ['Products'],
   })
 }
+export const getProductVariants = build => {
+  return build.query({
+    query: ({ params }) => ({
+      url: `productVariant`,
+      method: 'GET',
+      params,
+    }),
+    providesTags: ['ProductVariants'],
+  })
+}
 
 export const addProduct = build => {
   return build.mutation({

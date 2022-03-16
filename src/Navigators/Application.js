@@ -1,5 +1,5 @@
 import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { Box } from 'native-base'
@@ -30,7 +30,14 @@ import {
   MasterContactDetailScreen,
   MasterContactScreen,
 } from '@/Screens/Master/Contact'
-import { ProductDetailScreen } from '@/Screens/Product'
+import {
+  ParentProductScreen,
+  ProductDetailScreen,
+  ProductScreen,
+  ProductVariantScreen,
+  SelectProductDetailScreen,
+  SelectProductScreen,
+} from '@/Screens/Product'
 import ScanBarcodeScreen from '@/Screens/Product/ScanBarcodeScreen'
 import {
   MasterBuyingStatusDetailScreen,
@@ -45,7 +52,7 @@ import {
 import { TransactionDetailScreen } from '@/Screens/Transaction'
 import { AttendanceCheckInScreen } from '@/Screens/Attendance'
 
-const Stack = createStackNavigator()
+const Stack = createNativeStackNavigator()
 
 // @refresh reset
 const ApplicationNavigator = () => {
@@ -158,10 +165,36 @@ const ApplicationNavigator = () => {
 
           {/* Product */}
           <Stack.Screen
+            name="ParentProductScreen"
+            component={ParentProductScreen}
+            options={{ headerShown: true, title: t('productCategory') }}
+          />
+          <Stack.Screen
+            name="ProductScreen"
+            component={ProductScreen}
+            options={{ headerShown: true, title: t('product') }}
+          />
+          <Stack.Screen
             name="ProductDetailScreen"
             component={ProductDetailScreen}
             options={{ headerShown: true, title: t('productDetail') }}
           />
+          <Stack.Screen
+            name="ProductVariantScreen"
+            component={ProductVariantScreen}
+            options={{ headerShown: true, title: t('productVariant') }}
+          />
+          <Stack.Screen
+            name="SelectProductScreen"
+            component={SelectProductScreen}
+            options={{ headerShown: true, title: t('selectProduct') }}
+          />
+          <Stack.Screen
+            name="SelectProductDetailScreen"
+            component={SelectProductDetailScreen}
+            options={{ headerShown: true, title: t('selectProduct') }}
+          />
+
           <Stack.Screen
             name="ScanBarcodeScreen"
             component={ScanBarcodeScreen}

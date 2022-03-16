@@ -67,6 +67,10 @@ export default function (query, req) {
     if (isRefresh && !isFetching) {
       setRefresh(false)
     }
+
+    if (isSearch && !isFetching) {
+      setSearch(false)
+    }
   }, [isFetching])
 
   const getDataRequest = useCallback(

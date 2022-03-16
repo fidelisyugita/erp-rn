@@ -4,6 +4,7 @@ import {
   addProduct,
   editProduct,
   getProducts,
+  getProductVariants,
   deleteProduct,
   downloadPdfProduct,
 } from './productApi'
@@ -22,6 +23,7 @@ export const productApi = api.injectEndpoints({
     deleteBrand: deleteBrand(build),
 
     getProducts: getProducts(build),
+    getProductVariants: getProductVariants(build),
     addProduct: addProduct(build),
     editProduct: editProduct(build),
     deleteProduct: deleteProduct(build),
@@ -43,6 +45,7 @@ export const {
   useDeleteBrandMutation,
 
   useLazyGetProductsQuery,
+  useLazyGetProductVariantsQuery,
   useAddProductMutation,
   useEditProductMutation,
   useDeleteProductMutation,
