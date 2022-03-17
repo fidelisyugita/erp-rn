@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -49,7 +49,7 @@ const schema = yup
     products: yup.array().label(i18n.t('products')).required(),
     status: yup.string().label(i18n.t('transactionStatus')).required(),
     transactionType: yup.string().label(i18n.t('transactionType')).required(),
-    contact: yup.string().label(i18n.t('contact')).required(),
+    contact: yup.string().label(i18n.t('contact')),
     tax: yup.number().label(i18n.t('tax')).required(),
     discount: yup.number().label(i18n.t('discount')).required(),
     note: yup.string().label(i18n.t('note')),
@@ -59,7 +59,8 @@ const schema = yup
 const TransactionDetailScreen = ({ navigation, route }) => {
   const { type, item: paramItem } = route?.params
 
-  const [screenData, setScreenData] = React.useState({})
+  const [isOfflineTransaction, setOfflineTransaction] = useState(false)
+  const [screenData, setScreenData] = useState({})
   const { t } = useTranslation()
   const { sizes } = useTheme()
   const dispatch = useDispatch()
@@ -177,6 +178,14 @@ const TransactionDetailScreen = ({ navigation, route }) => {
     }
 
     submitRequest(request)
+  }
+
+  const onChangeTransactionType = value => {
+    const isOffline =
+      transactionTypes.find(ts => value == ts.id)?.name === 'OFFLINE'
+    setOfflineTransaction(isOffline)
+
+    setValue('transactionType', value)
   }
 
   return (
@@ -333,7 +342,7 @@ const TransactionDetailScreen = ({ navigation, route }) => {
                         isDisabled={screenData?.isDisabled}
                         placeholder={t('chooseTransactionType')}
                         selectedValue={value}
-                        onValueChange={onChange}
+                        onValueChange={onChangeTransactionType}
                         selectedItemBg={'teal.400'}
                       >
                         {transactionTypes.map(ts => (
@@ -354,36 +363,38 @@ const TransactionDetailScreen = ({ navigation, route }) => {
                 </FormControl.ErrorMessage>
               </FormControl>
 
-              <FormControl isRequired isInvalid={'contact' in errors}>
-                <FormControl.Label>{t('contact')}</FormControl.Label>
-                <Skeleton h="8" isLoaded={!isFetchingContacts}>
-                  <Controller
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                      <Select
-                        isDisabled={screenData?.isDisabled}
-                        placeholder={t('chooseContact')}
-                        selectedValue={value}
-                        onValueChange={onChange}
-                        selectedItemBg={'teal.400'}
-                      >
-                        {contacts.map(cs => (
-                          <Select.Item
-                            key={String(cs.id)}
-                            label={`${cs.name} (${cs.email})`}
-                            value={cs.id}
-                          />
-                        ))}
-                      </Select>
-                    )}
-                    name="contact"
-                    defaultValue=""
-                  />
-                </Skeleton>
-                <FormControl.ErrorMessage>
-                  {errors?.contact?.message}
-                </FormControl.ErrorMessage>
-              </FormControl>
+              {isOfflineTransaction ? (
+                <FormControl isInvalid={'contact' in errors}>
+                  <FormControl.Label>{t('contact')}</FormControl.Label>
+                  <Skeleton h="8" isLoaded={!isFetchingContacts}>
+                    <Controller
+                      control={control}
+                      render={({ field: { onChange, value } }) => (
+                        <Select
+                          isDisabled={screenData?.isDisabled}
+                          placeholder={t('chooseContact')}
+                          selectedValue={value}
+                          onValueChange={onChange}
+                          selectedItemBg={'teal.400'}
+                        >
+                          {contacts.map(cs => (
+                            <Select.Item
+                              key={String(cs.id)}
+                              label={`${cs.name} (${cs.email})`}
+                              value={cs.id}
+                            />
+                          ))}
+                        </Select>
+                      )}
+                      name="contact"
+                      defaultValue=""
+                    />
+                  </Skeleton>
+                  <FormControl.ErrorMessage>
+                    {errors?.contact?.message}
+                  </FormControl.ErrorMessage>
+                </FormControl>
+              ) : null}
 
               <FormControl isRequired isInvalid={'tax' in errors}>
                 <FormControl.Label>{t('tax')}</FormControl.Label>
