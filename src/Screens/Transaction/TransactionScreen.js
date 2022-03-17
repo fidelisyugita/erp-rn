@@ -143,14 +143,22 @@ const TransactionScreen = ({ navigation }) => {
                   borderRadius="2"
                   size="48px"
                   source={{
-                    uri: item.imageUrl,
+                    uri: item?.products[0]?.imageUrl,
                   }}
                 />
                 <VStack>
                   <Text color="coolGray.800" bold>
                     {item.invoiceCode}
                   </Text>
-                  <Text color="coolGray.600">{item.contact?.name}</Text>
+                  <Text color="coolGray.600">
+                    {item?.contact?.name ? item.contact.name : 'Marketplace'}
+                  </Text>
+                  {/* <Text color="coolGray.600">
+                    {item.products.map((p, idx) => {
+                      if (idx) return `, ${p.sku}`
+                      return p.sku
+                    })}
+                  </Text> */}
                 </VStack>
                 <Spacer />
                 <VStack>

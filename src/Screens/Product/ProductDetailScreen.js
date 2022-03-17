@@ -353,7 +353,7 @@ const ProductDetailScreen = ({ navigation, route }) => {
                 </FormControl.ErrorMessage>
               </FormControl>
 
-              {type !== 'add' ? (
+              {/* {type !== 'add' ? (
                 <FormControl isRequired isInvalid={'barcode' in errors}>
                   <FormControl.Label>{t('barcode')}</FormControl.Label>
                   <Controller
@@ -387,7 +387,7 @@ const ProductDetailScreen = ({ navigation, route }) => {
                     {errors?.barcode?.message}
                   </FormControl.ErrorMessage>
                 </FormControl>
-              ) : null}
+              ) : null} */}
 
               <FormControl isRequired isInvalid={'category' in errors}>
                 <FormControl.Label>{t('category')}</FormControl.Label>
