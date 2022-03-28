@@ -144,8 +144,9 @@ const TransactionScreen = ({ navigation }) => {
   }
 
   return (
-    <Box flex="1" bgColor="white" paddingX="4">
+    <Box flex="1" bgColor="white">
       <Input
+        mx="4"
         ref={searchRef}
         placeholder={t('searchTransaction')}
         width="100%"
@@ -182,6 +183,7 @@ const TransactionScreen = ({ navigation }) => {
         </Box>
       ) : (
         <FlatList
+          mx="4"
           ListEmptyComponent={renderEmpty}
           ListFooterComponent={renderFooter}
           data={list}
