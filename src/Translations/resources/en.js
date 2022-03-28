@@ -206,4 +206,7 @@ export default {
 
   pending: 'Pending',
   approved: 'Approved',
+  otherProducts: '+ {{total}} other products',
+  allStatus: 'All Status',
+  allType: 'All Type',
 }

@@ -1,26 +1,21 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   Box,
   Input,
   Icon,
   FlatList,
-  Text,
   Spinner,
-  Pressable,
   useTheme,
   IconButton,
   useDisclose,
-  HStack,
-  Avatar,
-  VStack,
-  Spacer,
 } from 'native-base'
 import { RefreshControl } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useTranslation } from 'react-i18next'
+import moment from 'moment'
 
 import { usePagination, useAccess } from '@/Hooks'
-import { ActionSheet } from '@/Components/Organisms'
+import { ActionSheet, TransactionCard } from '@/Components/Organisms'
 import {
   useLazyGetTransactionsQuery,
   useAddTransactionMutation,
@@ -28,10 +23,10 @@ import {
   useDeleteTransactionMutation,
   useDownloadPdfTransactionMutation,
 } from '@/Services/modules/transaction'
-import numbro from 'numbro'
 import { generateDeliveryOrder } from '@/Helper/PdfHelper'
 import { resetSelectProduct } from '@/Store/Product'
 import { useDispatch } from 'react-redux'
+import FilterTransaction from './Components/FilterTransaction'
 
 const TransactionScreen = ({ navigation }) => {
   const { t } = useTranslation()
@@ -39,6 +34,14 @@ const TransactionScreen = ({ navigation }) => {
   const { isCanAdd } = useAccess()
   const dispatch = useDispatch()
   const { isOpen, onOpen, onClose } = useDisclose()
+  const [selectedItem, setSelectedItem] = useState({})
+  const [filterStatus, setFilterStatus] = useState('')
+  const [filterType, setFilterType] = useState('')
+  const [filterDate, setFilterDate] = useState({
+    firstDate: moment().format('YYYY-MM-DD'),
+    secondDate: moment().format('YYY-MM-DD'),
+  })
+
   const [
     {
       list,
@@ -50,7 +53,18 @@ const TransactionScreen = ({ navigation }) => {
       renderFooter,
     },
     { isSearch, isRefresh, isFirstLoad },
-  ] = usePagination(useLazyGetTransactionsQuery)
+  ] = usePagination(useLazyGetTransactionsQuery, {
+    params: {
+      statusId: filterStatus,
+      typeId: filterType,
+      startDate: filterDate.firstDate,
+      endDate: filterDate.secondDate,
+    },
+  })
+
+  useEffect(() => {
+    onRefresh()
+  }, [filterStatus, filterType, filterDate])
 
   const [
     deleteTrigger,
@@ -72,8 +86,6 @@ const TransactionScreen = ({ navigation }) => {
   ] = useEditTransactionMutation({
     fixedCacheKey: 'edit-transaction',
   })
-
-  const [selectedItem, setSelectedItem] = React.useState({})
 
   React.useLayoutEffect(() => {
     if (isCanAdd) {
@@ -128,56 +140,7 @@ const TransactionScreen = ({ navigation }) => {
   }
 
   const renderItem = ({ item }) => {
-    return (
-      <Pressable onPress={() => onPressItem(item)}>
-        {({ isPressed }) => {
-          return (
-            <Box
-              borderBottomWidth={1}
-              borderColor="coolGray.200"
-              py="2"
-              bg={isPressed ? 'coolGray.200' : 'white'}
-            >
-              <HStack space={3} justifyContent="space-between">
-                <Avatar
-                  borderRadius="2"
-                  size="48px"
-                  source={{
-                    uri: item?.products[0]?.imageUrl,
-                  }}
-                />
-                <VStack>
-                  <Text color="coolGray.800" bold>
-                    {item.invoiceCode}
-                  </Text>
-                  <Text color="coolGray.600">
-                    {item?.contact?.name ? item.contact.name : 'Marketplace'}
-                  </Text>
-                  {/* <Text color="coolGray.600">
-                    {item.products.map((p, idx) => {
-                      if (idx) return `, ${p.sku}`
-                      return p.sku
-                    })}
-                  </Text> */}
-                </VStack>
-                <Spacer />
-                <VStack>
-                  <Text fontSize="xs" color="coolGray.800" textAlign="right">
-                    {numbro(item.totalPrice || 0).format({
-                      thousandSeparated: true,
-                      prefix: 'Rp ',
-                    })}
-                  </Text>
-                  <Text fontSize="xs" color="coolGray.800">
-                    {item.status.name}
-                  </Text>
-                </VStack>
-              </HStack>
-            </Box>
-          )
-        }}
-      </Pressable>
-    )
+    return <TransactionCard item={item} onPress={onPressItem} />
   }
 
   return (
@@ -205,21 +168,31 @@ const TransactionScreen = ({ navigation }) => {
           isSearch ? <Spinner color="primary.500" m="2" mr="3" /> : null
         }
       />
+      <FilterTransaction
+        setFilterStatus={setFilterStatus}
+        filterStatus={filterStatus}
+        setFilterType={setFilterType}
+        filterType={filterType}
+        filterDate={filterDate}
+        setFilterDate={setFilterDate}
+      />
       {isFirstLoad || isSearch || isRefresh ? (
         <Box mt="4" py="4" alignItems="center">
           <Spinner color="primary.500" />
         </Box>
       ) : (
         <FlatList
-          mt="4"
+          ListEmptyComponent={renderEmpty}
+          ListFooterComponent={renderFooter}
           data={list}
           keyExtractor={keyExtractor}
+          mt="4"
           onEndReached={onLoadMore}
           onEndReachedThreshold={0.5}
           renderItem={renderItem}
-          ListEmptyComponent={renderEmpty}
-          ListFooterComponent={renderFooter}
           showsVerticalScrollIndicator={false}
+          _contentContainerStyle={{ pb: '4' }}
+          ItemSeparatorComponent={() => <Box mb="2" />}
           refreshControl={
             <RefreshControl
               refreshing={isRefresh}
