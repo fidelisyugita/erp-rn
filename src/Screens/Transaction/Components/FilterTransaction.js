@@ -57,7 +57,14 @@ const FilterTransaction = ({
         selectedRange={filterDate}
       />
       <Box>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} mt="2">
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          mt="2"
+          _contentContainerStyle={{
+            px: '4',
+          }}
+        >
           <Skeleton h="10" isLoaded={!isFetchingTransactionStatus}>
             <Select
               selectedValue={filterStatus}
