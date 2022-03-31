@@ -65,7 +65,7 @@ const FilterTransaction = ({
             px: '4',
           }}
         >
-          <Skeleton h="10" isLoaded={!isFetchingTransactionStatus}>
+          <Skeleton h="10" isLoaded={!isFetchingTransactionStatus} mr="1">
             <Select
               selectedValue={filterStatus}
               minWidth="100"
@@ -87,7 +87,7 @@ const FilterTransaction = ({
               ))}
             </Select>
           </Skeleton>
-          <Skeleton h="10" isLoaded={!isFetchingTransactionTypes}>
+          <Skeleton h="10" isLoaded={!isFetchingTransactionTypes} mr="1">
             <Select
               selectedValue={filterType}
               minWidth="100"

@@ -76,8 +76,8 @@ const TransactionDetailScreen = ({ navigation, route }) => {
       invoiceCode: paramItem?.invoiceCode,
       description: paramItem?.description,
       products: paramItem?.products,
-      status: paramItem?.status,
-      transactionType: paramItem?.type,
+      status: paramItem?.status?.id,
+      transactionType: paramItem?.type?.id,
       contact: paramItem?.contact?.id,
       tax: paramItem?.tax,
       discount: paramItem?.discount,
@@ -150,7 +150,7 @@ const TransactionDetailScreen = ({ navigation, route }) => {
   }, [type])
 
   useEffect(() => {
-    if (productSelected.length > 0 && !screenData.isDisabled) {
+    if (productSelected.length > 0 && screenData.isDisabled == false) {
       setValue('products', productSelected)
     }
   }, [productSelected])

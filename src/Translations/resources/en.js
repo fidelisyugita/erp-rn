@@ -96,6 +96,7 @@ export default {
   size: 'Size',
   invoiceCode: 'Invoice Code',
   products: 'Products',
+  status: 'Status',
 
   dashboard: 'Dashboard',
   dataMaster: 'Data Master',
@@ -209,4 +210,5 @@ export default {
   otherProducts: '+ {{total}} other products',
   allStatus: 'All Status',
   allType: 'All Type',
+  updateOrTracking: 'Update/Tracking',
 }

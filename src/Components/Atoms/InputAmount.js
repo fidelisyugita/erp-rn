@@ -19,8 +19,8 @@ const InputAmount = ({ value, onPlus, onMinus, disabled = false, ...rest }) => {
       InputLeftElement={
         <IconButton
           variant="solid"
-          disabled={disabled}
-          isDisabled={disabled}
+          disabled={disabled || value < 1}
+          isDisabled={disabled || value < 1}
           onPress={onMinus}
           _icon={{
             as: MaterialCommunityIcons,
