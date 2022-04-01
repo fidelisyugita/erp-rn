@@ -13,6 +13,7 @@ import { RefreshControl } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useTranslation } from 'react-i18next'
 import moment from 'moment'
+import { useDispatch } from 'react-redux'
 
 import { usePagination, useAccess } from '@/Hooks'
 import { ActionSheet, TransactionCard } from '@/Components/Organisms'
@@ -21,12 +22,11 @@ import {
   useAddTransactionMutation,
   useEditTransactionMutation,
   useDeleteTransactionMutation,
-  useDownloadPdfTransactionMutation,
 } from '@/Services/modules/transaction'
 import { generateDeliveryOrder } from '@/Helper/PdfHelper'
 import { resetSelectProduct } from '@/Store/Product'
-import { useDispatch } from 'react-redux'
 import FilterTransaction from './Components/FilterTransaction'
+import ActionSheetTransaction from './Components/ActionSheetTransaction'
 
 const TransactionScreen = ({ navigation }) => {
   const { t } = useTranslation()
@@ -145,30 +145,31 @@ const TransactionScreen = ({ navigation }) => {
 
   return (
     <Box flex="1" bgColor="white">
-      <Input
-        mx="4"
-        ref={searchRef}
-        placeholder={t('searchTransaction')}
-        width="100%"
-        borderRadius="4"
-        py="3"
-        px="1"
-        mt="4"
-        fontSize="14"
-        onChangeText={onSearch}
-        InputLeftElement={
-          <Icon
-            m="2"
-            ml="3"
-            size="6"
-            color="gray.400"
-            as={<MaterialIcons name="search" />}
-          />
-        }
-        InputRightElement={
-          isSearch ? <Spinner color="primary.500" m="2" mr="3" /> : null
-        }
-      />
+      <Box px="4">
+        <Input
+          ref={searchRef}
+          placeholder={t('searchTransaction')}
+          width="100%"
+          borderRadius="4"
+          py="3"
+          px="1"
+          mt="4"
+          fontSize="14"
+          onChangeText={onSearch}
+          InputLeftElement={
+            <Icon
+              m="2"
+              ml="3"
+              size="6"
+              color="gray.400"
+              as={<MaterialIcons name="search" />}
+            />
+          }
+          InputRightElement={
+            isSearch ? <Spinner color="primary.500" m="2" mr="3" /> : null
+          }
+        />
+      </Box>
       <FilterTransaction
         setFilterStatus={setFilterStatus}
         filterStatus={filterStatus}
@@ -205,14 +206,10 @@ const TransactionScreen = ({ navigation }) => {
           }
         />
       )}
-      <ActionSheet
+      <ActionSheetTransaction
         isOpen={isOpen}
         onClose={onClose}
         item={selectedItem}
-        screenName="TransactionDetailScreen"
-        deleteMutation={useDeleteTransactionMutation}
-        deleteFixedCacheKey="delete-transaction"
-        downloadPdf={generateDeliveryOrder}
       />
     </Box>
   )

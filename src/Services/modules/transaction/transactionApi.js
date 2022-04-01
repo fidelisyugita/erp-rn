@@ -81,6 +81,30 @@ export const deleteTransaction = build => {
   })
 }
 
+export const trackTransaction = build => {
+  return build.mutation({
+    query: ({ id, body = {} }) => ({
+      url: `transaction/${id}`,
+      method: 'PUT',
+      body,
+    }),
+    async onQueryStarted(arg, { queryFulfilled }) {
+      try {
+        const result = await queryFulfilled
+
+        if (result) {
+          Toast.show({
+            description: i18n.t('updateTransactionSuccess'),
+          })
+        }
+        pop?.()
+      } catch (error) {
+        console.error(error)
+      }
+    },
+  })
+}
+
 export const downloadPdfTransaction = build => {
   return build.mutation({
     query: ({ id }) => ({
@@ -89,4 +113,3 @@ export const downloadPdfTransaction = build => {
     }),
   })
 }
-

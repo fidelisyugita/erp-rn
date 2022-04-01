@@ -57,8 +57,20 @@ const FilterTransaction = ({
         selectedRange={filterDate}
       />
       <Box>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} mt="2">
-          <Skeleton h="10" isLoaded={!isFetchingTransactionStatus}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          mt="2"
+          _contentContainerStyle={{
+            px: '4',
+          }}
+        >
+          <Skeleton
+            h="12"
+            w="100"
+            isLoaded={!isFetchingTransactionStatus}
+            mr="1"
+          >
             <Select
               selectedValue={filterStatus}
               minWidth="100"
@@ -80,7 +92,12 @@ const FilterTransaction = ({
               ))}
             </Select>
           </Skeleton>
-          <Skeleton h="10" isLoaded={!isFetchingTransactionTypes}>
+          <Skeleton
+            h="12"
+            w="100"
+            isLoaded={!isFetchingTransactionTypes}
+            mr="1"
+          >
             <Select
               selectedValue={filterType}
               minWidth="100"

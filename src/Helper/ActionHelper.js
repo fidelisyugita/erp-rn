@@ -33,6 +33,7 @@ const showLoadingActions = [
   'addAttendance',
   'approveAttendance',
   'addTransaction',
+  'trackTransaction',
 ]
 
 const hideLoadingActions = [
@@ -68,6 +69,7 @@ const hideLoadingActions = [
   'addAttendance',
   'approveAttendance',
   'addTransaction',
+  'trackTransaction',
 ]
 
 const actionsTracker = () => next => action => {
