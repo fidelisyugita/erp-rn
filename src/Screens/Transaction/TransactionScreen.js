@@ -22,6 +22,7 @@ import {
   useAddTransactionMutation,
   useEditTransactionMutation,
   useDeleteTransactionMutation,
+  useTrackTransactionMutation,
 } from '@/Services/modules/transaction'
 import { generateDeliveryOrder } from '@/Helper/PdfHelper'
 import { resetSelectProduct } from '@/Store/Product'
@@ -87,6 +88,11 @@ const TransactionScreen = ({ navigation }) => {
     fixedCacheKey: 'edit-transaction',
   })
 
+  const [
+    trackTrigger,
+    { isSuccess: isSuccessTrack, reset: resetTrack },
+  ] = useTrackTransactionMutation({ fixedCacheKey: 'track-transaction' })
+
   React.useLayoutEffect(() => {
     if (isCanAdd) {
       navigation.setOptions({
@@ -130,6 +136,13 @@ const TransactionScreen = ({ navigation }) => {
       resetDelete()
     }
   }, [isSuccessDelete])
+
+  React.useEffect(() => {
+    if (isSuccessTrack) {
+      onRefresh()
+      resetTrack()
+    }
+  }, [isSuccessTrack])
 
   const searchRef = useRef(null)
 
