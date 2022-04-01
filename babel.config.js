@@ -18,4 +18,7 @@ plugins.push(
 module.exports = {
   presets,
   plugins,
+  env: {
+    production: { plugins: [...plugins, 'transform-remove-console'] },
+  },
 }
