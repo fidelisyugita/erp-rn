@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {
   Box,
+  Button,
   CheckIcon,
   FlatList,
   HStack,
@@ -8,8 +9,12 @@ import {
   Skeleton,
   Text,
 } from 'native-base'
+import R from 'ramda'
 import { useTranslation } from 'react-i18next'
-import { useGetTransactionStatusQuery } from '@/Services/modules/transaction'
+import {
+  useGetTransactionStatusQuery,
+  useTrackTransactionMutation,
+} from '@/Services/modules/transaction'
 import UpdateProductCard from './Components/UpdateProductCard'
 
 const TransactionUpdateScreen = ({ route }) => {
@@ -17,12 +22,50 @@ const TransactionUpdateScreen = ({ route }) => {
 
   const [status, setStatus] = useState(transaction?.status?.id)
 
-  const [products, setProducts] = useState(transaction.products)
+  const [products, setProducts] = useState(
+    transaction.products.map(p => ({
+      ...p,
+      received: 0,
+      rejected: 0,
+    })),
+  )
+
+  const toggleReceived = (item, operand) => {
+    setProducts(pr => {
+      const index = R.findIndex(p => p.barcode == item.barcode, pr)
+      const received =
+        operand == 'plus'
+          ? pr[index].received + 1
+          : operand == 'minus'
+          ? pr[index].received - 1
+          : operand
+      return R.update(index, { ...pr[index], received: received })(pr)
+    })
+  }
+
+  const toggleRejected = (item, operand) => {
+    setProducts(pr => {
+      const index = R.findIndex(p => p.barcode == item.barcode, pr)
+      const rejected =
+        operand == 'plus'
+          ? pr[index].rejected + 1
+          : operand == 'minus'
+          ? pr[index].rejected - 1
+          : operand
+      return R.update(index, { ...pr[index], rejected: rejected })(pr)
+    })
+  }
 
   const keyExtractor = item => String(item.barcode)
 
   const renderItem = ({ item }) => {
-    return <UpdateProductCard item={item} />
+    return (
+      <UpdateProductCard
+        item={item}
+        toggleReceived={toggleReceived}
+        toggleRejected={toggleRejected}
+      />
+    )
   }
 
   return (
@@ -35,6 +78,20 @@ const TransactionUpdateScreen = ({ route }) => {
             setStatus={setStatus}
           />
         }
+        ListFooterComponent={
+          <ListFooterComponent
+            id={transaction.id}
+            products={products}
+            status={status}
+          />
+        }
+        _contentContainerStyle={{ flexGrow: 1 }}
+        ListFooterComponentStyle={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
         data={products}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
@@ -81,6 +138,29 @@ const ListHeaderComponent = ({ invoiceCode, status, setStatus }) => {
       </HStack>
       <Text mt="4">{t('products')}</Text>
     </Box>
+  )
+}
+
+const ListFooterComponent = ({ id, products, status }) => {
+  const { t } = useTranslation()
+  const [submitRequest] = useTrackTransactionMutation({
+    fixedCacheKey: 'track-transaction',
+  })
+
+  const submit = () => {
+    const request = {
+      id,
+      body: {
+        status: { id: status },
+        products,
+      },
+    }
+    submitRequest(request)
+  }
+  return (
+    <Button onPress={submit} colorScheme="primary" mx="4" my="4">
+      {t('submit')}
+    </Button>
   )
 }
 

@@ -20,7 +20,7 @@ export const navigate = (name, params) => {
 
 export const pop = count => {
   if (navigationRef?.isReady()) {
-    navigationRef?.dispatch(CommonActions.goBack())
+    navigationRef?.dispatch(StackActions.pop(count))
   }
 }
 

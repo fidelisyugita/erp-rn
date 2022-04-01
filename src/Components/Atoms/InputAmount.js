@@ -4,7 +4,15 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { formatNumber } from '@/Helper/NumberHelper'
 import { useTranslation } from 'react-i18next'
 
-const InputAmount = ({ value, onPlus, onMinus, disabled = false, ...rest }) => {
+const InputAmount = ({
+  value,
+  onPlus,
+  onMinus,
+  disabled = false,
+  disabledPlus = false,
+  onChangeValue,
+  ...rest
+}) => {
   const { t } = useTranslation()
   return (
     <Input
@@ -31,8 +39,8 @@ const InputAmount = ({ value, onPlus, onMinus, disabled = false, ...rest }) => {
       InputRightElement={
         <IconButton
           variant="solid"
-          disabled={disabled}
-          isDisabled={disabled}
+          disabled={disabled || disabledPlus}
+          isDisabled={disabled || disabledPlus}
           onPress={onPlus}
           _icon={{
             as: MaterialCommunityIcons,
