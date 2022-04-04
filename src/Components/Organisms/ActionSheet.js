@@ -155,20 +155,20 @@ const ActionSheet = ({
               {t('downloadPdf')}
             </Actionsheet.Item>
           ) : null}
-          {isCanView ? (
-            <Actionsheet.Item
-              onPress={onView}
-              startIcon={
-                <Icon
-                  as={<MaterialIcons name="remove-red-eye" />}
-                  color="muted.500"
-                  mr={3}
-                />
-              }
-            >
-              {t('view')}
-            </Actionsheet.Item>
-          ) : null}
+          {/* {isCanView ? ( */}
+          <Actionsheet.Item
+            onPress={onView}
+            startIcon={
+              <Icon
+                as={<MaterialIcons name="remove-red-eye" />}
+                color="muted.500"
+                mr={3}
+              />
+            }
+          >
+            {t('view')}
+          </Actionsheet.Item>
+          {/* ) : null} */}
           {isCanEdit && !approveMutation ? (
             <Actionsheet.Item
               onPress={onEdit}
