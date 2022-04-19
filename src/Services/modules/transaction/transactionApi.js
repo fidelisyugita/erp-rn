@@ -113,3 +113,12 @@ export const downloadPdfTransaction = build => {
     }),
   })
 }
+
+export const transactionOnline = build => {
+  return build.mutation({
+    query: () => ({
+      url: 'transaction/online',
+      method: 'POST',
+    }),
+  })
+}

@@ -74,6 +74,7 @@ const FilterTransaction = ({
             <Select
               selectedValue={filterStatus}
               minWidth="100"
+              h="12"
               placeholder={t('allStatus')}
               onValueChange={setFilterStatus}
               mr="1"
@@ -101,6 +102,7 @@ const FilterTransaction = ({
             <Select
               selectedValue={filterType}
               minWidth="100"
+              h="12"
               placeholder={t('allType')}
               onValueChange={setFilterType}
               mr="1"

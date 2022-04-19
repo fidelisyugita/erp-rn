@@ -28,6 +28,7 @@ import { generateDeliveryOrder } from '@/Helper/PdfHelper'
 import { resetSelectProduct } from '@/Store/Product'
 import FilterTransaction from './Components/FilterTransaction'
 import ActionSheetTransaction from './Components/ActionSheetTransaction'
+import ActionSheetAddOption from './Components/ActionSheetAddOption'
 
 const TransactionScreen = ({ navigation }) => {
   const { t } = useTranslation()
@@ -35,6 +36,11 @@ const TransactionScreen = ({ navigation }) => {
   const { isCanAdd } = useAccess()
   const dispatch = useDispatch()
   const { isOpen, onOpen, onClose } = useDisclose()
+  const {
+    isOpen: isOpenAdd,
+    onOpen: onOpenAdd,
+    onClose: onCloseAdd,
+  } = useDisclose()
   const [selectedItem, setSelectedItem] = useState({})
   const [filterStatus, setFilterStatus] = useState('')
   const [filterType, setFilterType] = useState('')
@@ -99,10 +105,7 @@ const TransactionScreen = ({ navigation }) => {
         headerRight: () => (
           <IconButton
             onPress={() => {
-              navigation.navigate('TransactionDetailScreen', {
-                type: 'add',
-              })
-              dispatch(resetSelectProduct())
+              onOpenAdd()
             }}
             key="ghost"
             variant="ghost"
@@ -114,7 +117,7 @@ const TransactionScreen = ({ navigation }) => {
         ),
       })
     }
-  }, [navigation, isCanAdd])
+  }, [navigation, isCanAdd, onOpenAdd])
 
   React.useEffect(() => {
     if (isSuccessAdd) {
@@ -224,6 +227,7 @@ const TransactionScreen = ({ navigation }) => {
         onClose={onClose}
         item={selectedItem}
       />
+      <ActionSheetAddOption isOpen={isOpenAdd} onClose={onCloseAdd} />
     </Box>
   )
 }

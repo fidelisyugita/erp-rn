@@ -51,6 +51,7 @@ import {
 } from '@/Screens/Master/Brand'
 import {
   TransactionDetailScreen,
+  TransactionOnlineDetailScreen,
   TransactionUpdateScreen,
 } from '@/Screens/Transaction'
 import { AttendanceCheckInScreen } from '@/Screens/Attendance'
@@ -214,6 +215,11 @@ const ApplicationNavigator = () => {
             name="TransactionUpdateScreen"
             component={TransactionUpdateScreen}
             options={{ headerShown: true, title: t('updateOrTracking') }}
+          />
+          <Stack.Screen
+            name="TransactionOnlineDetailScreen"
+            component={TransactionOnlineDetailScreen}
+            options={{ headerShown: true, title: t('addOnlineTransaction') }}
           />
         </Stack.Navigator>
       </NavigationContainer>
