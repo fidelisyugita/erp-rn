@@ -160,3 +160,60 @@ export const deleteBuyingType = build => {
   })
 }
 
+export const getBuying = build => {
+  return build.query({
+    query: ({ params }) => ({
+      url: `buying`,
+      method: 'GET',
+      params,
+    }),
+    providesTags: ['Buying'],
+  })
+}
+
+export const addBuying = build => {
+  return build.mutation({
+    query: ({ body }) => ({
+      url: 'buying',
+      method: 'POST',
+      body,
+    }),
+    async onQueryStarted(arg, { queryFulfilled }) {
+      try {
+        const { data } = await queryFulfilled
+        if (data) {
+          Toast.show({
+            description: i18n.t('addBuyingSuccess'),
+          })
+        }
+        pop?.()
+      } catch (error) {
+        console.error(error)
+      }
+    },
+  })
+}
+
+export const trackBuying = build => {
+  return build.mutation({
+    query: ({ id, body = {} }) => ({
+      url: `buying/${id}`,
+      method: 'PUT',
+      body,
+    }),
+    async onQueryStarted(arg, { queryFulfilled }) {
+      try {
+        const result = await queryFulfilled
+
+        if (result) {
+          Toast.show({
+            description: i18n.t('updateBuyingSuccess'),
+          })
+        }
+        pop?.()
+      } catch (error) {
+        console.error(error)
+      }
+    },
+  })
+}

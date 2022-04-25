@@ -27,11 +27,13 @@ import {
 } from '@/Services/modules/transaction'
 import { generateDeliveryOrder } from '@/Helper/PdfHelper'
 import { resetSelectProduct } from '@/Store/Product'
-import FilterTransaction from './Components/FilterTransaction'
-import ActionSheetTransaction from './Components/ActionSheetTransaction'
+import FilterBuying from './Components/FilterBuying'
+import ActionSheetTransaction from './Components/ActionSheetBuying'
 import ActionSheetAddOption from './Components/ActionSheetAddOption'
+import ActionSheetBuying from './Components/ActionSheetBuying'
+import { useLazyGetBuyingQuery } from '@/Services/modules/buying'
 
-const TransactionScreen = ({ navigation }) => {
+const BuyingScreen = ({ navigation }) => {
   const { t } = useTranslation()
   const { colors } = useTheme()
   const { isCanAdd } = useAccess()
@@ -61,7 +63,7 @@ const TransactionScreen = ({ navigation }) => {
       renderFooter,
     },
     { isSearch, isRefresh, isFirstLoad },
-  ] = usePagination(useLazyGetTransactionsQuery, {
+  ] = usePagination(useLazyGetBuyingQuery, {
     params: {
       statusId: filterStatus,
       typeId: filterType,
@@ -111,7 +113,7 @@ const TransactionScreen = ({ navigation }) => {
         headerRight: () => (
           <IconButton
             onPress={() => {
-              onOpenAdd()
+              navigation.navigate('BuyingDetailScreen', { type: 'add' })
             }}
             key="ghost"
             variant="ghost"
@@ -177,7 +179,7 @@ const TransactionScreen = ({ navigation }) => {
       <Box px="4">
         <Input
           ref={searchRef}
-          placeholder={t('searchTransaction')}
+          placeholder={t('search')}
           width="100%"
           borderRadius="4"
           py="3"
@@ -199,7 +201,7 @@ const TransactionScreen = ({ navigation }) => {
           }
         />
       </Box>
-      <FilterTransaction
+      <FilterBuying
         setFilterStatus={setFilterStatus}
         filterStatus={filterStatus}
         setFilterType={setFilterType}
@@ -235,14 +237,13 @@ const TransactionScreen = ({ navigation }) => {
           }
         />
       )}
-      <ActionSheetTransaction
+      <ActionSheetBuying
         isOpen={isOpen}
         onClose={onClose}
         item={selectedItem}
       />
-      <ActionSheetAddOption isOpen={isOpenAdd} onClose={onCloseAdd} />
     </Box>
   )
 }
 
-export default TransactionScreen
+export default BuyingScreen

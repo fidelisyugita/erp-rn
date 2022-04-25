@@ -116,9 +116,23 @@ export const downloadPdfTransaction = build => {
 
 export const transactionOnline = build => {
   return build.mutation({
-    query: () => ({
+    query: ({ body = {} }) => ({
       url: 'transaction/online',
       method: 'POST',
+      body,
     }),
+    async onQueryStarted(arg, { queryFulfilled }) {
+      try {
+        const { data } = await queryFulfilled
+        if (data) {
+          Toast.show({
+            description: i18n.t('addTransactionSuccess'),
+          })
+        }
+        pop?.()
+      } catch (error) {
+        console.error(error)
+      }
+    },
   })
 }

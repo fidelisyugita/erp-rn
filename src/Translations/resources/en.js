@@ -43,6 +43,7 @@ export default {
   contactDetail: 'Contact Detail',
   ok: 'Ok',
   sold: 'Sold',
+  buying: 'Buying',
 
   name: 'Name',
   description: 'Description',
@@ -211,4 +212,9 @@ export default {
   allStatus: 'All Status',
   allType: 'All Type',
   updateOrTracking: 'Update/Tracking',
+  online: 'Online',
+  offline: 'Offline',
+  barcodeAlreadyExist: 'Barcode already exist',
+  addOnlineTransaction: 'Add Online Transaction',
+  invoiceCodeRequiredField: 'Invoice code is required field',
 }
