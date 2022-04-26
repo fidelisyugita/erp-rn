@@ -4,7 +4,6 @@ import {
   Button,
   Center,
   FormControl,
-  IconButton,
   Input,
   KeyboardAvoidingView,
   ScrollView,
@@ -20,16 +19,9 @@ import * as yup from 'yup'
 import { useTranslation } from 'react-i18next'
 import numbro from 'numbro'
 import i18n from '@/Translations'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-
-import {
-  useAddTransactionMutation,
-  useEditTransactionMutation,
-  useGetTransactionStatusQuery,
-  useGetTransactionTypesQuery,
-} from '@/Services/modules/transaction'
-import { useGetContactsQuery } from '@/Services/modules/contact'
 import { useDispatch, useSelector } from 'react-redux'
+
+import { useGetContactsQuery } from '@/Services/modules/contact'
 import { InputAmount } from '@/Components/Atoms'
 import {
   ProductVariantCard,
@@ -40,15 +32,20 @@ import {
   addAmountProductSelected,
   minusAmountProductSelected,
 } from '@/Store/Product'
+import {
+  useAddBuyingMutation,
+  useGetBuyingStatusQuery,
+  useGetBuyingTypeQuery,
+} from '@/Services/modules/buying'
 
 const schema = yup
   .object({
     type: yup.string().required(),
     invoiceCode: yup.string().label(i18n.t('invoiceCode')).min(3).required(),
     description: yup.string().label(i18n.t('description')).nullable(true),
-    products: yup.array().label(i18n.t('products')).required(),
-    status: yup.string().label(i18n.t('transactionStatus')).required(),
-    transactionType: yup.string().label(i18n.t('transactionType')).required(),
+    products: yup.array().label(i18n.t('products')).required().min(1),
+    status: yup.string().label(i18n.t('buyingStatus')).required(),
+    buyingType: yup.string().label(i18n.t('buyingType')).required(),
     contact: yup.string().label(i18n.t('contact')),
     tax: yup.number().label(i18n.t('tax')).required(),
     discount: yup.number().label(i18n.t('discount')).required(),
@@ -56,10 +53,9 @@ const schema = yup
   })
   .required()
 
-const TransactionDetailScreen = ({ navigation, route }) => {
+const BuyingDetailScreen = ({ navigation, route }) => {
   const { type, item: paramItem } = route?.params
 
-  const [isOfflineTransaction, setOfflineTransaction] = useState(false)
   const [screenData, setScreenData] = useState({})
   const { t } = useTranslation()
   const { sizes } = useTheme()
@@ -75,9 +71,9 @@ const TransactionDetailScreen = ({ navigation, route }) => {
       type: type,
       invoiceCode: paramItem?.invoiceCode,
       description: paramItem?.description,
-      products: paramItem?.products,
+      products: paramItem?.products || [],
       status: paramItem?.status?.id,
-      transactionType: paramItem?.type?.id,
+      buyingType: paramItem?.type?.id,
       contact: paramItem?.contact?.id,
       tax: paramItem?.tax,
       discount: paramItem?.discount,
@@ -85,17 +81,12 @@ const TransactionDetailScreen = ({ navigation, route }) => {
     },
   })
 
-  const [submitRequest] =
-    type == 'add'
-      ? useAddTransactionMutation({ fixedCacheKey: 'add-transaction' })
-      : useEditTransactionMutation({
-          fixedCacheKey: 'edit-transaction',
-        })
+  const [submitRequest] = useAddBuyingMutation({ fixedCacheKey: 'add-buying' })
 
   const {
-    data: transactionStatus = [],
-    isFetching: isFetchingTransactionStatus,
-  } = useGetTransactionStatusQuery({
+    data: buyingStatus = [],
+    isFetching: isFetchingBuyingStatus,
+  } = useGetBuyingStatusQuery({
     params: {
       page: 0,
       limit: 100,
@@ -103,9 +94,9 @@ const TransactionDetailScreen = ({ navigation, route }) => {
   })
 
   const {
-    data: transactionTypes = [],
-    isFetching: isFetchingTransactionTypes,
-  } = useGetTransactionTypesQuery({
+    data: buyingTypes = [],
+    isFetching: isFetchingBuyingTypes,
+  } = useGetBuyingTypeQuery({
     params: {
       page: 0,
       limit: 100,
@@ -134,13 +125,13 @@ const TransactionDetailScreen = ({ navigation, route }) => {
     let tempScreen = {}
     switch (type) {
       case 'add':
-        tempScreen = { isDisabled: false, title: t('addTransaction') }
+        tempScreen = { isDisabled: false, title: t('addBuying') }
         break
       case 'edit':
-        tempScreen = { isDisabled: false, title: t('editTransaction') }
+        tempScreen = { isDisabled: false, title: t('editBuying') }
         break
       case 'view':
-        tempScreen = { isDisabled: true, title: t('transactionDetail') }
+        tempScreen = { isDisabled: true, title: t('buyingDetail') }
         break
       default:
         tempScreen = { isDisabled: true, title: t('undefined') }
@@ -156,13 +147,13 @@ const TransactionDetailScreen = ({ navigation, route }) => {
   }, [productSelected])
 
   useEffect(() => {
-    if (transactionTypes.length > 0) {
+    if (buyingTypes.length > 0) {
       setValue(
-        'transactionType',
-        transactionTypes.find(item => item.name.toUpperCase() === 'OFFLINE').id,
+        'buyingType',
+        buyingTypes.find(item => item.name.toUpperCase() === 'OFFLINE')?.id,
       )
     }
-  }, [transactionTypes])
+  }, [buyingTypes])
 
   const onSubmit = data => {
     delete data.type
@@ -170,8 +161,8 @@ const TransactionDetailScreen = ({ navigation, route }) => {
     let request = {
       body: {
         ...data,
-        status: transactionStatus.find(ts => data.status == ts.id),
-        type: transactionTypes.find(ts => data.transactionType == ts.id),
+        status: buyingStatus.find(ts => data.status == ts.id),
+        type: buyingTypes.find(ts => data.buyingType == ts.id),
         contact: contacts.find(c => data.contact == c.id),
       },
     }
@@ -189,12 +180,8 @@ const TransactionDetailScreen = ({ navigation, route }) => {
     submitRequest(request)
   }
 
-  const onChangeTransactionType = value => {
-    const isOffline =
-      transactionTypes.find(ts => value == ts.id)?.name === 'OFFLINE'
-    setOfflineTransaction(isOffline)
-
-    setValue('transactionType', value)
+  const onChangeBuyingType = value => {
+    setValue('buyingType', value)
   }
 
   return (
@@ -293,6 +280,7 @@ const TransactionDetailScreen = ({ navigation, route }) => {
                             onPress={() =>
                               navigation.navigate('ParentProductScreen', {
                                 selectable: true,
+                                typeOfTransaction: 'buying',
                               })
                             }
                           >
@@ -311,19 +299,19 @@ const TransactionDetailScreen = ({ navigation, route }) => {
               </FormControl>
 
               <FormControl isRequired isInvalid={'status' in errors}>
-                <FormControl.Label>{t('transactionStatus')}</FormControl.Label>
-                <Skeleton h="8" isLoaded={!isFetchingTransactionStatus}>
+                <FormControl.Label>{t('buyingStatus')}</FormControl.Label>
+                <Skeleton h="8" isLoaded={!isFetchingBuyingStatus}>
                   <Controller
                     control={control}
                     render={({ field: { onChange, value } }) => (
                       <Select
                         isDisabled={screenData?.isDisabled}
-                        placeholder={t('chooseTransactionStatus')}
+                        placeholder={t('chooseBuyingStatus')}
                         selectedValue={value}
                         onValueChange={onChange}
                         selectedItemBg={'teal.400'}
                       >
-                        {transactionStatus.map(ts => (
+                        {buyingStatus.map(ts => (
                           <Select.Item
                             key={String(ts.id)}
                             label={ts.name}
@@ -341,20 +329,20 @@ const TransactionDetailScreen = ({ navigation, route }) => {
                 </FormControl.ErrorMessage>
               </FormControl>
 
-              <FormControl isRequired isInvalid={'transactionType' in errors}>
-                <FormControl.Label>{t('transactionType')}</FormControl.Label>
-                <Skeleton h="8" isLoaded={!isFetchingTransactionTypes}>
+              <FormControl isRequired isInvalid={'buyingType' in errors}>
+                <FormControl.Label>{t('buyingType')}</FormControl.Label>
+                <Skeleton h="8" isLoaded={!isFetchingBuyingTypes}>
                   <Controller
                     control={control}
                     render={({ field: { onChange, value } }) => (
                       <Select
-                        isDisabled={true}
-                        placeholder={t('chooseTransactionType')}
+                        isDisabled={screenData?.isDisabled}
+                        placeholder={t('chooseBuyingType')}
                         selectedValue={value}
-                        onValueChange={onChangeTransactionType}
+                        onValueChange={onChangeBuyingType}
                         selectedItemBg={'teal.400'}
                       >
-                        {transactionTypes.map(ts => (
+                        {buyingTypes.map(ts => (
                           <Select.Item
                             key={String(ts.id)}
                             label={ts.name}
@@ -363,47 +351,45 @@ const TransactionDetailScreen = ({ navigation, route }) => {
                         ))}
                       </Select>
                     )}
-                    name="transactionType"
+                    name="buyingType"
                     defaultValue=""
                   />
                 </Skeleton>
                 <FormControl.ErrorMessage>
-                  {errors?.transactionType?.message}
+                  {errors?.buyingType?.message}
                 </FormControl.ErrorMessage>
               </FormControl>
 
-              {isOfflineTransaction ? (
-                <FormControl isInvalid={'contact' in errors}>
-                  <FormControl.Label>{t('contact')}</FormControl.Label>
-                  <Skeleton h="8" isLoaded={!isFetchingContacts}>
-                    <Controller
-                      control={control}
-                      render={({ field: { onChange, value } }) => (
-                        <Select
-                          isDisabled={screenData?.isDisabled}
-                          placeholder={t('chooseContact')}
-                          selectedValue={value}
-                          onValueChange={onChange}
-                          selectedItemBg={'teal.400'}
-                        >
-                          {contacts.map(cs => (
-                            <Select.Item
-                              key={String(cs.id)}
-                              label={`${cs.name} (${cs.email})`}
-                              value={cs.id}
-                            />
-                          ))}
-                        </Select>
-                      )}
-                      name="contact"
-                      defaultValue=""
-                    />
-                  </Skeleton>
-                  <FormControl.ErrorMessage>
-                    {errors?.contact?.message}
-                  </FormControl.ErrorMessage>
-                </FormControl>
-              ) : null}
+              <FormControl isInvalid={'contact' in errors}>
+                <FormControl.Label>{t('contact')}</FormControl.Label>
+                <Skeleton h="8" isLoaded={!isFetchingContacts}>
+                  <Controller
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                      <Select
+                        isDisabled={screenData?.isDisabled}
+                        placeholder={t('chooseContact')}
+                        selectedValue={value}
+                        onValueChange={onChange}
+                        selectedItemBg={'teal.400'}
+                      >
+                        {contacts.map(cs => (
+                          <Select.Item
+                            key={String(cs.id)}
+                            label={`${cs.name} (${cs.email})`}
+                            value={cs.id}
+                          />
+                        ))}
+                      </Select>
+                    )}
+                    name="contact"
+                    defaultValue=""
+                  />
+                </Skeleton>
+                <FormControl.ErrorMessage>
+                  {errors?.contact?.message}
+                </FormControl.ErrorMessage>
+              </FormControl>
 
               <FormControl isRequired isInvalid={'tax' in errors}>
                 <FormControl.Label>{t('tax')}</FormControl.Label>
@@ -507,4 +493,4 @@ const TransactionDetailScreen = ({ navigation, route }) => {
   )
 }
 
-export default TransactionDetailScreen
+export default BuyingDetailScreen

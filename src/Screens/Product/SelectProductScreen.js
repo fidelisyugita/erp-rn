@@ -21,6 +21,7 @@ import SelectProductDetailScreen from './SelectProductDetailScreen'
 
 const SelectProductScreen = ({ navigation, route }) => {
   const paramItem = route.params?.item || {}
+  const typeOfTransaction = route.params?.typeOfTransaction || 'transaction'
 
   const [productSelected, setProductSelected] = React.useState(null)
 
@@ -50,7 +51,13 @@ const SelectProductScreen = ({ navigation, route }) => {
   }
 
   const onAddProduct = item => {
-    dispatch(selectProduct({ ...item, price: item.sellingPrice }))
+    dispatch(
+      selectProduct({
+        ...item,
+        price:
+          typeOfTransaction === 'buying' ? item.buyingPrice : item.sellingPrice,
+      }),
+    )
   }
 
   const keyExtractor = item => String(item.barcode)
@@ -67,6 +74,7 @@ const SelectProductScreen = ({ navigation, route }) => {
         onClose={onAddProductClose}
         onAdd={onAddProduct}
         item={productSelected}
+        typeOfTransaction={typeOfTransaction}
       />
       <Input
         ref={searchRef}

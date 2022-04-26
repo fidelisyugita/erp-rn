@@ -55,6 +55,7 @@ import {
   TransactionUpdateScreen,
 } from '@/Screens/Transaction'
 import { AttendanceCheckInScreen } from '@/Screens/Attendance'
+import { BuyingDetailScreen, BuyingUpdateScreen } from '@/Screens/Buying'
 
 const Stack = createNativeStackNavigator()
 
@@ -220,6 +221,18 @@ const ApplicationNavigator = () => {
             name="TransactionOnlineDetailScreen"
             component={TransactionOnlineDetailScreen}
             options={{ headerShown: true, title: t('addOnlineTransaction') }}
+          />
+
+          {/* Buying */}
+          <Stack.Screen
+            name="BuyingDetailScreen"
+            component={BuyingDetailScreen}
+            options={{ headerShown: true, title: t('buyingDetail') }}
+          />
+           <Stack.Screen
+            name="BuyingUpdateScreen"
+            component={BuyingUpdateScreen}
+            options={{ headerShown: true, title: t('updateOrTracking') }}
           />
         </Stack.Navigator>
       </NavigationContainer>

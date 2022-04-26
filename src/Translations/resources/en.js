@@ -171,6 +171,13 @@ export default {
   addBuyingTypeSuccess: 'Add buying type successfully!',
   updateBuyingTypeSuccess: 'Update buying type successfully!',
   deleteBuyingTypeSuccess: 'Delete buying type successfully!',
+  addBuying: 'Add Buying',
+  chooseBuyingType: 'Choose buying type',
+  chooseBuyingStatus: 'Choose buying status',
+  buyingDetail: 'Buying Detail',
+  updateBuyingSuccess: 'Update buying successfully!',
+  addBuyingSuccess: 'Add buying successfully',
+
   addBrand: 'Add Brand',
   editBrand: 'Edit Brand',
   addBrandSuccess: 'Add brand successfully!',

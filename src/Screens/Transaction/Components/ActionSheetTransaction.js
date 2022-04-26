@@ -9,10 +9,12 @@ const ActionSheetTransaction = ({ isOpen, onClose, item }) => {
   const navigation = useNavigation()
 
   const onView = () => {
+    onClose?.()
     navigation.navigate('TransactionDetailScreen', { type: 'view', item })
   }
 
   const onEdit = () => {
+    onClose?.()
     navigation.navigate('TransactionUpdateScreen', { item })
   }
 

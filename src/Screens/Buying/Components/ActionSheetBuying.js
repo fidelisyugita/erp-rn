@@ -9,11 +9,13 @@ const ActionSheetBuying = ({ isOpen, onClose, item }) => {
   const navigation = useNavigation()
 
   const onView = () => {
-    navigation.navigate('TransactionDetailScreen', { type: 'view', item })
+    onClose?.()
+    navigation.navigate('BuyingDetailScreen', { type: 'view', item })
   }
 
   const onEdit = () => {
-    navigation.navigate('TransactionUpdateScreen', { item })
+    onClose?.()
+    navigation.navigate('BuyingUpdateScreen', { item })
   }
 
   const onDownloadPdf = async () => {

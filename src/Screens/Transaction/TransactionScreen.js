@@ -16,7 +16,7 @@ import moment from 'moment'
 import { useDispatch } from 'react-redux'
 
 import { usePagination, useAccess } from '@/Hooks'
-import { ActionSheet, TransactionCard } from '@/Components/Organisms'
+import { TransactionCard } from '@/Components/Organisms'
 import {
   useLazyGetTransactionsQuery,
   useAddTransactionMutation,
@@ -25,8 +25,6 @@ import {
   useTrackTransactionMutation,
   useTransactionOnlineMutation,
 } from '@/Services/modules/transaction'
-import { generateDeliveryOrder } from '@/Helper/PdfHelper'
-import { resetSelectProduct } from '@/Store/Product'
 import FilterTransaction from './Components/FilterTransaction'
 import ActionSheetTransaction from './Components/ActionSheetTransaction'
 import ActionSheetAddOption from './Components/ActionSheetAddOption'
@@ -47,7 +45,7 @@ const TransactionScreen = ({ navigation }) => {
   const [filterType, setFilterType] = useState('')
   const [filterDate, setFilterDate] = useState({
     firstDate: moment().format('YYYY-MM-DD'),
-    secondDate: moment().format('YYY-MM-DD'),
+    secondDate: moment().format('YYYY-MM-DD'),
   })
 
   const [

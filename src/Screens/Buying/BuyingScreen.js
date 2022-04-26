@@ -13,43 +13,28 @@ import { RefreshControl } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useTranslation } from 'react-i18next'
 import moment from 'moment'
-import { useDispatch } from 'react-redux'
 
 import { usePagination, useAccess } from '@/Hooks'
-import { ActionSheet, TransactionCard } from '@/Components/Organisms'
+import { TransactionCard as BuyingCard } from '@/Components/Organisms'
 import {
-  useLazyGetTransactionsQuery,
-  useAddTransactionMutation,
-  useEditTransactionMutation,
-  useDeleteTransactionMutation,
-  useTrackTransactionMutation,
-  useTransactionOnlineMutation,
-} from '@/Services/modules/transaction'
-import { generateDeliveryOrder } from '@/Helper/PdfHelper'
-import { resetSelectProduct } from '@/Store/Product'
+  useAddBuyingMutation,
+  useLazyGetBuyingQuery,
+  useTrackBuyingMutation,
+} from '@/Services/modules/buying'
 import FilterBuying from './Components/FilterBuying'
-import ActionSheetTransaction from './Components/ActionSheetBuying'
-import ActionSheetAddOption from './Components/ActionSheetAddOption'
 import ActionSheetBuying from './Components/ActionSheetBuying'
-import { useLazyGetBuyingQuery } from '@/Services/modules/buying'
 
 const BuyingScreen = ({ navigation }) => {
   const { t } = useTranslation()
   const { colors } = useTheme()
   const { isCanAdd } = useAccess()
-  const dispatch = useDispatch()
   const { isOpen, onOpen, onClose } = useDisclose()
-  const {
-    isOpen: isOpenAdd,
-    onOpen: onOpenAdd,
-    onClose: onCloseAdd,
-  } = useDisclose()
   const [selectedItem, setSelectedItem] = useState({})
   const [filterStatus, setFilterStatus] = useState('')
   const [filterType, setFilterType] = useState('')
   const [filterDate, setFilterDate] = useState({
     firstDate: moment().format('YYYY-MM-DD'),
-    secondDate: moment().format('YYY-MM-DD'),
+    secondDate: moment().format('YYYY-MM-DD'),
   })
 
   const [
@@ -77,35 +62,16 @@ const BuyingScreen = ({ navigation }) => {
   }, [filterStatus, filterType, filterDate])
 
   const [
-    deleteTrigger,
-    { isSuccess: isSuccessDelete, reset: resetDelete },
-  ] = useDeleteTransactionMutation({
-    fixedCacheKey: 'delete-transaction',
-  })
-
-  const [
     addTrigger,
     { isSuccess: isSuccessAdd, reset: resetAdd },
-  ] = useAddTransactionMutation({
-    fixedCacheKey: 'add-transaction',
-  })
-
-  const [
-    editTrigger,
-    { isSuccess: isSuccessEdit, reset: resetEdit },
-  ] = useEditTransactionMutation({
-    fixedCacheKey: 'edit-transaction',
+  ] = useAddBuyingMutation({
+    fixedCacheKey: 'add-buying',
   })
 
   const [
     trackTrigger,
     { isSuccess: isSuccessTrack, reset: resetTrack },
-  ] = useTrackTransactionMutation({ fixedCacheKey: 'track-transaction' })
-
-  const [
-    addOnlineTrigger,
-    { isSuccess: isSuccessAddOnline, reset: resetAddOnline },
-  ] = useTransactionOnlineMutation({ fixedCacheKey: 'add-online-transaction' })
+  ] = useTrackBuyingMutation({ fixedCacheKey: 'track-buying' })
 
   React.useLayoutEffect(() => {
     if (isCanAdd) {
@@ -125,7 +91,7 @@ const BuyingScreen = ({ navigation }) => {
         ),
       })
     }
-  }, [navigation, isCanAdd, onOpenAdd])
+  }, [navigation, isCanAdd])
 
   React.useEffect(() => {
     if (isSuccessAdd) {
@@ -135,32 +101,11 @@ const BuyingScreen = ({ navigation }) => {
   }, [isSuccessAdd])
 
   React.useEffect(() => {
-    if (isSuccessEdit) {
-      onRefresh()
-      resetEdit()
-    }
-  }, [isSuccessEdit])
-
-  React.useEffect(() => {
-    if (isSuccessDelete) {
-      onRefresh()
-      resetDelete()
-    }
-  }, [isSuccessDelete])
-
-  React.useEffect(() => {
     if (isSuccessTrack) {
       onRefresh()
       resetTrack()
     }
   }, [isSuccessTrack])
-
-  React.useEffect(() => {
-    if (isSuccessAddOnline) {
-      onRefresh()
-      resetAddOnline()
-    }
-  }, [isSuccessAddOnline])
 
   const searchRef = useRef(null)
 
@@ -171,7 +116,7 @@ const BuyingScreen = ({ navigation }) => {
   }
 
   const renderItem = ({ item }) => {
-    return <TransactionCard item={item} onPress={onPressItem} />
+    return <BuyingCard item={item} onPress={onPressItem} />
   }
 
   return (

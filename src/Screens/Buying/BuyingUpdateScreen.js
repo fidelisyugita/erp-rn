@@ -11,19 +11,19 @@ import {
 } from 'native-base'
 import R from 'ramda'
 import { useTranslation } from 'react-i18next'
-import {
-  useGetTransactionStatusQuery,
-  useTrackTransactionMutation,
-} from '@/Services/modules/transaction'
 import UpdateProductCard from './Components/UpdateProductCard'
+import {
+  useGetBuyingStatusQuery,
+  useTrackBuyingMutation,
+} from '@/Services/modules/buying'
 
 const BuyingUpdateScreen = ({ route }) => {
-  const transaction = route.params?.item
+  const buying = route.params?.item
 
-  const [status, setStatus] = useState(transaction?.status?.id)
+  const [status, setStatus] = useState(buying?.status?.id)
 
   const [products, setProducts] = useState(
-    transaction.products.map(p => ({
+    buying.products.map(p => ({
       ...p,
       received: 0,
       rejected: 0,
@@ -73,14 +73,14 @@ const BuyingUpdateScreen = ({ route }) => {
       <FlatList
         ListHeaderComponent={
           <ListHeaderComponent
-            invoiceCode={transaction.invoiceCode}
+            invoiceCode={buying.invoiceCode}
             status={status}
             setStatus={setStatus}
           />
         }
         ListFooterComponent={
           <ListFooterComponent
-            id={transaction.id}
+            id={buying.id}
             products={products}
             status={status}
           />
@@ -104,9 +104,9 @@ const ListHeaderComponent = ({ invoiceCode, status, setStatus }) => {
   const { t } = useTranslation()
 
   const {
-    data: transactionStatus = [],
-    isFetching: isFetchingTransactionStatus,
-  } = useGetTransactionStatusQuery({
+    data: buyingStatus = [],
+    isFetching: isFetchingBuyingStatus,
+  } = useGetBuyingStatusQuery({
     params: {
       page: 0,
       limit: 100,
@@ -120,7 +120,7 @@ const ListHeaderComponent = ({ invoiceCode, status, setStatus }) => {
       </Text>
       <HStack alignItems="center">
         <Text mr="2">{t('status')} : </Text>
-        <Skeleton h="12" w="100" isLoaded={!isFetchingTransactionStatus}>
+        <Skeleton h="12" w="100" isLoaded={!isFetchingBuyingStatus}>
           <Select
             selectedValue={status}
             onValueChange={setStatus}
@@ -130,7 +130,7 @@ const ListHeaderComponent = ({ invoiceCode, status, setStatus }) => {
             }}
             minW="100"
           >
-            {transactionStatus.map(ts => (
+            {buyingStatus.map(ts => (
               <Select.Item key={String(ts.id)} label={ts.name} value={ts.id} />
             ))}
           </Select>
@@ -143,8 +143,8 @@ const ListHeaderComponent = ({ invoiceCode, status, setStatus }) => {
 
 const ListFooterComponent = ({ id, products, status }) => {
   const { t } = useTranslation()
-  const [submitRequest] = useTrackTransactionMutation({
-    fixedCacheKey: 'track-transaction',
+  const [submitRequest] = useTrackBuyingMutation({
+    fixedCacheKey: 'track-buying',
   })
 
   const submit = () => {

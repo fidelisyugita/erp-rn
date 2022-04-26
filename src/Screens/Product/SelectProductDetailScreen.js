@@ -22,6 +22,7 @@ const SelectProductDetailScreen = ({
   onCancel,
   onAdd,
   item,
+  typeOfTransaction = 'transaction',
 }) => {
   const { t } = useTranslation()
   const [amount, setAmount] = useState(1)
@@ -80,10 +81,17 @@ const SelectProductDetailScreen = ({
           <Attribute label={t('brand')} value={item?.brand?.name} />
           <Attribute label={t('color')} value={item?.color} />
           <Attribute label={t('size')} value={item?.size} />
-          <Attribute
-            label={t('sellingPrice')}
-            value={formatMoney(item?.sellingPrice)}
-          />
+          {typeOfTransaction === 'transaction' ? (
+            <Attribute
+              label={t('sellingPrice')}
+              value={formatMoney(item?.sellingPrice)}
+            />
+          ) : (
+            <Attribute
+              label={t('buyingPrice')}
+              value={formatMoney(item?.buyingPrice)}
+            />
+          )}
           <Attribute
             label={t('stock')}
             value={`${formatNumber(item?.stock)} ${

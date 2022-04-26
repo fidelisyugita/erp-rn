@@ -46,7 +46,7 @@ const schema = yup
     type: yup.string().required(),
     invoiceCode: yup.string().label(i18n.t('invoiceCode')).min(3).required(),
     description: yup.string().label(i18n.t('description')).nullable(true),
-    products: yup.array().label(i18n.t('products')).required(),
+    products: yup.array().label(i18n.t('products')).required().min(1),
     status: yup.string().label(i18n.t('transactionStatus')).required(),
     transactionType: yup.string().label(i18n.t('transactionType')).required(),
     contact: yup.string().label(i18n.t('contact')),
@@ -75,7 +75,7 @@ const TransactionDetailScreen = ({ navigation, route }) => {
       type: type,
       invoiceCode: paramItem?.invoiceCode,
       description: paramItem?.description,
-      products: paramItem?.products,
+      products: paramItem?.products || [],
       status: paramItem?.status?.id,
       transactionType: paramItem?.type?.id,
       contact: paramItem?.contact?.id,
@@ -159,7 +159,8 @@ const TransactionDetailScreen = ({ navigation, route }) => {
     if (transactionTypes.length > 0) {
       setValue(
         'transactionType',
-        transactionTypes.find(item => item.name.toUpperCase() === 'OFFLINE').id,
+        transactionTypes.find(item => item.name.toUpperCase() === 'OFFLINE')
+          ?.id,
       )
     }
   }, [transactionTypes])
