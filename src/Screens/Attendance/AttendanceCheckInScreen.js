@@ -40,8 +40,10 @@ const AttendanceCheckInScreen = () => {
             size="4/6"
             bgColor="gray.500"
             borderRadius="4"
+            alignSelf="center"
             alignItems="center"
             justifyContent="center"
+            mb="4"
           >
             <Text color="white" fontSize="4xl">
               {t('image')}
