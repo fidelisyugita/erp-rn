@@ -224,4 +224,5 @@ export default {
   barcodeAlreadyExist: 'Barcode already exist',
   addOnlineTransaction: 'Add Online Transaction',
   invoiceCodeRequiredField: 'Invoice code is required field',
+  selectDate: 'Select Date',
 }

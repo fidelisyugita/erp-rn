@@ -8,10 +8,6 @@ const DateRange = ({ isOpen, onClose, setRange, selectedRange }) => {
   const { t } = useTranslation()
   const [dateRange, setDateRange] = useState({})
 
-  useEffect(() => {
-    setDateRange(selectedRange)
-  }, [selectedRange])
-
   const apply = () => {
     setRange(dateRange)
     onClose()
@@ -24,7 +20,7 @@ const DateRange = ({ isOpen, onClose, setRange, selectedRange }) => {
         <Modal.Body>
           <DateRangePicker
             onSelectDateRange={setDateRange}
-            blockSingleDateSelection={true}
+            // blockSingleDateSelection={true}
             responseFormat="YYYY-MM-DD"
             maxDate={moment()}
           />
@@ -33,7 +29,11 @@ const DateRange = ({ isOpen, onClose, setRange, selectedRange }) => {
           <Button variant="unstyled" mr="1" onPress={onClose}>
             {t('cancel')}
           </Button>
-          <Button colorScheme="primary" onPress={apply}>
+          <Button
+            colorScheme="primary"
+            isDisabled={!dateRange.firstDate || !dateRange.secondDate}
+            onPress={apply}
+          >
             {t('apply')}
           </Button>
         </Modal.Footer>
