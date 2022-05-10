@@ -10,19 +10,19 @@ import i18n from '@/Translations'
 export const generatePdfProduct = async product => {
   const barcodeUri = await CodeGenerator.generate({
     type: CodeGenerator.Type.Code128,
-    code: `${product.barcode}`,
+    code: `${product.id}`,
   })
   console.log({ 'CodeGenerator.barcodeUri': barcodeUri })
 
   // new Promise(resolve => {
   const docDefinition = {
     content: [
-      { text: `SKU: ${product.sku}`, style: 'header' },
+      { text: `SKU: ${product.id}`, style: 'header' },
       { image: barcodeUri, width: 300, height: 80 },
       { text: `Nama Produk: ${product.name}`, margin: [0, 10, 0, 0] },
       // { image: product.imageUrl, fit: [200, 200] },
       `Kategori: ${product?.category?.name}`,
-      `Deskripsi: ${product.description}`,
+      `Deskripsi: ${product.description || '-'}`,
       {
         text: `Satuan: ${product?.measureUnit?.name}`,
         margin: [0, 10, 0, 0],
@@ -61,6 +61,32 @@ export const generateDeliveryOrder = async transaction => {
   // })
   // console.log({ 'CodeGenerator.barcodeUri': barcodeUri })
 
+  const { products, contact } = transaction
+
+  // let totalItem = 0
+  // let totalPrice = 0
+  const productDocs = products.map((p, index) => ({
+    columns: [
+      {
+        width: 20,
+        text: `${index + 1}`,
+      },
+      {
+        width: 120,
+        text: `${p.sku}`,
+      },
+      {
+        width: '*',
+        text: `${p.name} uk.${p.size}`,
+      },
+      {
+        width: 'auto',
+        text: `${p.amount} PCS`,
+      },
+    ],
+    columnGap: 10,
+  }))
+
   const docDefinition = {
     content: [
       { text: `SURAT JALAN`, style: 'header' },
@@ -69,13 +95,66 @@ export const generateDeliveryOrder = async transaction => {
 
       // { image: barcodeUri, width: 300, height: 80 },
       { text: `Kode Invoice: ${transaction.invoiceCode}` },
+      { text: `Tanggal: ${transaction.createdAt}` },
+      { text: contact ? `Pelanggan: ${contact.name}` : '' },
+      { text: `PPN: ${transaction.tax || 'Non'}` },
 
-      { text: `Nama Produk: ${transaction.name}`, margin: [0, 10, 0, 0] },
+      // { text: `Nama Produk: ${transaction.name}`, margin: [0, 10, 0, 0] },
+      {
+        columns: [
+          {
+            width: 20,
+            text: `No`,
+            style: 'colHeader',
+          },
+          {
+            width: 120,
+            text: `SKU`,
+            style: 'colHeader',
+          },
+          {
+            width: '*',
+            text: `Nama Barang`,
+            style: 'colHeader',
+          },
+          {
+            width: 'auto',
+            text: `Jumlah`,
+            style: 'colHeader',
+          },
+        ],
+        columnGap: 10,
+        margin: [0, 10, 0, 0],
+      },
+      ...productDocs,
+      {
+        columns: [
+          {
+            width: '*',
+            text: ``,
+          },
+          {
+            width: 'auto',
+            text: `Total`,
+          },
+          {
+            width: 'auto',
+            text: `${transaction.totalItem} PCS`,
+          },
+        ],
+        columnGap: 10,
+      },
+
+      { text: `Keterangan: ${transaction.note || '-'}`, margin: [0, 10, 0, 0] },
     ],
 
     styles: {
       header: {
         fontSize: 22,
+        bold: true,
+      },
+      colHeader: {
+        fontSize: 14,
         bold: true,
       },
     },
