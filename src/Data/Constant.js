@@ -209,19 +209,19 @@ export const MENU = [
     roleAccess: [
       {
         role: 'ACCOUNTANT',
-        access: ['create', 'read', 'update', 'delete', 'download'],
+        access: ['create', 'read', 'update', 'delete'],
       },
       {
         role: 'SALES',
-        access: ['create', 'read', 'update', 'delete', 'download'],
+        access: ['create', 'read', 'update', 'delete'],
       },
       {
         role: 'PURCHASE',
-        access: ['create', 'read', 'update', 'delete', 'download'],
+        access: ['create', 'read', 'update', 'delete'],
       },
       {
         role: 'INVENTORY',
-        access: ['create', 'read', 'update', 'delete', 'download'],
+        access: ['create', 'read', 'update', 'delete'],
       },
     ],
   },
