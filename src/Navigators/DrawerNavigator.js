@@ -34,6 +34,7 @@ import { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { AttendanceScreen } from '@/Screens/Attendance'
 import { useAccess } from '@/Hooks'
+import { BuyingScreen } from '@/Screens/Buying'
 
 const Drawer = createDrawerNavigator()
 
@@ -52,6 +53,8 @@ const getIcon = screenName => {
     case t('contact'):
       return 'contacts'
     case t('transaction'):
+      return 'script-text-outline'
+    case t('buying'):
       return 'script-text-outline'
     case t('signOut'):
       return 'logout'
@@ -200,6 +203,11 @@ const DrawerNavigator = () => {
         name={t('product')}
         component={ParentProductScreen}
         options={{ title: t('product'), drawerLabel: t('product') }}
+      />
+      <Drawer.Screen
+        name={t('buying')}
+        component={BuyingScreen}
+        options={{ title: t('buying'), drawerLabel: t('buying') }}
       />
       <Drawer.Screen
         name={t('transaction')}

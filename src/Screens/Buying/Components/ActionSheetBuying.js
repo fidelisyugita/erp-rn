@@ -5,17 +5,17 @@ import i18n from '@/Translations'
 import { useNavigation } from '@react-navigation/native'
 import { generateDeliveryOrder } from '@/Helper/PdfHelper'
 
-const ActionSheetTransaction = ({ isOpen, onClose, item }) => {
+const ActionSheetBuying = ({ isOpen, onClose, item }) => {
   const navigation = useNavigation()
 
   const onView = () => {
     onClose?.()
-    navigation.navigate('TransactionDetailScreen', { type: 'view', item })
+    navigation.navigate('BuyingDetailScreen', { type: 'view', item })
   }
 
   const onEdit = () => {
     onClose?.()
-    navigation.navigate('TransactionUpdateScreen', { item })
+    navigation.navigate('BuyingUpdateScreen', { item })
   }
 
   const onDownloadPdf = async () => {
@@ -108,4 +108,4 @@ const ActionSheetTransaction = ({ isOpen, onClose, item }) => {
   )
 }
 
-export default ActionSheetTransaction
+export default ActionSheetBuying

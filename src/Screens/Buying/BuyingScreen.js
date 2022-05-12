@@ -13,33 +13,22 @@ import { RefreshControl } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useTranslation } from 'react-i18next'
 import moment from 'moment'
-import { useDispatch } from 'react-redux'
 
 import { usePagination, useAccess } from '@/Hooks'
-import { TransactionCard } from '@/Components/Organisms'
+import { TransactionCard as BuyingCard } from '@/Components/Organisms'
 import {
-  useLazyGetTransactionsQuery,
-  useAddTransactionMutation,
-  useEditTransactionMutation,
-  useDeleteTransactionMutation,
-  useTrackTransactionMutation,
-  useTransactionOnlineMutation,
-} from '@/Services/modules/transaction'
-import FilterTransaction from './Components/FilterTransaction'
-import ActionSheetTransaction from './Components/ActionSheetTransaction'
-import ActionSheetAddOption from './Components/ActionSheetAddOption'
+  useAddBuyingMutation,
+  useLazyGetBuyingQuery,
+  useTrackBuyingMutation,
+} from '@/Services/modules/buying'
+import FilterBuying from './Components/FilterBuying'
+import ActionSheetBuying from './Components/ActionSheetBuying'
 
-const TransactionScreen = ({ navigation }) => {
+const BuyingScreen = ({ navigation }) => {
   const { t } = useTranslation()
   const { colors } = useTheme()
   const { isCanAdd } = useAccess()
-  const dispatch = useDispatch()
   const { isOpen, onOpen, onClose } = useDisclose()
-  const {
-    isOpen: isOpenAdd,
-    onOpen: onOpenAdd,
-    onClose: onCloseAdd,
-  } = useDisclose()
   const [selectedItem, setSelectedItem] = useState({})
   const [filterStatus, setFilterStatus] = useState('')
   const [filterType, setFilterType] = useState('')
@@ -59,7 +48,7 @@ const TransactionScreen = ({ navigation }) => {
       renderFooter,
     },
     { isSearch, isRefresh, isFirstLoad },
-  ] = usePagination(useLazyGetTransactionsQuery, {
+  ] = usePagination(useLazyGetBuyingQuery, {
     params: {
       statusId: filterStatus,
       typeId: filterType,
@@ -73,35 +62,16 @@ const TransactionScreen = ({ navigation }) => {
   }, [filterStatus, filterType, filterDate])
 
   const [
-    deleteTrigger,
-    { isSuccess: isSuccessDelete, reset: resetDelete },
-  ] = useDeleteTransactionMutation({
-    fixedCacheKey: 'delete-transaction',
-  })
-
-  const [
     addTrigger,
     { isSuccess: isSuccessAdd, reset: resetAdd },
-  ] = useAddTransactionMutation({
-    fixedCacheKey: 'add-transaction',
-  })
-
-  const [
-    editTrigger,
-    { isSuccess: isSuccessEdit, reset: resetEdit },
-  ] = useEditTransactionMutation({
-    fixedCacheKey: 'edit-transaction',
+  ] = useAddBuyingMutation({
+    fixedCacheKey: 'add-buying',
   })
 
   const [
     trackTrigger,
     { isSuccess: isSuccessTrack, reset: resetTrack },
-  ] = useTrackTransactionMutation({ fixedCacheKey: 'track-transaction' })
-
-  const [
-    addOnlineTrigger,
-    { isSuccess: isSuccessAddOnline, reset: resetAddOnline },
-  ] = useTransactionOnlineMutation({ fixedCacheKey: 'add-online-transaction' })
+  ] = useTrackBuyingMutation({ fixedCacheKey: 'track-buying' })
 
   React.useLayoutEffect(() => {
     if (isCanAdd) {
@@ -109,7 +79,7 @@ const TransactionScreen = ({ navigation }) => {
         headerRight: () => (
           <IconButton
             onPress={() => {
-              onOpenAdd()
+              navigation.navigate('BuyingDetailScreen', { type: 'add' })
             }}
             key="ghost"
             variant="ghost"
@@ -121,7 +91,7 @@ const TransactionScreen = ({ navigation }) => {
         ),
       })
     }
-  }, [navigation, isCanAdd, onOpenAdd])
+  }, [navigation, isCanAdd])
 
   React.useEffect(() => {
     if (isSuccessAdd) {
@@ -131,32 +101,11 @@ const TransactionScreen = ({ navigation }) => {
   }, [isSuccessAdd])
 
   React.useEffect(() => {
-    if (isSuccessEdit) {
-      onRefresh()
-      resetEdit()
-    }
-  }, [isSuccessEdit])
-
-  React.useEffect(() => {
-    if (isSuccessDelete) {
-      onRefresh()
-      resetDelete()
-    }
-  }, [isSuccessDelete])
-
-  React.useEffect(() => {
     if (isSuccessTrack) {
       onRefresh()
       resetTrack()
     }
   }, [isSuccessTrack])
-
-  React.useEffect(() => {
-    if (isSuccessAddOnline) {
-      onRefresh()
-      resetAddOnline()
-    }
-  }, [isSuccessAddOnline])
 
   const searchRef = useRef(null)
 
@@ -167,7 +116,7 @@ const TransactionScreen = ({ navigation }) => {
   }
 
   const renderItem = ({ item }) => {
-    return <TransactionCard item={item} onPress={onPressItem} />
+    return <BuyingCard item={item} onPress={onPressItem} />
   }
 
   return (
@@ -175,7 +124,7 @@ const TransactionScreen = ({ navigation }) => {
       <Box px="4">
         <Input
           ref={searchRef}
-          placeholder={t('searchTransaction')}
+          placeholder={t('search')}
           width="100%"
           borderRadius="4"
           py="3"
@@ -197,7 +146,7 @@ const TransactionScreen = ({ navigation }) => {
           }
         />
       </Box>
-      <FilterTransaction
+      <FilterBuying
         setFilterStatus={setFilterStatus}
         filterStatus={filterStatus}
         setFilterType={setFilterType}
@@ -233,14 +182,13 @@ const TransactionScreen = ({ navigation }) => {
           }
         />
       )}
-      <ActionSheetTransaction
+      <ActionSheetBuying
         isOpen={isOpen}
         onClose={onClose}
         item={selectedItem}
       />
-      <ActionSheetAddOption isOpen={isOpenAdd} onClose={onCloseAdd} />
     </Box>
   )
 }
 
-export default TransactionScreen
+export default BuyingScreen

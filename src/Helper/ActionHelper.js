@@ -34,6 +34,9 @@ const showLoadingActions = [
   'approveAttendance',
   'addTransaction',
   'trackTransaction',
+  'transactionOnline',
+  'addBuying',
+  'trackBuying',
 ]
 
 const hideLoadingActions = [
@@ -70,6 +73,9 @@ const hideLoadingActions = [
   'approveAttendance',
   'addTransaction',
   'trackTransaction',
+  'transactionOnline',
+  'addBuying',
+  'trackBuying',
 ]
 
 const actionsTracker = () => next => action => {

@@ -63,9 +63,11 @@ export const api = createApi({
   tagTypes: [
     'Attendance',
     'Brands',
+    'Buying',
     'BuyingStatus',
     'BuyingType',
     'Contacts',
+    'Dashboard',
     'MeasureUnits',
     'ProductCategories',
     'Products',

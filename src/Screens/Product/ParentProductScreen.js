@@ -13,6 +13,7 @@ import { useGetProductCategoriesQuery } from '@/Services/modules/product'
 const ParentProductScreen = ({ navigation, route }) => {
   const { data: brands = [], isLoading } = useGetProductCategoriesQuery({})
   const selectable = route.params?.selectable || false
+  const typeOfTransaction = route.params?.typeOfTransaction || ''
 
   return (
     <Box flex="1" bgColor="white">
@@ -32,7 +33,7 @@ const ParentProductScreen = ({ navigation, route }) => {
                 onPress={() =>
                   navigation.navigate(
                     selectable ? 'SelectProductScreen' : 'ProductScreen',
-                    { item: menu },
+                    { item: menu, typeOfTransaction },
                   )
                 }
               >

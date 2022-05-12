@@ -9,14 +9,14 @@ import {
   Skeleton,
   useDisclose,
 } from 'native-base'
-import {
-  useGetTransactionStatusQuery,
-  useGetTransactionTypesQuery,
-} from '@/Services/modules/transaction'
 import { useTranslation } from 'react-i18next'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { DateRange } from '@/Components/Atoms'
 import { dateRangeConverter } from '@/Helper/DateHelper'
+import {
+  useGetBuyingStatusQuery,
+  useGetBuyingTypeQuery,
+} from '@/Services/modules/buying'
 
 const FilterTransaction = ({
   setFilterStatus,
@@ -29,9 +29,9 @@ const FilterTransaction = ({
   const { t } = useTranslation()
   const { isOpen, onOpen, onClose } = useDisclose()
   const {
-    data: transactionStatus = [],
-    isFetching: isFetchingTransactionStatus,
-  } = useGetTransactionStatusQuery({
+    data: buyingStatus = [],
+    isFetching: isFetchingBuyingStatus,
+  } = useGetBuyingStatusQuery({
     params: {
       page: 0,
       limit: 100,
@@ -39,9 +39,9 @@ const FilterTransaction = ({
   })
 
   const {
-    data: transactionTypes = [],
-    isFetching: isFetchingTransactionTypes,
-  } = useGetTransactionTypesQuery({
+    data: buyingTypes = [],
+    isFetching: isFetchingBuyingTypes,
+  } = useGetBuyingTypeQuery({
     params: {
       page: 0,
       limit: 100,
@@ -65,12 +65,7 @@ const FilterTransaction = ({
             px: '4',
           }}
         >
-          <Skeleton
-            h="12"
-            w="100"
-            isLoaded={!isFetchingTransactionStatus}
-            mr="1"
-          >
+          <Skeleton h="12" w="100" isLoaded={!isFetchingBuyingStatus} mr="1">
             <Select
               selectedValue={filterStatus}
               minWidth="100"
@@ -84,7 +79,7 @@ const FilterTransaction = ({
               }}
             >
               <Select.Item label={t('allStatus')} value="" />
-              {transactionStatus.map(ts => (
+              {buyingStatus.map(ts => (
                 <Select.Item
                   key={String(ts.id)}
                   label={ts.name}
@@ -93,12 +88,7 @@ const FilterTransaction = ({
               ))}
             </Select>
           </Skeleton>
-          <Skeleton
-            h="12"
-            w="100"
-            isLoaded={!isFetchingTransactionTypes}
-            mr="1"
-          >
+          <Skeleton h="12" w="100" isLoaded={!isFetchingBuyingTypes} mr="1">
             <Select
               selectedValue={filterType}
               minWidth="100"
@@ -112,7 +102,7 @@ const FilterTransaction = ({
               }}
             >
               <Select.Item label={t('allType')} value="" />
-              {transactionTypes.map(tp => (
+              {buyingTypes.map(tp => (
                 <Select.Item
                   key={String(tp.id)}
                   label={tp.name}

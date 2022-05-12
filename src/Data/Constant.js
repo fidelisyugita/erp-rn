@@ -247,6 +247,27 @@ export const MENU = [
     ],
   },
   {
+    name: 'Buying',
+    roleAccess: [
+      {
+        role: 'ACCOUNTANT',
+        access: ['create', 'read', 'download'],
+      },
+      {
+        role: 'SALES',
+        access: ['create', 'read', 'download'],
+      },
+      {
+        role: 'PURCHASE',
+        access: ['create', 'read', 'download'],
+      },
+      {
+        role: 'INVENTORY',
+        access: ['create', 'read', 'download'],
+      },
+    ],
+  },
+  {
     name: 'Attendance',
     roleAccess: [
       {

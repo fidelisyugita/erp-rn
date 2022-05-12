@@ -15,7 +15,7 @@ const frameWidth = scale(100)
 const frameHeight = scaleHeight(50)
 
 const ScanBarcodeScreen = ({ navigation, route }) => {
-  const callback = route?.params?.callback
+  const previousScreen = route?.params?.previousScreen
   const headerHeight = useHeaderHeight()
   const { t } = useTranslation()
   const [CAM_VIEW_HEIGHT] = useState(
@@ -43,14 +43,17 @@ const ScanBarcodeScreen = ({ navigation, route }) => {
   const scanRef = useRef(null)
 
   const onSuccess = e => {
-    setBarcode(e.data)
-    setIsOpen(true)
+    if (e.data) {
+      setBarcode(e.data)
+      setIsOpen(true)
+    }
   }
 
   const onAgree = () => {
     setIsOpen(false)
-    navigation.pop()
-    callback?.(barcode)
+    if (previousScreen) {
+      navigation.navigate(previousScreen, { barcode })
+    }
   }
 
   return (

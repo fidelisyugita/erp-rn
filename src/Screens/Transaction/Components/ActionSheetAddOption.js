@@ -1,21 +1,27 @@
 import React, { useEffect } from 'react'
 import { Actionsheet, Icon } from 'native-base'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import i18n from '@/Translations'
+import { resetSelectProduct } from '@/Store/Product'
 import { useNavigation } from '@react-navigation/native'
+import i18n from '@/Translations'
 import { generateDeliveryOrder } from '@/Helper/PdfHelper'
+import { useDispatch } from 'react-redux'
 
-const ActionSheetTransaction = ({ isOpen, onClose, item }) => {
+const ActionSheetAddOption = ({ isOpen, onClose, item }) => {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
 
-  const onView = () => {
+  const onOnline = () => {
     onClose?.()
-    navigation.navigate('TransactionDetailScreen', { type: 'view', item })
+    navigation.navigate('TransactionOnlineDetailScreen', { type: 'add' })
   }
 
-  const onEdit = () => {
+  const onOffline = () => {
     onClose?.()
-    navigation.navigate('TransactionUpdateScreen', { item })
+    navigation.navigate('TransactionDetailScreen', {
+      type: 'add',
+    })
+    dispatch(resetSelectProduct())
   }
 
   const onDownloadPdf = async () => {
@@ -29,22 +35,16 @@ const ActionSheetTransaction = ({ isOpen, onClose, item }) => {
 
   const [actions, setActions] = React.useState([
     {
-      id: 'downloadPdf',
-      label: i18n.t('downloadPdf'),
-      icon: 'picture-as-pdf',
-      onPress: onDownloadPdf,
-    },
-    {
       id: 'read',
-      label: i18n.t('view'),
+      label: i18n.t('offline'),
       icon: 'remove-red-eye',
-      onPress: onView,
+      onPress: onOffline,
     },
     {
       id: 'update',
-      label: i18n.t('edit'),
+      label: i18n.t('online'),
       icon: 'edit',
-      onPress: onEdit,
+      onPress: onOnline,
     },
     {
       id: 'cancel',
@@ -57,27 +57,21 @@ const ActionSheetTransaction = ({ isOpen, onClose, item }) => {
   useEffect(() => {
     setActions([
       {
-        id: 'downloadPdf',
-        label: i18n.t('downloadPdf'),
-        icon: 'picture-as-pdf',
-        onPress: onDownloadPdf,
-      },
-      {
         id: 'read',
-        label: i18n.t('view'),
+        label: i18n.t('offline'),
         icon: 'remove-red-eye',
-        onPress: onView,
+        onPress: onOffline,
       },
       {
         id: 'update',
-        label: i18n.t('edit'),
+        label: i18n.t('online'),
         icon: 'edit',
-        onPress: onEdit,
+        onPress: onOnline,
       },
       {
         id: 'cancel',
         label: i18n.t('cancel'),
-        icon: 'close',
+        icon: 'delete',
         onPress: onClose,
       },
     ])
@@ -88,17 +82,7 @@ const ActionSheetTransaction = ({ isOpen, onClose, item }) => {
       <Actionsheet.Content>
         {actions.map(({ label, onPress, id, icon }) => {
           return (
-            <Actionsheet.Item
-              key={id}
-              onPress={onPress}
-              startIcon={
-                <Icon
-                  as={<MaterialIcons name={icon} />}
-                  color="muted.500"
-                  mr={3}
-                />
-              }
-            >
+            <Actionsheet.Item key={id} onPress={onPress}>
               {label}
             </Actionsheet.Item>
           )
@@ -108,4 +92,4 @@ const ActionSheetTransaction = ({ isOpen, onClose, item }) => {
   )
 }
 
-export default ActionSheetTransaction
+export default ActionSheetAddOption

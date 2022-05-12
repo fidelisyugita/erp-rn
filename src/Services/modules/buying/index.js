@@ -4,11 +4,13 @@ import {
   addBuyingStatus,
   editBuyingStatus,
   deleteBuyingStatus,
-
   getBuyingType,
   addBuyingType,
   editBuyingType,
   deleteBuyingType,
+  getBuying,
+  addBuying,
+  trackBuying,
 } from './buyingApi'
 
 export const buyingApi = api.injectEndpoints({
@@ -22,6 +24,10 @@ export const buyingApi = api.injectEndpoints({
     addBuyingType: addBuyingType(build),
     editBuyingType: editBuyingType(build),
     deleteBuyingType: deleteBuyingType(build),
+
+    getBuying: getBuying(build),
+    addBuying: addBuying(build),
+    trackBuying: trackBuying(build),
   }),
   overrideExisting: true,
 })
@@ -38,4 +44,8 @@ export const {
   useAddBuyingTypeMutation,
   useEditBuyingTypeMutation,
   useDeleteBuyingTypeMutation,
+
+  useLazyGetBuyingQuery,
+  useAddBuyingMutation,
+  useTrackBuyingMutation,
 } = buyingApi
