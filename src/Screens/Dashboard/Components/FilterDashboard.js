@@ -1,24 +1,9 @@
-import React, { useState } from 'react'
-import {
-  Box,
-  CheckIcon,
-  HStack,
-  IconButton,
-  Input,
-  ScrollView,
-  Select,
-  Skeleton,
-  Text,
-  useDisclose,
-} from 'native-base'
+import React from 'react'
+import { HStack, IconButton, Input, Text, useDisclose } from 'native-base'
 import { useTranslation } from 'react-i18next'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { DateRange } from '@/Components/Atoms'
 import { dateRangeConverter } from '@/Helper/DateHelper'
-import {
-  useGetBuyingStatusQuery,
-  useGetBuyingTypeQuery,
-} from '@/Services/modules/buying'
 
 const FilterDasbhoard = ({ setFilterDate, filterDate }) => {
   const { t } = useTranslation()

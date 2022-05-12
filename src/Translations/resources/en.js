@@ -44,6 +44,11 @@ export default {
   ok: 'Ok',
   sold: 'Sold',
   buying: 'Buying',
+  reject: 'Reject',
+  keuntungan: 'Keuntungan',
+  terjual: 'Terjual',
+  periode: 'Periode',
+  penjualan: 'Penjualan',
 
   name: 'Name',
   description: 'Description',
@@ -225,4 +230,8 @@ export default {
   addOnlineTransaction: 'Add Online Transaction',
   invoiceCodeRequiredField: 'Invoice code is required field',
   selectDate: 'Select Date',
+  nameAZ: 'Name: A-Z',
+  nameZA: 'Name: Z-A',
+  keuntunganAsc: 'Keuntungan: rendah ke tinggi',
+  keuntunganDesc: 'Keuntungan: tinggi ke rendah',
 }
