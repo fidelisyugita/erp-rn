@@ -85,6 +85,7 @@ export default {
   edit: 'Edit',
   delete: 'Delete',
   view: 'View',
+  download: 'Download ',
   downloadPdf: 'Download PDF',
   downloadSuccess: 'Download Success',
   cancel: 'Cancel',
@@ -125,6 +126,7 @@ export default {
   forgotPasswordDescripton: 'Enter your email below to reset your password.',
   forgotPasswordSuccess:
     'We just sent an email with a link to reset your password',
+  search: 'Search ',
   searchProduct: 'Search Product',
   selectProduct: 'Select Product',
   searchProductCategory: 'Search Product Category',

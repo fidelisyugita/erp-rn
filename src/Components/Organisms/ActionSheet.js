@@ -16,9 +16,6 @@ import { useTranslation } from 'react-i18next'
 
 import { useAccess } from '@/Hooks'
 import { getCurrentRoute } from '@/Navigators/utils'
-import { downloadFile } from '@/Helper/DownloadHelper'
-import { Config } from '@/Config'
-import { generatePdfProduct } from '@/Helper/PdfHelper'
 
 const ActionSheet = ({
   isOpen,

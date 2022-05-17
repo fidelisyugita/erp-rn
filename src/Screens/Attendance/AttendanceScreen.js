@@ -150,7 +150,7 @@ const AttendanceScreen = ({}) => {
         //   url: `product/pdf/${selectedItem?.id}`,
         //   method: 'POST',
         // }}
-        downloadPdf={generatePdfProduct}
+        // downloadPdf={generatePdfProduct}
         approveMutation={useApproveAttendanceMutation}
         approveFixedCacheKey="approve-attendance"
       />
