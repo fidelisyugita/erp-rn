@@ -10,25 +10,26 @@ import i18n from '@/Translations'
 export const generatePdfProduct = async product => {
   const barcodeUri = await CodeGenerator.generate({
     type: CodeGenerator.Type.Code128,
-    code: `${product.id}`,
+    code: `${product.barcode}`,
   })
   console.log({ 'CodeGenerator.barcodeUri': barcodeUri })
 
   // new Promise(resolve => {
   const docDefinition = {
     content: [
-      { text: `SKU: ${product.id}`, style: 'header' },
+      { text: `SKU: ${product.sku}`, style: 'header', margin: [25, 10, 0, 0] },
       { image: barcodeUri, width: 300, height: 80 },
-      { text: `Nama Produk: ${product.name}`, margin: [0, 10, 0, 0] },
+      { text: product.barcode, margin: [100, 5, 0, 0] },
+      // { text: `Nama Produk: ${product.name}`, margin: [0, 10, 0, 0] },
       // { image: product.imageUrl, fit: [200, 200] },
-      `Kategori: ${product?.category?.name}`,
-      `Deskripsi: ${product.description || '-'}`,
-      {
-        text: `Satuan: ${product?.measureUnit?.name}`,
-        margin: [0, 10, 0, 0],
-      },
-      `Stock: ${product.stock}`,
-      `Terjual: ${product.totalSold}`,
+      // `Kategori: ${product?.category?.name}`,
+      // `Deskripsi: ${product.description || '-'}`,
+      // {
+      //   text: `Satuan: ${product?.measureUnit?.name}`,
+      //   margin: [0, 10, 0, 0],
+      // },
+      // `Stock: ${product.stock}`,
+      // `Terjual: ${product.sold}`,
     ],
 
     styles: {

@@ -135,7 +135,7 @@ const DashboardScreen = () => {
       >
         <HStack>
           <Text flex="1">{t('keuntungan')}:</Text>
-          <Text flex="1">{formatMoney(data?.cashIn)}</Text>
+          <Text flex="1">{formatMoney(data?.cashIn - data?.cashOut)}</Text>
         </HStack>
         <HStack>
           <Text flex="1">{t('penjualan')}:</Text>

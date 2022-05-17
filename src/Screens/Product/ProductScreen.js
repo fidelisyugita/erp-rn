@@ -194,7 +194,7 @@ const ProductScreen = ({ navigation, route }) => {
         //   url: `product/pdf/${selectedItem?.id}`,
         //   method: 'POST',
         // }}
-        downloadPdf={generatePdfProduct}
+        // downloadPdf={generatePdfProduct}
       />
     </Box>
   )
