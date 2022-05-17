@@ -16,7 +16,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { useTranslation } from 'react-i18next'
 
 import { usePagination, useAccess } from '@/Hooks'
-import { ActionSheet } from '@/Components/Organisms'
+import ActionSheet from './Components/ActionSheet'
 import {
   useLazyGetContactsQuery,
   useAddContactMutation,

@@ -5,6 +5,7 @@ import i18n from '@/Translations'
 import { useNavigation } from '@react-navigation/native'
 
 const ActionSheetLocal = ({
+  downloadPdf,
   actionScreen,
   isOpen,
   onClose,
@@ -27,7 +28,22 @@ const ActionSheetLocal = ({
     onClose()
   }
 
+  const onDownload = async () => {
+    try {
+      await downloadPdf?.(item)
+    } catch (error) {
+      console.log({ 'onDownloadPdf-error': error })
+    }
+    onClose?.()
+  }
+
   const [actions] = React.useState([
+    {
+      id: 'download',
+      label: i18n.t('download'),
+      icon: 'picture-as-pdf',
+      onPress: onDownload,
+    },
     {
       id: 'read',
       label: i18n.t('view'),
@@ -49,7 +65,7 @@ const ActionSheetLocal = ({
     {
       id: 'cancel',
       label: i18n.t('cancel'),
-      icon: 'delete',
+      icon: 'close',
       onPress: onClose,
     },
   ])
