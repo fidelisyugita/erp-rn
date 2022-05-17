@@ -1,7 +1,6 @@
 import currency from 'currency.js'
 
 export const formatMoney = value => {
-  console.log({ value })
   if (!value && value != 0) return '-'
   return currency(value, {
     symbol: 'Rp',

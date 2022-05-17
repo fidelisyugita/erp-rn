@@ -5,6 +5,7 @@ import {
   editContact,
   deleteContact,
 } from './contactApi'
+import { getContactTransactions } from './contactTransactionApi'
 
 export const contactApi = api.injectEndpoints({
   endpoints: build => ({
@@ -12,6 +13,8 @@ export const contactApi = api.injectEndpoints({
     addContact: addContact(build),
     editContact: editContact(build),
     deleteContact: deleteContact(build),
+
+    getContactTransactions: getContactTransactions(build),
   }),
   overrideExisting: true,
 })
@@ -22,4 +25,7 @@ export const {
   useAddContactMutation,
   useEditContactMutation,
   useDeleteContactMutation,
+
+  useGetContactTransactionsQuery,
+  useLazyGetContactTransactionsQuery,
 } = contactApi

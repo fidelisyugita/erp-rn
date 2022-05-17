@@ -2,6 +2,8 @@ import React from 'react'
 import { Pressable, Text, useDisclose, VStack } from 'native-base'
 import { useTranslation } from 'react-i18next'
 import ActionSheetLocal from './ActionSheetLocal'
+import { formatMoney, formatNumber } from '@/Helper/NumberHelper'
+import { generatePdfProduct } from '@/Helper/PdfHelper'
 
 const VariantCard = ({ item, pointer, onDelete }) => {
   const { t } = useTranslation()
@@ -38,16 +40,16 @@ const VariantCard = ({ item, pointer, onDelete }) => {
             {t('size')}: {item.size}
           </Text>
           <Text>
-            {t('stock')}: {item.stock}
+            {t('stock')}: {formatNumber(item.stock)}
           </Text>
           <Text>
-            {t('buyingPrice')}: {item.buyingPrice}
+            {t('buyingPrice')}: {formatMoney(item.buyingPrice)}
           </Text>
           <Text>
-            {t('sellingPrice')}: {item.sellingPrice}
+            {t('sellingPrice')}: {formatMoney(item.sellingPrice)}
           </Text>
           <Text>
-            {t('sold')}: {item.sold}
+            {t('sold')}: {formatNumber(item.sold)}
           </Text>
         </VStack>
       </Pressable>
@@ -59,6 +61,7 @@ const VariantCard = ({ item, pointer, onDelete }) => {
         pointer={pointer}
         actionScreen="ProductVariantScreen"
         onDelete={onDelete}
+        downloadPdf={generatePdfProduct}
       />
     </>
   )

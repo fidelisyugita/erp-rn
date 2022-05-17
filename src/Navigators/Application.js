@@ -56,6 +56,7 @@ import {
 } from '@/Screens/Transaction'
 import { AttendanceCheckInScreen } from '@/Screens/Attendance'
 import { BuyingDetailScreen, BuyingUpdateScreen } from '@/Screens/Buying'
+import { ContactTransactionScreen } from '@/Screens/ContactTransaction'
 
 const Stack = createNativeStackNavigator()
 
@@ -229,10 +230,17 @@ const ApplicationNavigator = () => {
             component={BuyingDetailScreen}
             options={{ headerShown: true, title: t('buyingDetail') }}
           />
-           <Stack.Screen
+          <Stack.Screen
             name="BuyingUpdateScreen"
             component={BuyingUpdateScreen}
             options={{ headerShown: true, title: t('updateOrTracking') }}
+          />
+
+          {/* Contact Transaction */}
+          <Stack.Screen
+            name="ContactTransactionScreen"
+            component={ContactTransactionScreen}
+            options={{ headerShown: true, title: t('transaction') }}
           />
         </Stack.Navigator>
       </NavigationContainer>

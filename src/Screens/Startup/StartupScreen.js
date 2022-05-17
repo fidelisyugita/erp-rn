@@ -36,7 +36,7 @@ const StartupScreen = () => {
       justifyContent="center"
     >
       <Text fontSize="4xl" bold color="white">
-        ERP APP
+        PT KMP
       </Text>
     </Box>
   )
