@@ -1,4 +1,4 @@
-package com.erp;
+package com.kmp.erp;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
