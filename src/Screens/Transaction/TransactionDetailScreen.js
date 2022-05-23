@@ -59,7 +59,7 @@ const schema = yup
 const TransactionDetailScreen = ({ navigation, route }) => {
   const { type, item: paramItem } = route?.params
 
-  const [isOfflineTransaction, setOfflineTransaction] = useState(false)
+  const [isOfflineTransaction, setOfflineTransaction] = useState(true)
   const [screenData, setScreenData] = useState({})
   const { t } = useTranslation()
   const { sizes } = useTheme()
@@ -91,7 +91,7 @@ const TransactionDetailScreen = ({ navigation, route }) => {
       : useEditTransactionMutation({
           fixedCacheKey: 'edit-transaction',
         })
-
+  t
   const {
     data: transactionStatus = [],
     isFetching: isFetchingTransactionStatus,
@@ -349,7 +349,7 @@ const TransactionDetailScreen = ({ navigation, route }) => {
                     control={control}
                     render={({ field: { onChange, value } }) => (
                       <Select
-                        isDisabled={true}
+                        // isDisabled={true}
                         placeholder={t('chooseTransactionType')}
                         selectedValue={value}
                         onValueChange={onChangeTransactionType}

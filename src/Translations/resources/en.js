@@ -228,6 +228,7 @@ export default {
   updateOrTracking: 'Update/Tracking',
   online: 'Online',
   offline: 'Offline',
+  standard: 'Standard',
   barcodeAlreadyExist: 'Barcode already exist',
   addOnlineTransaction: 'Add Online Transaction',
   invoiceCodeRequiredField: 'Invoice code is required field',
@@ -236,4 +237,11 @@ export default {
   nameZA: 'Name: Z-A',
   keuntunganAsc: 'Keuntungan: rendah ke tinggi',
   keuntunganDesc: 'Keuntungan: tinggi ke rendah',
+
+  add: 'Add',
+  tax: 'Tax',
+  discount: 'Discount',
+
+  received: 'Received',
+  rejected: 'Rejected',
 }
