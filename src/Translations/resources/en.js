@@ -237,4 +237,11 @@ export default {
   nameZA: 'Name: Z-A',
   keuntunganAsc: 'Keuntungan: rendah ke tinggi',
   keuntunganDesc: 'Keuntungan: tinggi ke rendah',
+
+  add: 'Add',
+  tax: 'Tax',
+  discount: 'Discount',
+
+  received: 'Received',
+  rejected: 'Rejected',
 }
