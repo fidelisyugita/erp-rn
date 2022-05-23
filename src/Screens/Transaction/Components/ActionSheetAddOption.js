@@ -58,13 +58,13 @@ const ActionSheetAddOption = ({ isOpen, onClose, item }) => {
     setActions([
       {
         id: 'read',
-        label: i18n.t('offline'),
+        label: i18n.t('standard'),
         icon: 'remove-red-eye',
         onPress: onOffline,
       },
       {
         id: 'update',
-        label: i18n.t('online'),
+        label: i18n.t('barcode'),
         icon: 'edit',
         onPress: onOnline,
       },

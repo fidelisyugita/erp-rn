@@ -228,6 +228,7 @@ export default {
   updateOrTracking: 'Update/Tracking',
   online: 'Online',
   offline: 'Offline',
+  standard: 'Standard',
   barcodeAlreadyExist: 'Barcode already exist',
   addOnlineTransaction: 'Add Online Transaction',
   invoiceCodeRequiredField: 'Invoice code is required field',

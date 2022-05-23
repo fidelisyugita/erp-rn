@@ -85,7 +85,7 @@ const TransactionUpdateScreen = ({ route }) => {
             status={status}
           />
         }
-        _contentContainerStyle={{ flexGrow: 1 }}
+        _contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}
         ListFooterComponentStyle={{
           position: 'absolute',
           bottom: 0,
