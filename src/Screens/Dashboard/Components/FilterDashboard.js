@@ -19,7 +19,7 @@ const FilterDasbhoard = ({ setFilterDate, filterDate }) => {
       />
       <HStack px="4" mt="2" alignItems={'center'}>
         <Text fontSize="20" mr="4">
-          {t('periode')}
+          {t('period')}
         </Text>
         <Input
           maxWidth="1/2"

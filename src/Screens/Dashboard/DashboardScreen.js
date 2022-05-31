@@ -31,12 +31,12 @@ const SORT = [
   {
     id: 'profit-asc',
     type: 'asc',
-    label: i18n.t('keuntunganAsc'),
+    label: i18n.t('profitAsc'),
   },
   {
     id: 'profit-desc',
     type: 'desc',
-    label: i18n.t('keuntunganDesc'),
+    label: i18n.t('profitDesc'),
   },
 ]
 
@@ -99,7 +99,7 @@ const DashboardScreen = () => {
           </Text>
         </HStack>
         <HStack>
-          <Text flex="1">{t('terjual')}</Text>
+          <Text flex="1">{t('sold')}</Text>
           <Text flex="1">
             {formatNumber(item.amount)} {item.measureUnit.name}
           </Text>
@@ -111,7 +111,7 @@ const DashboardScreen = () => {
           </Text>
         </HStack>
         <HStack>
-          <Text flex="1">{t('keuntungan')}</Text>
+          <Text flex="1">{t('profit')}</Text>
           <Text flex="1">
             {formatMoney((item.sellingPrice - item.buyingPrice) * item.amount)}
           </Text>
@@ -134,11 +134,11 @@ const DashboardScreen = () => {
         mb="4"
       >
         <HStack>
-          <Text flex="1">{t('keuntungan')}:</Text>
+          <Text flex="1">{t('profit')}:</Text>
           <Text flex="1">{formatMoney(data?.cashIn - data?.cashOut)}</Text>
         </HStack>
         <HStack>
-          <Text flex="1">{t('penjualan')}:</Text>
+          <Text flex="1">{t('grossProfit')}:</Text>
           <Text flex="1">{formatMoney(data?.cashOut)}</Text>
         </HStack>
         <HStack>
