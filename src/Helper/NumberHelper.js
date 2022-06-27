@@ -1,4 +1,5 @@
 import currency from 'currency.js'
+import numbro from 'numbro'
 
 export const formatMoney = value => {
   if (!value && value != 0) return '-'
@@ -11,12 +12,9 @@ export const formatMoney = value => {
 
 export const formatNumber = value => {
   if (!value && value != 0) return '-'
-  return currency(value, {
-    symbol: '',
-    separator: '.',
-    decimal: '',
-    precision: 0,
-  }).format()
+  return numbro(value || 0).format({
+    thousandSeparated: true,
+  })
 }
 
 export const isNumeric = value => {
